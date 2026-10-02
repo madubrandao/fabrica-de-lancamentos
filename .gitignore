@@ -1,0 +1,10 @@
+.obsidian/workspace*.json
+.obsidian/cache
+.trash/
+.env
+*.env
+*.key
+*.pem
+.DS_Store
+Thumbs.db
+
