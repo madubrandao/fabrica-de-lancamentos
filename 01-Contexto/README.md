@@ -8,7 +8,9 @@ Visão do projeto, objetivo, público, regras de negócio e glossário.
 
 ## Notas
 
-(vazio)
+- [[visao-do-projeto]] — o que é o LAUNCH OS, camadas e objetivo.
+- [[escopo-e-principios]] — livro x engenharia nossa, o que NÃO fazer, regras de ouro.
+- [[glossario]] — termos dos documentos.
+- [[perguntas-em-aberto]] — o que os docs não respondem.
 
 Voltar: [[00-LEIA-PRIMEIRO]]
-
