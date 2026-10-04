@@ -32,7 +32,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 | 6 | Notas pinadas do Maestri: 6 notas do [[DEC-0014-notas-pinadas-no-maestri]] | Madu + Claude | [ ] |
 | 7 | Maestri: workspace, terminais ENG-00…07, conexões | **Madu** (interface do Maestri) | [ ] |
 | 8 | Docker de desenvolvimento: compose com **versões fixas** (inclui o pin do `n8n`), `.env.example`, `bootstrap.ps1`; `docker compose up` com healthchecks verdes | Claude (ENG-07) | [x] feito em 2026-10-04: postgres 17.11, redis 8.10.2, n8n 2.41.6; 3 serviços healthy, `/healthz` 200; n8n na porta 5680 por conflito; `N8N_BASIC_AUTH_ACTIVE` removida; `.env` local com segredos aleatórios; pilha parada com `down` (volumes preservados); commit local no `launch-os` ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]]) |
-| 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [x] implementado e testado localmente em 2026-10-04 (commit local `effbd86` no `launch-os`); **falta validar a execução no GitHub Actions**, que só roda depois do push |
+| 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [x] implementado e testado localmente em 2026-10-04 (commit local `effbd86` no `launch-os`); **validado no GitHub Actions**: execução `37238422875` no commit `effbd86`, `success`, as 10 verificações `ok` e `RESULTADO: aprovado` no log; push feito |
 | 10 | Documentação de arquitetura **referenciada** no repo, não copiada (fonte única, DEC-0013 D4) | Claude (ENG-00) | [ ] |
 | 11 | Verificação final contra [[definicao-de-pronto]] e fechamento do M00 | Madu aprova | [ ] |
 
@@ -64,7 +64,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 O primeiro teste negativo rodou no repositório real, porque o `cp` falhou numa cadeia `&&` e os comandos seguintes executaram fora da cópia. Efeitos e reversão:
 - Arquivos rastreados alterados (guardrails do ENG-03, tag do Redis no compose) e `x.txt` com token falso: revertidos com `git reset` e `git checkout`; nada foi commitado nem enviado; o repositório ficou igual ao `HEAD`.
 - O `.env` local (ignorado pelo Git) foi sobrescrito e **os segredos anteriores se perderam**; foi regenerado com novos valores aleatórios.
-- **Consequência pendente:** os volumes Docker `launch-os_postgres_data`, `launch-os_redis_data` e `launch-os_n8n_data` foram criados com a senha antiga do Postgres. Antes de subir a pilha de novo, é preciso recriá-los (`docker compose ... down -v`). Eles só têm a inicialização de teste do n8n; remoção aguardando confirmação da Madu.
+- **Consequência resolvida:** os 3 volumes `launch-os_*` tinham a senha antiga do Postgres; a Madu autorizou e eles foram removidos (nenhum container os usava; volumes dos outros projetos intactos). A pilha foi subida de novo com o `.env` regenerado: 3 serviços `healthy`, `/healthz` 200; depois `down`, com os volumes novos preservados.
 - O teste foi refeito com trava que aborta fora da cópia.
 
 ## Riscos conhecidos
