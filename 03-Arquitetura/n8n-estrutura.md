@@ -30,7 +30,7 @@ Exemplo no Plano Final: `01_CEO/` contém `create_objective`, `delegate_task`, `
 - Lógica de domínio independente de detalhes do n8n.
 
 ## Workflows de negócio descritos no Blueprint
-1. **Create Launch** (primeiro workflow integrado): Webhook/API → Validate → Create Launch → A0 → A1 → A2 → A3 → A4 → A6 → Approval Gate → `LAUNCH_READY`. Entrada: `product_id`, `launch_type`, `objective`.
+1. **Create Launch** (primeiro workflow integrado): Webhook/API → Validate → Create Launch → A0 → A1 → A2 → A3 → A4 → A6 → Approval Gate → `LAUNCH_READY`. Entrada: `product_id`, `launch_type`, `objective`. Passa pelo A6, então o M03 inclui um **A6 mínimo** (definição PENDENTE; [[DEC-0015-alocacao-do-roadmap-m01-m04]]).
 2. **Open Cart:** Launch Ready → QA técnico (sales page, links, order form, checkout, thank-you, confirmação, CRM, tracking) → Approval → Cart Open → emite `launch.cart_opened`.
 3. **Monitoring:** tráfego, cliques, visitas ao order form, pedidos, conversão, reembolsos, suporte, engajamento de CRM → consumidos por A10 (dashboards e alertas).
 4. **Post-Launch:** Cart Closed → clientes→A8; não compradores→A4/A7; métricas→A10; dados de parceiros→A9 → Post Mortem → Learning → A0 Decision.

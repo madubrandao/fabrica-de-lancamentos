@@ -1,7 +1,7 @@
 ---
 tipo: decisao
 area: 02-Decisoes
-status: parcialmente-resolvido
+status: resolvido (P01–P12); subitem aberto: pin do n8n (P09)
 fonte: comparação Plano Final x Blueprint v1 x starter zip (2026-10-02); resoluções por [[DEC-0010-decisoes-canonicas-fase-1-v1]]
 atualizado: 2026-10-04
 ---
@@ -22,8 +22,8 @@ Legenda: **RESOLVIDO** = decidido explicitamente no DEC-0010. **RESOLVIDO (por h
 | P07 | Conjunto de notas pinadas no Maestri (Blueprint §3.1 = 5, §11 = 7; starter = 6 com `TASK_BOARD.md`) | **RESOLVIDO** ([[DEC-0014-notas-pinadas-no-maestri]]) | Decidido pela Madu em 2026-10-04: 6 notas (`PROJECT_STATUS`, `CURRENT_MILESTONE`, `CURRENT_TASK`, `DECISIONS` como índice, `BLOCKERS`, `DEFINITION_OF_DONE`). Novo PENDENTE (M00): onde as notas ficam, repo ou Maestri. |
 | P08 | Local do conhecimento do livro e dos ADRs (`knowledge/plf` x `docs/knowledge`; `docs/DECISIONS.md` x `docs/decisions`) | **RESOLVIDO** ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D6) | Confirmado em 2026-10-04: `docs/adr/` é a fonte única das decisões (`DECISIONS.md` vira só índice do Maestri); conhecimento em `knowledge/plf/`. DEC-0010 §2 mantido: a pasta fica reservada, sem o PDF. |
 | P09 | Guardrails do starter vazios/incompletos | **RESOLVIDO** (§8) | Guardrails oficiais de ENG-00…07 definidos no DEC-0010 §8; substituem os do starter. Ver [[engenharia-eng-00-a-07]]. Falta aplicar ao importar o starter (M00). Subitem `docker-compose.yml` duplicado: **RESOLVIDO** (DEC-0013 D5, um só em `infrastructure/compose/`). Subitem **ABERTO**: `n8n:latest` sem versão fixa (definir no M00). |
-| P10 | **Novo.** M03 valida A0–A4 e M04 valida A5–A10, mas DEC-0008 (caminho crítico) ativa A5 e A9 depois de A6/A7/A8/A10. | ABERTO (baixo risco) | Compatível se M04 for lido como "validar A5–A10 ao final", com a ordem de ativação interna definida em M04. Confirmar. |
-| P11 | **Novo.** Escopo do Core: Plano Final `CORE v0.1` inclui A0–A4; starter diz "A0 skeleton". Com M00–M06, A0–A4 caem em M03, e M01 só tem a plataforma. | ABERTO (baixo risco) | Sugestão: tratar `CORE v0.1` como nome histórico = M01+M02+M03; confirmar. |
-| P12 | **Novo.** Mapeamento antigo Blueprint M01 → novo: o "Core Online" antigo (repo, Maestri, Docker, Postgres…) foi dividido entre **M00** (repo, Maestri, Claude Code, infra de dev) e **M01** (Postgres, Redis, migrations, eventos, audit, registry, permissions, approvals, state machine). Itens "API skeleton" e "event schema" não estão citados nominalmente no §7. | ABERTO (baixo risco) | Alocados em M01 por inferência; confirmar. |
+| P10 | **Novo.** M03 valida A0–A4 e M04 valida A5–A10, mas DEC-0008 (caminho crítico) ativa A5 e A9 depois de A6/A7/A8/A10. | **RESOLVIDO** ([[DEC-0015-alocacao-do-roadmap-m01-m04]]) | Confirmado pela Madu em 2026-10-04: M04 valida A5–A10 ao final, com a ordem do DEC-0008 dentro do M04. Achado: o Create Launch usa o A6, que é do M04; decidido um **A6 mínimo no M03** (definição do A6 mínimo PENDENTE). |
+| P11 | **Novo.** Escopo do Core: Plano Final `CORE v0.1` inclui A0–A4; starter diz "A0 skeleton". Com M00–M06, A0–A4 caem em M03, e M01 só tem a plataforma. | **RESOLVIDO** ([[DEC-0015-alocacao-do-roadmap-m01-m04]]) | Confirmado em 2026-10-04: `CORE v0.1` é nome histórico para M01+M02+M03; Company Memory = interfaces no M02 e tabelas no schema do M01; primeiro fluxo ponta a ponta = Create Launch até `LAUNCH_READY` no M03. |
+| P12 | **Novo.** Mapeamento antigo Blueprint M01 → novo: o "Core Online" antigo (repo, Maestri, Docker, Postgres…) foi dividido entre **M00** (repo, Maestri, Claude Code, infra de dev) e **M01** (Postgres, Redis, migrations, eventos, audit, registry, permissions, approvals, state machine). Itens "API skeleton" e "event schema" não estão citados nominalmente no §7. | **RESOLVIDO** ([[DEC-0015-alocacao-do-roadmap-m01-m04]]) | Confirmado em 2026-10-04: API skeleton e event schema no M01 (event schema em `packages/schemas/`); o M00 não tem código de aplicação. |
 
 Depois de decidido, registrar como `DEC-00XX` e atualizar esta tabela.

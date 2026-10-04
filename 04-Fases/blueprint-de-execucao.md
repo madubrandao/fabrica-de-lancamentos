@@ -51,11 +51,11 @@ Humano → Architect → Spec/ADR → { Backend, Database, N8N } → Agent Engin
 - Windows: usar WSL ou local/tmux só depois de instalar e verificar Claude Code e toolchain; manter o repo em um único local canônico.
 
 ## Relação com M00–M06 (canônico)
-Os 15 passos acima foram escritos pelo Blueprint com a numeração antiga. Pelo roadmap canônico ([[roadmap]]): passos 1–6 e 9 ≈ **M00**; passos 7–8 ≈ **M01**; passo 10 ≈ **M02**; passo 14 ≈ **M03**; passo 15 ≈ validação de M03/M04; passo 11–12 acompanham M01–M04; passo 13 ≈ **M06** (painel mínimo antes, completo depois). Alocação por inferência (P12).
+Os 15 passos acima foram escritos pelo Blueprint com a numeração antiga. Pelo roadmap canônico ([[roadmap]]): passos 1–6 e 9 ≈ **M00**; passos 7–8 ≈ **M01**; passo 10 ≈ **M02**; passo 14 ≈ **M03**; passo 15 ≈ validação de M03/M04; passo 11–12 acompanham M01–M04; passo 13 ≈ **M06** (painel mínimo antes, completo depois). Alocação confirmada em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12).
 
 ## Antes do passo 1 (M00)
 - **Início formal do M00** pela Madu: nenhum código/repositório é criado como consequência automática do DEC-0010 (§10).
-- Decisões abertas que tocam o M00: P10–P12 em [[pendencias-de-decisao]]. A P07 foi resolvida (DEC-0014); resta definir onde as notas ficam.
+- Pendências P01–P12 todas resolvidas ([[pendencias-de-decisao]]). Resta definir onde as notas do Maestri ficam (DEC-0014) e o pin do `n8n`.
 - Ainda sem resposta em [[perguntas-em-aberto]]: stack de backend/frontend, provedor de LLM, hospedagem, ambiente Windows (WSL/tmux/local), local do repo.
 - Guardrails oficiais de ENG-00…07 (DEC-0010 §8) entram nas definições de agente ao importar o starter.
 

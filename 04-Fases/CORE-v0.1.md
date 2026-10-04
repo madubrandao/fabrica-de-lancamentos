@@ -27,7 +27,7 @@ Itens (Plano Final §31):
 Depois conectam-se A5–A10.
 
 **Versão do starter (mais restrita):** "LAUNCH OS CORE" = PostgreSQL + Redis + event model + agent registry + memory interfaces + approval gates + launch state machine + **A0 skeleton**. Regra: não construir o dashboard completo antes de os contratos do Core estarem estáveis.
-Diferença entre as duas definições de escopo do Core (A0–A4 prontos x só esqueleto de A0): com o roadmap canônico M00–M06 ([[roadmap]]), A0–A4 pertencem ao M03 e a plataforma ao M01/M02. "CORE v0.1" é tratado como **nome histórico**; a equivalência (M01+M02+M03) é sugestão a confirmar em [[pendencias-de-decisao]] P11.
+Diferença entre as duas definições de escopo do Core (A0–A4 prontos x só esqueleto de A0): com o roadmap canônico M00–M06 ([[roadmap]]), A0–A4 pertencem ao M03 e a plataforma ao M01/M02. "CORE v0.1" é **nome histórico** e equivale a **M01+M02+M03** ([[DEC-0015-alocacao-do-roadmap-m01-m04]], P11 resolvida). Company Memory (item 3): interfaces no M02, tabelas no schema do M01. Primeiro fluxo ponta a ponta (item 13): Create Launch até `LAUNCH_READY` no M03, com A6 mínimo.
 
 ## Primeiro pedido ao Architect (Blueprint §41)
 Ler o CLAUDE.md e toda a documentação de arquitetura. **Não implementar.** Produzir a especificação técnica do Core Platform com: arquitetura de serviços; entidades; state machine de Launch; event catalog; permission model; agent contract; memory contract; approval gates; estrutura de diretórios; ADRs iniciais. Não inventar requisitos de negócio; decisão indefinida vira "decisão pendente". Depois delegar: Database → schema; Backend → API/state machine; DevOps → Docker.

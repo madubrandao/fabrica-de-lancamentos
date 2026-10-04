@@ -22,7 +22,8 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0012-lista-de-entidades-do-blueprint]] — lista oficial de 22 entidades (Blueprint §14); resolve P05.
 - [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] — árvore do Blueprint §8, `99_ERRORS`, fonte única por assunto, guardrails só nos agentes; resolve P06 e P08.
 - [[DEC-0014-notas-pinadas-no-maestri]] — 6 notas pinadas no `00-COMMAND-CENTER`; resolve P07.
-- [[pendencias-de-decisao]] — conflitos entre documentos: P01–P09 resolvidos (P09 mantém o pin do `n8n` aberto); **abertos:** P10, P11, P12.
+- [[DEC-0015-alocacao-do-roadmap-m01-m04]] — M04 valida A5–A10 ao final, A6 mínimo no M03, `CORE v0.1` = M01+M02+M03, API skeleton e event schema no M01; resolve P10, P11 e P12.
+- [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos** (P09 mantém o pin do `n8n` aberto).
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.
 

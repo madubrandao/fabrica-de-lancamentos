@@ -7,7 +7,7 @@ atualizado: 2026-10-04
 ---
 # Milestones M00–M06 (checklists)
 
-Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens vêm do Blueprint e do starter e foram **alocados por mim ao marco correspondente**; a alocação é inferência ([[pendencias-de-decisao]] P12). Nada foi iniciado: nenhum código ou repositório existe. Cada capability só está pronta quando cumprir [[definicao-de-pronto]].
+Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens vêm do Blueprint e do starter e foram **alocados por mim ao marco correspondente**; a alocação foi confirmada pela Madu em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12). Nada foi iniciado: nenhum código ou repositório existe. Cada capability só está pronta quando cumprir [[definicao-de-pronto]].
 
 Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer marco para ações com gasto ([[gates]]).
 
@@ -44,13 +44,13 @@ Valida: Agent Contract, context assembly, tool registry, memory interfaces, exec
 
 ## M03 — First Business Agents
 Valida: A0–A4. Objetivo: produzir um lançamento até `LAUNCH_READY`.
-- [ ] A0 · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4
-- Primeiro workflow integrado: Create Launch ([[n8n-estrutura]])
+- [ ] A0 · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] **A6 mínimo** (só o necessário para o Create Launch; definição PENDENTE; A6 completo no M04)
+- Primeiro workflow integrado: Create Launch até `LAUNCH_READY` ([[n8n-estrutura]], [[DEC-0015-alocacao-do-roadmap-m01-m04]])
 
 ## M04 — Launch Execution
 Valida: A5–A10 e execução do ciclo completo.
 - [ ] A5 · [ ] A6 · [ ] A7 · [ ] A8 · [ ] A9 · [ ] A10
-- Ordem de ativação interna: DEC-0008 (P10)
+- Ordem de ativação interna: A6 (completo), A7, A8, A10, depois A5 e A9 ([[DEC-0008-caminho-critico-primeiro]], [[DEC-0015-alocacao-do-roadmap-m01-m04]]); o marco só fecha com A5–A10 validados
 
 ## M05 — Learning Loop
 Valida: análise, experimentação e learning loop.
