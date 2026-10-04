@@ -95,7 +95,7 @@ Evidências coletadas depois do push de `aeb58d4` (`launch-os`) e `7246f9f` (vau
 | workflow n8n conectado | N/A no M00 (M03) |
 | dashboard mínimo | N/A no M00 (M06) |
 | ADR atualizado se houve decisão arquitetural | atendido: DEC-0011 a DEC-0020 no vault; `docs/adr/` pronto, sem ADR técnico ainda |
-| revisão por outro agente | **não realizada**: o trabalho foi feito em uma única sessão sem revisão independente; recomendada antes de fechar |
+| revisão por outro agente | **atendida em 2026-10-04**: 1ª passada parcial (`docs/status/`) e 2ª passada completa do repositório (seção abaixo) |
 | contratos explícitos, impacto de segurança, sem estado local commitado, deploy entendido, evidência de verificação | atendido (esta seção) |
 
 ### Riscos e pendências para a Madu ao fechar
@@ -108,6 +108,21 @@ Evidências coletadas depois do push de `aeb58d4` (`launch-os`) e `7246f9f` (vau
 **Disco (autorizado pela Madu):** `npm cache clean --force` (cache de 13 GB para 969 MB) e `pnpm store prune` (721 MB, 273 pacotes). `C:` passou de **8,8 GB para 22 GB livres** (97% para 91% usado), acima do critério de 20 GB definido pela Madu para autorizar o M01. Não foram tocados: Clipchamp (16 GB), app Claude (9,5 GB), Chrome (10 GB), imagens e volumes do Docker de outros projetos, nem o VHDX do Docker (compactação não autorizada).
 
 **RAM:** 7,7 GB no total, ~0,8 GB livre (90% em uso), com 4 containers de outros projetos rodando (`qg-madu-n8n`, `n8n-n8n-1`, `app-postgres_app-1`, `n8n-postgres_n8n-1`, todos `unless-stopped`). A Madu autorizou pará-los enquanto se trabalha no LAUNCH OS; **ainda não foram parados**, porque a pilha do LAUNCH OS está desligada. Comandos de parar e religar em `docs/status/BLOCKERS.md` do `launch-os`.
+
+## Revisão independente completa (2026-10-04)
+Um revisor independente (subagente com contexto novo, somente leitura) leu **47 de 47 arquivos não vazios** do `launch-os` (os 39 `.gitkeep` têm 0 byte; total de 86 versionados) e cruzou o repositório com os DEC-0010, 0012, 0013, 0015, 0016, 0019 e 0020. Não leu DEC-0001 a 0009, 0011, 0014 e 0017, as fichas A0-A10 e algumas notas de arquitetura e fases do vault: isso é do vault, fora do repositório de código. Resultado: **nenhum achado de gravidade alta, nenhum segredo real versionado**, guardrails dos 8 agentes fiéis ao DEC-0010 §8, roadmap, entidades, gates e eventos coerentes. **10 achados** (2 de gravidade média, 8 baixa ou média-baixa), todos confirmados por leitura e corrigidos:
+1. Segredos com fallback `CHANGE_ME` e portas em todas as interfaces: segredos obrigatórios (`${VAR:?}`) e portas em `127.0.0.1`.
+2. Redis sem senha: com a porta local o risco cai; senha do Redis **PENDENTE para o M01** (decisão da Madu).
+3. n8n e banco de negócio compartilham banco e superusuário, sem decisão registrada: registrado como PENDENTE (M01), não decidido.
+4. Guardrails copiados em 7 `CLAUDE.md` e 3 `rules/`: substituídos por referência ao `ENG-xx`; a CI agora detecta cópia exata.
+5. Versões e porta repetidas em 5+ lugares: docs apontam para compose e `.env.example`; a CI compara compose e `.env.example`.
+6. `check-repo.sh` com falsos negativos: 14 títulos na ordem, `.env.*`, `github_pat_`, `sk-`, `xox`, fim de linha misto, caminhos com espaço, tags de imagem, arquivos de CI na lista obrigatória.
+7. `.gitignore`: acrescentados `.mcp.json`, `.claude/settings.local.json`, dumps e IDE. **Desvio do relatório:** `*.sql` **não** foi ignorado, porque as migrations de `database/migrations/` serão `.sql`.
+8. `bootstrap.ps1`: roda de qualquer pasta, gera segredos aleatórios, leitura em UTF-8, falha clara com Docker parado.
+9. `ci.yml`: `persist-credentials: false`, runner `ubuntu-24.04`, cancelamento só em pull request.
+10. Textos: CI/CD, backup, logs e atualização de versões como PENDENTES; `JWT_SECRET` e variáveis sem uso marcados como reservados; nome da pessoa removido da regra de push.
+
+**Testes das correções:** `check-repo.sh` aprovado no estado atual; em uma cópia isolada com 10 violações injetadas reprovou (saída 1) e apontou todas; `bootstrap.ps1` testado no PowerShell 7 e no Windows PowerShell 5.1, chamado de outra pasta (`.env` na raiz, 0 `CHANGE_ME`, sem BOM, acentos, LF, segunda execução não sobrescreve) e com o Docker "parado" simulado por um `docker` falso (mensagem clara, sem `NativeCommandError`); pilha real subida com o compose novo (3 serviços `healthy`, `/healthz` 200, `netstat` mostra `127.0.0.1:5432`, `5680` e `6379`) e o compose sem `.env` falha com "required variable POSTGRES_PASSWORD is missing". Para o teste, os 4 containers de outros projetos foram parados e religados no fim, e voltaram como estavam.
 
 ## Riscos conhecidos
 - Docker parado: o passo 8 não passa sem o daemon.

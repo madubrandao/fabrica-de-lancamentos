@@ -39,3 +39,10 @@ O compose do starter usava `postgres:17`, `redis:8` e `n8nio/n8n:latest`, sem ve
 - Atualização de versões, estratégia de backup dos volumes e ambientes de teste e produção seguem PENDENTES (DEC-0016 D3).
 
 Ver [[M00-plano-de-execucao]] · [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] · [[DEC-0005-stack-de-producao]].
+
+## Adendo (2026-10-04, revisão independente completa)
+- **Segredos obrigatórios:** o compose usa `${POSTGRES_PASSWORD:?}` e `${N8N_ENCRYPTION_KEY:?}`; sem o `.env` ele falha, em vez de subir com `CHANGE_ME`.
+- **Portas só em `127.0.0.1`** (Postgres 5432, Redis 6379, n8n 5680). Consequência: o n8n não recebe webhooks de fora da máquina; isso será revisto ao integrar plataformas reais.
+- **PENDENTES (M01):** senha do Redis; banco e usuário do n8n separados do banco de negócio.
+- `scripts/bootstrap.ps1` passa a gerar segredos aleatórios ao criar o `.env`.
+
