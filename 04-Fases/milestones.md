@@ -7,12 +7,12 @@ atualizado: 2026-10-04
 ---
 # Milestones M00–M06 (checklists)
 
-Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens vêm do Blueprint e do starter e foram **alocados por mim ao marco correspondente**; a alocação foi confirmada pela Madu em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12). O M00 está em andamento; do M01 em diante nada foi iniciado e nenhum código existe. Cada capability só está pronta quando cumprir [[definicao-de-pronto]].
+Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens vêm do Blueprint e do starter e foram **alocados por mim ao marco correspondente**; a alocação foi confirmada pela Madu em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12). O M00 está concluído ([[DEC-0021-m00-foundation-concluido]]); o M01 não está autorizado e nenhum código de aplicação existe. Cada capability só está pronta quando cumprir [[definicao-de-pronto]].
 
 Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer marco para ações com gasto ([[gates]]).
 
 ## M00 — Foundation
-**Status: em verificação final, aguardando aprovação da Madu** (início formal em 2026-10-04, [[DEC-0018-inicio-formal-do-m00]]). Passo a passo em [[M00-plano-de-execucao]].
+**Status: concluído em 2026-10-04** ([[DEC-0021-m00-foundation-concluido]]; início formal em 2026-10-04, [[DEC-0018-inicio-formal-do-m00]]). Passo a passo em [[M00-plano-de-execucao]].
 Valida: fundação documental, repositório, Claude Code, infraestrutura de desenvolvimento (sem Maestri, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
 - [x] Início formal do M00 autorizado pela Madu (DEC-0010 §10; [[DEC-0018-inicio-formal-do-m00]])
 - [x] Repositório Git `launch-os` (privado, GitHub, fora de `.claude`, sem espaços no caminho; D6) · [x] `CLAUDE.md` raiz (+ por domínio), com TECH STACK = TypeScript/Node (D1)

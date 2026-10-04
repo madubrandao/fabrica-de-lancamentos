@@ -2,12 +2,12 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0018; DEC-0010 §7; DEC-0013; DEC-0014; DEC-0016; blueprint v1 §3, §7, §10–§11, §40; starter (lido no scratchpad)
-status: executado; em verificação final (passo 11), aguardando aprovação da Madu para fechar
+status: concluido em 2026-10-04 (DEC-0021)
 atualizado: 2026-10-04
 ---
 # M00 Foundation — plano de execução
 
-Início formal: [[DEC-0018-inicio-formal-do-m00]]. **Atualização:** o Maestri saiu do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]); os passos 6 e 7 foram ajustados. Nada abaixo foi executado, exceto a verificação de ambiente.
+Início formal: [[DEC-0018-inicio-formal-do-m00]]. **Fechamento: [[DEC-0021-m00-foundation-concluido]] (2026-10-04).** **Atualização:** o Maestri saiu do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]); os passos 6 e 7 foram ajustados. Nada abaixo foi executado, exceto a verificação de ambiente.
 
 ## Verificação de ambiente (2026-10-04, somente leitura)
 | Item | Resultado |
@@ -34,7 +34,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. **Atualização:** o Maestri 
 | 8 | Docker de desenvolvimento: compose com **versões fixas** (inclui o pin do `n8n`), `.env.example`, `bootstrap.ps1`; `docker compose up` com healthchecks verdes | Claude (ENG-07) | [x] feito em 2026-10-04: postgres 17.11, redis 8.10.2, n8n 2.41.6; 3 serviços healthy, `/healthz` 200; n8n na porta 5680 por conflito; `N8N_BASIC_AUTH_ACTIVE` removida; `.env` local com segredos aleatórios; pilha parada com `down` (volumes preservados); commit local no `launch-os` ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]]) |
 | 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [x] implementado e testado localmente em 2026-10-04 (commit local `effbd86` no `launch-os`); **validado no GitHub Actions**: execução `37238422875` no commit `effbd86`, `success`, as 10 verificações `ok` e `RESULTADO: aprovado` no log; push feito |
 | 10 | Documentação de arquitetura **referenciada** no repo, não copiada (fonte única, DEC-0013 D4) | Claude (ENG-00) | [x] feito em 2026-10-04 (commit local no `launch-os`; ainda sem push): `docs/architecture/README.md` indexa o vault sem copiar, mais ponteiros em `docs/agents`, `docs/events` e `docs/workflows`; CI exige os 4 arquivos |
-| 11 | Verificação final contra [[definicao-de-pronto]] e fechamento do M00 | Madu aprova | verificação **feita** em 2026-10-04 (seção abaixo); **fechamento aguardando aprovação da Madu** |
+| 11 | Verificação final contra [[definicao-de-pronto]] e fechamento do M00 | Madu aprova | [x] verificação e revisão independente completa feitas; **M00 fechado pela Madu em 2026-10-04** ([[DEC-0021-m00-foundation-concluido]]) |
 
 ## Pendências do M00
 - Caminho local (`C:\dev\launch-os`) e nome do repositório: confirmar.

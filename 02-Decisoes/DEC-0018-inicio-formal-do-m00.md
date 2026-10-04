@@ -8,6 +8,8 @@ data-registro: 2026-10-04
 ---
 # DEC-0018 — Início formal do M00 Foundation
 
+> **Marco concluído em 2026-10-04:** [[DEC-0021-m00-foundation-concluido]].
+
 ## Contexto
 O [[DEC-0010-decisoes-canonicas-fase-1-v1]] §10 proíbe qualquer código ou repositório de código sem o início formal do M00. Em 2026-10-04 todas as pendências entre documentos (P01–P12) e os blocos técnico e de negócio estavam resolvidos ([[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]] a [[DEC-0017-modelo-de-negocio-inicial]]). Restava o bloco B de [[perguntas-em-aberto]] (material faltando), que não trava o M00.
 

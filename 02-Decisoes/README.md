@@ -28,6 +28,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0018-inicio-formal-do-m00]] — início formal do M00 Foundation (2026-10-04); escopo só do M00.
 - [[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]] — postgres 17.11, redis 8.10.2, n8n 2.41.6; n8n na porta 5680; healthchecks.
 - [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] — Maestri fora do escopo; o n8n orquestra e executa os agentes A0-A10; substitui DEC-0002 (parcial), DEC-0014 e partes do DEC-0005 e do DEC-0010.
+- [[DEC-0021-m00-foundation-concluido]] — M00 Foundation concluído em 2026-10-04; M01 não autorizado; pendências antes do M01.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos**, sem subitens abertos.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.
