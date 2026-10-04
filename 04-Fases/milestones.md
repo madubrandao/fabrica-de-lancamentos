@@ -15,7 +15,7 @@ Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer mar
 Valida: fundação documental, repositório, Maestri, Claude Code, infraestrutura de desenvolvimento.
 - [ ] Início formal do M00 autorizado pela Madu (DEC-0010 §10)
 - [ ] Repositório Git `launch-os` · [ ] `CLAUDE.md` raiz (+ por domínio)
-- [ ] Maestri: workspace, terminais ENG-00…07, responsabilidades, notas pinadas (P07 a decidir)
+- [ ] Maestri: workspace, terminais ENG-00…07, responsabilidades, 6 notas pinadas ([[DEC-0014-notas-pinadas-no-maestri]]); definir onde ficam (repo ou Maestri)
 - [ ] Claude Code instalado e verificado; decisão WSL/tmux/local
 - [ ] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
 - [ ] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap

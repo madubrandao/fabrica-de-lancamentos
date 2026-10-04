@@ -21,7 +21,8 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]] — padrão único `approval.requested/granted/rejected`; resolve P04.
 - [[DEC-0012-lista-de-entidades-do-blueprint]] — lista oficial de 22 entidades (Blueprint §14); resolve P05.
 - [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] — árvore do Blueprint §8, `99_ERRORS`, fonte única por assunto, guardrails só nos agentes; resolve P06 e P08.
-- [[pendencias-de-decisao]] — conflitos entre documentos: P01–P06, P08 e P09 resolvidos (P09 mantém o pin do `n8n` aberto); **abertos:** P07, P10, P11, P12.
+- [[DEC-0014-notas-pinadas-no-maestri]] — 6 notas pinadas no `00-COMMAND-CENTER`; resolve P07.
+- [[pendencias-de-decisao]] — conflitos entre documentos: P01–P09 resolvidos (P09 mantém o pin do `n8n` aberto); **abertos:** P10, P11, P12.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.
 

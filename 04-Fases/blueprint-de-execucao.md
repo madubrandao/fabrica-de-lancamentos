@@ -45,7 +45,7 @@ Humano → Architect → Spec/ADR → { Backend, Database, N8N } → Agent Engin
 ## Maestri (referência, Blueprint §3–§6, §10–§11)
 - **Workspaces:** 00-COMMAND-CENTER · 01-CORE-PLATFORM · 02-AGENT-ENGINE · 03-N8N · 04-LAUNCH-ENGINE · 05-DASHBOARD · 06-QA-SECURITY · 07-KNOWLEDGE-PLF.
 - **Partituras:** 00-bootstrap (Architect, Backend, Database, DevOps) · 01-core-platform (+N8N, Agent Engine, QA) · 02-agent-engine · 03-n8n · 04-launch-engine · 05-full-stack (todos; montagem padrão diária) · 06-qa-release.
-- **Notas compartilhadas:** PROJECT_STATUS · CURRENT_TASK · ARCHITECTURE · DECISIONS · BLOCKERS · AGENT_STATUS · RELEASE_NOTES (conjunto exato em aberto, P07).
+- **Notas pinadas (decididas, [[DEC-0014-notas-pinadas-no-maestri]]):** PROJECT_STATUS · CURRENT_MILESTONE · CURRENT_TASK · DECISIONS (índice para `docs/adr/`) · BLOCKERS · DEFINITION_OF_DONE. As 7 do Blueprint §11 e as 6 do starter foram substituídas; AGENT_STATUS e RELEASE_NOTES entram depois, por ADR. Onde as notas ficam (repo ou Maestri) é PENDENTE no M00.
 - **Regra de comunicação:** o Architect coordena; especialistas podem conversar direto para reduzir dependências; decisões arquiteturais voltam ao Architect e são registradas em DECISIONS/ADR.
 - **O humano** prioriza, aprova, interrompe, reorienta, resolve decisões e avalia riscos — não controla linha a linha.
 - Windows: usar WSL ou local/tmux só depois de instalar e verificar Claude Code e toolchain; manter o repo em um único local canônico.
@@ -55,7 +55,7 @@ Os 15 passos acima foram escritos pelo Blueprint com a numeração antiga. Pelo 
 
 ## Antes do passo 1 (M00)
 - **Início formal do M00** pela Madu: nenhum código/repositório é criado como consequência automática do DEC-0010 (§10).
-- Decisões abertas que tocam o M00: P07 (notas pinadas no Maestri), P10–P12 em [[pendencias-de-decisao]].
+- Decisões abertas que tocam o M00: P10–P12 em [[pendencias-de-decisao]]. A P07 foi resolvida (DEC-0014); resta definir onde as notas ficam.
 - Ainda sem resposta em [[perguntas-em-aberto]]: stack de backend/frontend, provedor de LLM, hospedagem, ambiente Windows (WSL/tmux/local), local do repo.
 - Guardrails oficiais de ENG-00…07 (DEC-0010 §8) entram nas definições de agente ao importar o starter.
 
