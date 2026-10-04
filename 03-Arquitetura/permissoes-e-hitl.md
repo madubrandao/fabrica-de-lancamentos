@@ -46,4 +46,4 @@ mudanças estratégicas críticas, contratos relevantes, grandes alterações de
 Toda execução que envolva gasto exige `BUDGET_AUTHORIZED = true`, registrado em audit log. Não é gate da máquina de estados. Vale em qualquer marco; ao A5 isso se aplica antes de criar/escalar campanha.
 
 ## Pendente (não inventar, DEC-0010 §9)
-Limites numéricos de orçamento, scopes dos 11 agentes, regras detalhadas de autonomia, quem aprova o quê por gate ([[gates]]).
+Limites numéricos de orçamento, tempo de aprovação e SLA (adiados para o M01 como configuração por política; aprovação sem resposta vale como **não aprovada**; orçamento antes do M04: [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D8), scopes dos 11 agentes, regras detalhadas de autonomia, quem aprova o quê por gate ([[gates]]).

@@ -56,7 +56,8 @@ Os 15 passos acima foram escritos pelo Blueprint com a numeração antiga. Pelo 
 ## Antes do passo 1 (M00)
 - **Início formal do M00** pela Madu: nenhum código/repositório é criado como consequência automática do DEC-0010 (§10).
 - Pendências P01–P12 todas resolvidas ([[pendencias-de-decisao]]). Resta definir onde as notas do Maestri ficam (DEC-0014) e o pin do `n8n`.
-- Ainda sem resposta em [[perguntas-em-aberto]]: stack de backend/frontend, provedor de LLM, hospedagem, ambiente Windows (WSL/tmux/local), local do repo.
+- Decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]]: TypeScript/Node, LLM via adaptador (Anthropic primeiro), dev em Docker local, Windows nativo, repositório privado fora de `.claude` e sem espaços no caminho. Pendentes: frameworks (M01), caminho e conta do repo, ambientes de teste/produção (antes do M03).
+- Ainda abertas em [[perguntas-em-aberto]]: blocos B (material faltando) e C (negócio).
 - Guardrails oficiais de ENG-00…07 (DEC-0010 §8) entram nas definições de agente ao importar o starter.
 
 Ver [[roadmap]] · [[milestones]] · [[CORE-v0.1]] · [[definicao-de-pronto]] · [[engenharia-eng-00-a-07]].

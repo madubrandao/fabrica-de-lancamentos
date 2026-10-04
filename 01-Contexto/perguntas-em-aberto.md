@@ -3,7 +3,7 @@ tipo: contexto
 area: 01-Contexto
 fonte: análise da leitura da FASE 1 - BASE (2026-10-02)
 status: aberto
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Perguntas em aberto
 
@@ -23,14 +23,14 @@ Itens que os documentos **não respondem**. Nada aqui foi assumido. Conflitos en
 - [ ] Orçamento e limites de gasto por política (A5 "não aumenta orçamento indefinidamente"; o limite não está definido).
 - [ ] Quais plataformas de checkout, e-mail/CRM, anúncios e páginas serão usadas?
 
-## Técnico (nenhum doc define)
-- [ ] Linguagem/framework do backend e do frontend.
-- [ ] Provedores de LLM (o `.env.example` do starter lista Anthropic e OpenAI como opções, sem decisão).
-- [ ] Hospedagem/ambientes (dev, teste, produção).
-- [ ] Vector store para memória semântica (Blueprint: "somente quando trouxer valor"; Plano: "Vector/semantic memory" na Fase 1).
-- [ ] Ambiente de dev no Windows: WSL, tmux ou local (starter recomenda decidir depois de instalar e verificar Claude Code e toolchain).
-- [ ] Repositório `launch-os` (Git/GitHub): quando criar e onde.
+## Técnico (decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]], 2026-10-04)
+- [x] ~~Linguagem/framework~~ **TypeScript/Node** (D1). Pendente: framework de backend e de frontend (ADR no M01).
+- [x] ~~Provedores de LLM~~ **Anthropic primeiro, com camada de adaptador** (D2). Pendente: modelo por agente (M02).
+- [x] ~~Hospedagem/ambientes~~ **só dev em Docker local** (D3). Pendente: teste e produção, antes do M03.
+- [x] ~~Vector store~~ **adiado**; M02 só reserva a interface (D4).
+- [x] ~~Ambiente de dev no Windows~~ **Windows nativo + Docker Desktop**, com `.gitattributes` LF no M00 (D5).
+- [x] ~~Repositório `launch-os`~~ **privado no GitHub, fora de `.claude`, sem espaços no caminho**, criado após o início formal do M00 (D6). Pendente: caminho e conta exatos.
 
 ## Processo
-- [ ] Mapeamento estado da state machine → gate (os docs listam os dois, não os ligam).
-- [ ] Limites numéricos: orçamento, tempo de aprovação, SLA de agentes.
+- [ ] Mapeamento estado da state machine → gate: **adiado para a especificação do M01 (ENG-00)** (D7).
+- [ ] Limites numéricos: orçamento, tempo de aprovação, SLA de agentes: **adiados para o M01**, como configuração por política; orçamento antes do M04 (D8).

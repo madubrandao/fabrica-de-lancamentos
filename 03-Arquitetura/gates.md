@@ -41,6 +41,6 @@ Canônico: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §3. Regra: nenhuma transi�
 - Regra do livro como gate: Joint Launch só após Internal Launch ter testado oferta e sequência.
 
 ## Pendente
-Quem aprova cada gate (humano, A0 ou ambos), critérios objetivos de aprovação e o mapeamento estado → gate (os docs listam os dois, não os ligam). A especificar em M01.
+Quem aprova cada gate (humano, A0 ou ambos), critérios objetivos de aprovação e o mapeamento estado → gate (os docs listam os dois, não os ligam; G04 a G07 caem todos entre `PLC` e `CART_OPEN`). Adiado para a especificação do M01 pelo ENG-00 ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D7).
 
 (A lista de 10 gates do Plano Final está superada.)

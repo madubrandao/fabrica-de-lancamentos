@@ -23,6 +23,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] — árvore do Blueprint §8, `99_ERRORS`, fonte única por assunto, guardrails só nos agentes; resolve P06 e P08.
 - [[DEC-0014-notas-pinadas-no-maestri]] — 6 notas pinadas no `00-COMMAND-CENTER`; resolve P07.
 - [[DEC-0015-alocacao-do-roadmap-m01-m04]] — M04 valida A5–A10 ao final, A6 mínimo no M03, `CORE v0.1` = M01+M02+M03, API skeleton e event schema no M01; resolve P10, P11 e P12.
+- [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] — TypeScript/Node, LLM via adaptador (Anthropic primeiro), dev em Docker local, Windows nativo, repo privado; adia vector store, estado→gate e limites numéricos.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos** (P09 mantém o pin do `n8n` aberto).
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.

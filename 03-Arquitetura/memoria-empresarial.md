@@ -26,4 +26,4 @@ PostgreSQL · Schema · Entities · Relations · Event log · Vector/semantic me
 `dados → diagnóstico → insight → experimento → resultado → aprendizado → memória` (A10). Cada lançamento alimenta o seguinte.
 
 ## Pendente
-Modelo de dados de `facts/entities/relationships`, política de retenção e auditoria, escolha de vector store, contratos de leitura/escrita por agente (ver [[permissoes-e-hitl]]).
+Modelo de dados de `facts/entities/relationships`, política de retenção e auditoria, escolha de vector store (adiada: o M02 só reserva a interface, [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D4), contratos de leitura/escrita por agente (ver [[permissoes-e-hitl]]).

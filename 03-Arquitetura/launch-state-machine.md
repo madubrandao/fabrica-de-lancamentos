@@ -45,6 +45,6 @@ SEED: começar sem lista/produto e testar a ideia · INTERNAL: validação · JO
 
 ## Pendente (especificar em M01)
 - Tabela de transições permitidas e eventos emitidos por transição.
-- Mapeamento estado → gate.
+- Mapeamento estado → gate (adiado para o M01, ENG-00; [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D7).
 - `owner_agent` por estado.
 - Modelo da entidade "decisão de continuidade" (campos, vínculo com `Decision` e `Launch`). **Não inventado aqui.**

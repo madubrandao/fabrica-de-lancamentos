@@ -14,9 +14,9 @@ Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer mar
 ## M00 — Foundation
 Valida: fundação documental, repositório, Maestri, Claude Code, infraestrutura de desenvolvimento.
 - [ ] Início formal do M00 autorizado pela Madu (DEC-0010 §10)
-- [ ] Repositório Git `launch-os` · [ ] `CLAUDE.md` raiz (+ por domínio)
+- [ ] Repositório Git `launch-os` (privado, GitHub, fora de `.claude`, sem espaços no caminho; D6) · [ ] `CLAUDE.md` raiz (+ por domínio), com TECH STACK = TypeScript/Node (D1)
 - [ ] Maestri: workspace, terminais ENG-00…07, responsabilidades, 6 notas pinadas ([[DEC-0014-notas-pinadas-no-maestri]]); definir onde ficam (repo ou Maestri)
-- [ ] Claude Code instalado e verificado; decisão WSL/tmux/local
+- [ ] Claude Code instalado e verificado; ambiente = Windows nativo + Docker Desktop ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D5); `.gitattributes` fixando LF
 - [ ] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
 - [ ] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap
 - [ ] Importação do starter conforme [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]: compose único em `infrastructure/compose/`, referências `docs/decisions`/`docs/knowledge` corrigidas, `.claude/rules` sem repetir guardrails ([[starter-zip-inventario]])
