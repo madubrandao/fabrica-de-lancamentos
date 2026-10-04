@@ -32,7 +32,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 | 6 | Notas pinadas do Maestri: 6 notas do [[DEC-0014-notas-pinadas-no-maestri]] | Madu + Claude | [ ] |
 | 7 | Maestri: workspace, terminais ENG-00…07, conexões | **Madu** (interface do Maestri) | [ ] |
 | 8 | Docker de desenvolvimento: compose com **versões fixas** (inclui o pin do `n8n`), `.env.example`, `bootstrap.ps1`; `docker compose up` com healthchecks verdes | Claude (ENG-07) | [x] feito em 2026-10-04: postgres 17.11, redis 8.10.2, n8n 2.41.6; 3 serviços healthy, `/healthz` 200; n8n na porta 5680 por conflito; `N8N_BASIC_AUTH_ACTIVE` removida; `.env` local com segredos aleatórios; pilha parada com `down` (volumes preservados); commit local no `launch-os` ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]]) |
-| 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [ ] |
+| 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [x] implementado e testado localmente em 2026-10-04 (commit local `effbd86` no `launch-os`); **falta validar a execução no GitHub Actions**, que só roda depois do push |
 | 10 | Documentação de arquitetura **referenciada** no repo, não copiada (fonte única, DEC-0013 D4) | Claude (ENG-00) | [ ] |
 | 11 | Verificação final contra [[definicao-de-pronto]] e fechamento do M00 | Madu aprova | [ ] |
 
@@ -53,6 +53,19 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 - A máquina tem outros 4 containers de outros projetos (dois n8n e dois Postgres), que não foram tocados. Portas 5678 e 5679 ocupadas, por isso o n8n do LAUNCH OS usa a 5680.
 - Disco `C:` com cerca de 12 GB livres (95% usado) depois do download das imagens.
 - n8n avisa que o task runner interno é obsoleto (`N8N_RUNNERS_MODE`): avaliar o runner externo quando houver workflows com código.
+
+## Observações do passo 9
+- `scripts/ci/check-repo.sh` valida: 20 arquivos obrigatórios, 14 seções do `CLAUDE.md`, 8 agentes com Guardrails, ausência de `.env`/chaves/padrões de segredo, sem CRLF no índice, imagens do compose e `N8N_IMAGE` com versão exata, `docker compose config`, e referências descartadas (DEC-0013). Roda também localmente: `bash scripts/ci/check-repo.sh`.
+- `.github/workflows/ci.yml` roda o script em push na `main` e em pull requests, com `permissions: contents: read` e `actions/checkout` v7.0.1 fixado pelo SHA do commit.
+- Testado: aprovado no estado atual; reprovado com 6 violações injetadas em uma cópia.
+- Ainda não há testes de código nem lint: não existe código de aplicação (entram a partir do M01).
+
+## Incidente durante o passo 9 (2026-10-04)
+O primeiro teste negativo rodou no repositório real, porque o `cp` falhou numa cadeia `&&` e os comandos seguintes executaram fora da cópia. Efeitos e reversão:
+- Arquivos rastreados alterados (guardrails do ENG-03, tag do Redis no compose) e `x.txt` com token falso: revertidos com `git reset` e `git checkout`; nada foi commitado nem enviado; o repositório ficou igual ao `HEAD`.
+- O `.env` local (ignorado pelo Git) foi sobrescrito e **os segredos anteriores se perderam**; foi regenerado com novos valores aleatórios.
+- **Consequência pendente:** os volumes Docker `launch-os_postgres_data`, `launch-os_redis_data` e `launch-os_n8n_data` foram criados com a senha antiga do Postgres. Antes de subir a pilha de novo, é preciso recriá-los (`docker compose ... down -v`). Eles só têm a inicialização de teste do n8n; remoção aguardando confirmação da Madu.
+- O teste foi refeito com trava que aborta fora da cópia.
 
 ## Riscos conhecidos
 - Docker parado: o passo 8 não passa sem o daemon.
