@@ -16,6 +16,6 @@ Plano e status por fase do projeto. Material original em `FASE  1 - BASE/` (raiz
 - [[definicao-de-pronto]]
 
 ## Status atual
-Camada de código: **não iniciada**. FASE 1 - BASE = documentação e arquitetura. **Próximo marco autorizado: M00 Foundation**, mas só começa com início formal pela Madu (DEC-0010 §10). Ver [[2026-10-02-leitura-fase-1]].
+Camada de código: **não iniciada** (não há código de aplicação). FASE 1 - BASE concluída. **M00 Foundation: iniciado em 2026-10-04 e em verificação final** ([[M00-plano-de-execucao]], [[DEC-0018-inicio-formal-do-m00]]). Ver [[2026-10-02-leitura-fase-1]].
 
 Voltar: [[00-LEIA-PRIMEIRO]]

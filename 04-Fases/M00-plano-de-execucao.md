@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0018; DEC-0010 §7; DEC-0013; DEC-0014; DEC-0016; blueprint v1 §3, §7, §10–§11, §40; starter (lido no scratchpad)
-status: proposto (aguardando confirmação da Madu para executar)
+status: executado; em verificação final (passo 11), aguardando aprovação da Madu para fechar
 atualizado: 2026-10-04
 ---
 # M00 Foundation — plano de execução
@@ -34,7 +34,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. **Atualização:** o Maestri 
 | 8 | Docker de desenvolvimento: compose com **versões fixas** (inclui o pin do `n8n`), `.env.example`, `bootstrap.ps1`; `docker compose up` com healthchecks verdes | Claude (ENG-07) | [x] feito em 2026-10-04: postgres 17.11, redis 8.10.2, n8n 2.41.6; 3 serviços healthy, `/healthz` 200; n8n na porta 5680 por conflito; `N8N_BASIC_AUTH_ACTIVE` removida; `.env` local com segredos aleatórios; pilha parada com `down` (volumes preservados); commit local no `launch-os` ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]]) |
 | 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [x] implementado e testado localmente em 2026-10-04 (commit local `effbd86` no `launch-os`); **validado no GitHub Actions**: execução `37238422875` no commit `effbd86`, `success`, as 10 verificações `ok` e `RESULTADO: aprovado` no log; push feito |
 | 10 | Documentação de arquitetura **referenciada** no repo, não copiada (fonte única, DEC-0013 D4) | Claude (ENG-00) | [x] feito em 2026-10-04 (commit local no `launch-os`; ainda sem push): `docs/architecture/README.md` indexa o vault sem copiar, mais ponteiros em `docs/agents`, `docs/events` e `docs/workflows`; CI exige os 4 arquivos |
-| 11 | Verificação final contra [[definicao-de-pronto]] e fechamento do M00 | Madu aprova | [ ] |
+| 11 | Verificação final contra [[definicao-de-pronto]] e fechamento do M00 | Madu aprova | verificação **feita** em 2026-10-04 (seção abaixo); **fechamento aguardando aprovação da Madu** |
 
 ## Pendências do M00
 - Caminho local (`C:\dev\launch-os`) e nome do repositório: confirmar.
@@ -72,6 +72,35 @@ O primeiro teste negativo rodou no repositório real, porque o `cp` falhou numa 
 - **Preço (site oficial):** gratuito permanente com agentes ilimitados, canvas infinito, conexões entre agentes e **1 workspace**; Pro com pagamento único de R$95, workspaces ilimitados e uso em até 2 dispositivos (Mac ou Windows), com 7 dias de teste.
 - **Impacto no plano:** o Blueprint §3 e o `MAESTRI_SETUP.md` pedem **8 workspaces**. Com o plano gratuito (1 workspace) não dá para criá-los todos: é preciso o Pro (decisão e custo da Madu) ou adaptar o desenho a 1 workspace. **PENDENTE.**
 - **Instalação:** o download do instalador foi bloqueado pelo classificador de segurança do Claude Code (executável externo). Nada foi baixado nem instalado. A decisão de como proceder (a Madu baixar, ou liberar a permissão) está com a Madu.
+
+## Passo 11: verificação final (2026-10-04)
+Evidências coletadas depois do push de `aeb58d4` (`launch-os`) e `7246f9f` (vault):
+- **CI:** execução `37241151698`, `success`, commit `aeb58d4`; 10 verificações `ok`, 32 arquivos obrigatórios.
+- **Repositórios:** `launch-os` privado, branch `main`, 86 arquivos rastreados, 7 commits, sincronizado com o GitHub; vault privado, 70 arquivos, sincronizado.
+- **Segredos:** 0 padrões de segredo no histórico dos dois repositórios; nenhum `.env`, `.pem` ou `.key` jamais versionado; `.env` local ignorado e com segredos aleatórios.
+- **Docker:** postgres 17.11, redis 8.10.2 e n8n 2.41.6 `healthy`; `/healthz` do n8n 200; Redis `PONG`; Postgres aceitando conexões; pilha encerrada com `down`; containers dos outros projetos intactos.
+- **Estrutura:** as 36 pastas do Blueprint §8 presentes, 13 domínios de n8n, nenhum PDF em `knowledge/plf/`.
+- **Agentes e CLAUDE.md:** 8 agentes `eng-xx` com guardrails (5 em cada, 6 no ENG-04, como no DEC-0010 §8); `CLAUDE.md` raiz com 14 seções e 8 por domínio.
+- **Documentação:** wikilinks de todo o vault conferidos, sem links quebrados; textos desatualizados corrigidos nesta verificação.
+
+### Definition of Done aplicada à fundação
+| Critério | Situação |
+|---|---|
+| código implementado | N/A: o M00 não tem código de aplicação (só configuração e scripts) |
+| testes escritos e passando | parcial: a CI valida estrutura e configuração; testes de código entram no M01 |
+| logs implementados, erros tratados | N/A (sem código); o `bootstrap.ps1` falha com mensagem clara |
+| permissões verificadas | CI com `contents: read`; sem segredos versionados |
+| documentação atualizada | atendido |
+| evento definido, schema versionado | N/A no M00 (M01) |
+| workflow n8n conectado | N/A no M00 (M03) |
+| dashboard mínimo | N/A no M00 (M06) |
+| ADR atualizado se houve decisão arquitetural | atendido: DEC-0011 a DEC-0020 no vault; `docs/adr/` pronto, sem ADR técnico ainda |
+| revisão por outro agente | **não realizada**: o trabalho foi feito em uma única sessão sem revisão independente; recomendada antes de fechar |
+| contratos explícitos, impacto de segurança, sem estado local commitado, deploy entendido, evidência de verificação | atendido (esta seção) |
+
+### Riscos e pendências para a Madu ao fechar
+- **Disco `C:` com 8,9 GB livres (97% usado)**, caindo a cada imagem Docker baixada; precisa de limpeza antes do M01.
+- Pendências herdadas, nenhuma bloqueia o fechamento: ver `docs/status/BLOCKERS.md` no `launch-os`.
 
 ## Riscos conhecidos
 - Docker parado: o passo 8 não passa sem o daemon.

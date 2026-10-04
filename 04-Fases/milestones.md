@@ -12,16 +12,16 @@ Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens
 Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer marco para ações com gasto ([[gates]]).
 
 ## M00 — Foundation
-**Status: em andamento** (início formal em 2026-10-04, [[DEC-0018-inicio-formal-do-m00]]). Passo a passo em [[M00-plano-de-execucao]].
+**Status: em verificação final, aguardando aprovação da Madu** (início formal em 2026-10-04, [[DEC-0018-inicio-formal-do-m00]]). Passo a passo em [[M00-plano-de-execucao]].
 Valida: fundação documental, repositório, Claude Code, infraestrutura de desenvolvimento (sem Maestri, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
 - [x] Início formal do M00 autorizado pela Madu (DEC-0010 §10; [[DEC-0018-inicio-formal-do-m00]])
-- [ ] Repositório Git `launch-os` (privado, GitHub, fora de `.claude`, sem espaços no caminho; D6) · [ ] `CLAUDE.md` raiz (+ por domínio), com TECH STACK = TypeScript/Node (D1)
+- [x] Repositório Git `launch-os` (privado, GitHub, fora de `.claude`, sem espaços no caminho; D6) · [x] `CLAUDE.md` raiz (+ por domínio), com TECH STACK = TypeScript/Node (D1)
 - [x] ~~Maestri~~ removido do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]); 6 notas de estado em `docs/status/` no `launch-os`
-- [ ] Claude Code instalado e verificado; ambiente = Windows nativo + Docker Desktop ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D5); `.gitattributes` fixando LF
-- [ ] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
+- [x] Claude Code instalado e verificado (2.1.289); ambiente = Windows nativo + Docker Desktop ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D5); `.gitattributes` fixando LF
+- [x] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
 - [x] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]], validado em 2026-10-04)
-- [ ] Importação do starter conforme [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]: compose único em `infrastructure/compose/`, referências `docs/decisions`/`docs/knowledge` corrigidas, `.claude/rules` sem repetir guardrails ([[starter-zip-inventario]])
-- [ ] Esqueleto de CI
+- [x] Importação do starter conforme [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]: compose único em `infrastructure/compose/`, referências `docs/decisions`/`docs/knowledge` corrigidas, `.claude/rules` sem repetir guardrails ([[starter-zip-inventario]])
+- [x] Esqueleto de CI (GitHub Actions, execução verde em `aeb58d4`)
 - [x] Documentação de arquitetura transferida/linkada ao repo (referenciada, não copiada: `docs/architecture/README.md`)
 
 ## M01 — Core Platform
