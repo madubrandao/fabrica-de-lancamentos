@@ -16,12 +16,12 @@ Itens que os documentos **não respondem**. Nada aqui foi assumido. Conflitos en
 - [x] ~~PDF do livro entra no projeto?~~ **Resolvido (DEC-0010 §2):** o PDF fica como fonte externa ao diretório operacional; não copiar nem incorporar a `knowledge/plf/`. Lacunas metodológicas ficam PENDENTES até consulta explícita à fonte.
 - [ ] O Blueprint de Implementação v1 por agente (system prompt, tools, permissões, schemas, regras, gatilhos, workflows, critérios de aprovação) — pedido pelo Plano Final — **não existe ainda**.
 
-## Negócio (nenhum doc define)
-- [ ] Qual é o primeiro produto/oferta de teste? Nicho/mercado?
-- [ ] Modelo de operação: só lançamentos próprios, ou serviço para clientes? (o MAPA cita cenários de 1, 5 e 20+ lançamentos/clientes, sem valores)
-- [ ] Dimensionamento: quadro mínimo / profissional / escala (a tabela do MAPA tem "X" por preencher).
-- [ ] Orçamento e limites de gasto por política (A5 "não aumenta orçamento indefinidamente"; o limite não está definido).
-- [ ] Quais plataformas de checkout, e-mail/CRM, anúncios e páginas serão usadas?
+## Negócio (decidido no [[DEC-0017-modelo-de-negocio-inicial]], 2026-10-04)
+- [x] ~~Primeiro produto/oferta de teste~~ **produto fictício de teste** (C1). Pendente: definir o produto fictício, antes do M03.
+- [x] ~~Modelo de operação~~ **só lançamentos próprios, uma única organização**; revisitar antes do M04 (C2).
+- [x] ~~Dimensionamento~~ **capacidade inicial de 1 lançamento por vez**, arquitetura preparada para 5 (C3). Pendente: número de humanos que operam e aprovam, antes do M01.
+- [x] ~~Orçamento e limites de gasto~~ **adiado para antes do M04** (C4). Aberto: limite de custo de LLM (reavaliar no M02).
+- [x] ~~Plataformas~~ **adaptadores simulados agora; plataformas reais por ADR antes do primeiro lançamento real** (C5).
 
 ## Técnico (decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]], 2026-10-04)
 - [x] ~~Linguagem/framework~~ **TypeScript/Node** (D1). Pendente: framework de backend e de frontend (ADR no M01).

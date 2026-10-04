@@ -22,4 +22,4 @@ Fluxo completo do Plano Final §26 (espinha dorsal da PLF): criar produto → an
 
 > Quando esse fluxo funcionar de ponta a ponta, deixamos de ter um blueprint e passamos a ter o primeiro núcleo operacional.
 
-Teste de aceite em ambiente de teste: primeiro `INTERNAL LAUNCH` (Blueprint §40, passo 15), com lançamento **simulado**.
+Teste de aceite em ambiente de teste: primeiro `INTERNAL LAUNCH` (Blueprint §40, passo 15), com lançamento **simulado**, usando um **produto fictício de teste** e integrações simuladas ([[DEC-0017-modelo-de-negocio-inicial]] C1, C5).

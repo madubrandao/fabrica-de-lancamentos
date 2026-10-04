@@ -39,4 +39,4 @@ Critério de sucesso da v1: [[criterio-de-sucesso-v1]].
 O humano (Madu) é a autoridade máxima nas decisões críticas ([[permissoes-e-hitl]]).
 
 ## O que este documento NÃO define
-Produto comercial concreto, nicho, primeiro produto de teste, orçamento, provedores de LLM, hospedagem. Ver [[perguntas-em-aberto]].
+Produto real e nicho (o primeiro ciclo usa um produto fictício de teste, [[DEC-0017-modelo-de-negocio-inicial]]), valores de orçamento (antes do M04) e as plataformas reais de integração. Provedor de LLM, stack e hospedagem de dev estão no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]]. Ver [[perguntas-em-aberto]].

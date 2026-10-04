@@ -32,4 +32,4 @@ Antes de qualquer execução com gasto: policy check `BUDGET_AUTHORIZED = true` 
 Campanha: **SUPERVISED**; grandes alterações de orçamento e gastos acima do limite: aprovação humana.
 
 ## Regra de ouro — pendências
-Limite de orçamento · plataformas de anúncio · KPIs (CPL, CAC citados nos workflows; metas não definidas) · prompt · schemas: **PENDENTE**.
+Limite de orçamento (definir antes do M04, [[DEC-0017-modelo-de-negocio-inicial]] C4) · plataformas de anúncio (simuladas até o primeiro lançamento real, C5) · KPIs (CPL, CAC citados nos workflows; metas não definidas) · prompt · schemas: **PENDENTE**.
