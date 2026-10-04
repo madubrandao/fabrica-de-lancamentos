@@ -3,7 +3,7 @@ tipo: referencia
 area: 08-Referencias
 fonte: FASE  1 - BASE/launch-os-starter-claude-maestri-v1.zip (lido via extração no scratchpad, nada extraído para o projeto)
 status: inventario
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Inventário do `launch-os-starter-claude-maestri-v1.zip`
 
@@ -30,6 +30,14 @@ Starter do repositório `launch-os`. **Não foi extraído para o projeto**; ao d
 
 ## Status canônico do starter
 Pelo [[DEC-0010-decisoes-canonicas-fase-1-v1]] §1, o starter está no nível 4: **implementa** decisões, não redefine arquitetura. Seu `docs/ROADMAP.md` (M0–M8) é histórico; vale M00–M06 ([[roadmap]]).
+
+## Ao importar no M00 ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]])
+O starter **não foi modificado**. Na importação:
+1. Remover o `docker-compose.yml` da raiz (idêntico ao de `infra/`, confirmado por `diff`); manter um só em `infrastructure/compose/docker-compose.dev.yml`; `infra/` vira `infrastructure/`. Fixar a versão do `n8n` (PENDENTE).
+2. `CLAUDE.md`: trocar `docs/decisions` por `docs/adr` e `docs/knowledge` por `knowledge/plf`; `docs/DECISIONS.md` deixa de ser fonte e vira índice do Maestri para `docs/adr/` (README, FIRST_SESSION e `testing.md` também o citam).
+3. `.claude/agents/*.md`: preencher `Guardrails` com o DEC-0010 §8 e deixar `Responsibilities` só com responsabilidade.
+4. `.claude/rules/*.md`: remover o que repete guardrail de agente.
+5. Atualizar o README do starter (aponta para `infra/docker-compose.dev.yml`) e o `FILE_INDEX.txt`.
 
 ## Diferenças em relação ao Blueprint
 Starter não traz `knowledge/`, `docs/adr`, `infrastructure/` (usa `infra/`), `workflows` nem `schemas`. Estrutura-alvo completa está em [[estrutura-do-repositorio]].

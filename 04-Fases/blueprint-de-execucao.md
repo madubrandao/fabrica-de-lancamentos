@@ -16,7 +16,7 @@ Sequência operacional para sair do papel. **Nada abaixo foi executado.** Pré-r
 | 2 | Abrir o repo em um Workspace do Maestri | Madu | [ ] |
 | 3 | Criar terminais ENG-00…07 | Madu | [ ] |
 | 4 | Criar `CLAUDE.md` raiz | ENG-00 | [ ] |
-| 5 | Criar `DECISIONS.md`, `PROJECT_STATUS.md`, `CURRENT_TASK.md`, `DEFINITION_OF_DONE.md` | ENG-00 | [ ] |
+| 5 | Criar `DECISIONS.md` (só índice do Maestri para `docs/adr/`, [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]), `PROJECT_STATUS.md`, `CURRENT_TASK.md`, `DEFINITION_OF_DONE.md` | ENG-00 | [ ] |
 | 6 | Architect produz `ARCHITECTURE.md`, `DOMAIN_MODEL.md`, `EVENT_CATALOG.md`, `AGENT_MODEL.md` | ENG-00 | [ ] |
 | 7 | Database cria schema e migrations | ENG-02 | [ ] |
 | 8 | Backend cria API e state machine | ENG-01 | [ ] |

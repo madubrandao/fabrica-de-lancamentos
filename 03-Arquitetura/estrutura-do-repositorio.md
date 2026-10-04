@@ -2,28 +2,40 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: blueprint v1 §7–§9, §12, §40; PLANO FINAL §23; starter zip
-status: Blueprint §8 prevalece (P06 e P08 resolvidos por hierarquia)
-atualizado: 2026-10-02
+status: canonico (DEC-0013 resolve P06 e P08)
+atualizado: 2026-10-04
 ---
 # Estrutura do repositório `launch-os` (a ser criado — ainda não existe)
 
 > Este vault é a **memória do projeto**. O repositório de código `launch-os` é outro, ainda não criado. Não confundir.
 
-## Estrutura (Blueprint §8 — vigente por sugestão)
+## Estrutura (Blueprint §8 — vigente, [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]])
 ```text
 launch-os/
 ├── CLAUDE.md · README.md
 ├── apps/        api · dashboard · worker
 ├── packages/    core · agents · memory · events · schemas · integrations · observability
 ├── database/    migrations · seeds · schema
-├── n8n/         workflows · subworkflows · fixtures
+├── n8n/         workflows (pastas de domínio 00_SYSTEM … 99_ERRORS) · subworkflows · fixtures
 ├── knowledge/   plf · playbooks · policies · glossary
 ├── docs/        architecture · adr · agents · events · workflows · operations
 ├── tests/       unit · integration · e2e · evals
-├── infrastructure/  docker · compose · deployment
+├── infrastructure/  docker (só Dockerfiles) · compose (docker-compose.dev.yml único) · deployment
 └── scripts/
 ```
-Estrutura alternativa do Plano Final §23: `agents/ workflows/ schemas/ prompts/ policies/ playbooks/ tests/ docs/ infra/` (superada pelo Blueprint; ver P06).
+Árvore do Plano Final §23 (`agents/ workflows/ schemas/ prompts/ policies/ playbooks/ tests/ docs/ infra/`): **descartada** (DEC-0013 D2). `prompts/` não tem equivalente no Blueprint: **PENDENTE**.
+
+## Fonte única por assunto (DEC-0013 D4, D6)
+| Assunto | Fonte única |
+|---|---|
+| Contratos de API, evento e agente | `packages/schemas/` |
+| Publicar/consumir eventos (código) | `packages/events/` |
+| DDL | `database/schema/` |
+| Decisões (ADR) | `docs/adr/` (`DECISIONS.md` é só índice no Maestri) |
+| Conhecimento do livro | `knowledge/plf/` (sem o PDF) |
+| Compose de desenvolvimento | `infrastructure/compose/docker-compose.dev.yml` |
+
+`docs/events/` e `docs/agents/` só referenciam; não redefinem. `docs/decisions` e `docs/knowledge` do starter não existem na estrutura-alvo.
 
 ## CLAUDE.md por domínio (Blueprint §7)
 Raiz + `apps/api` · `apps/dashboard` · `packages/agents` · `packages/memory` · `packages/events` · `n8n` · `database` · `infrastructure`.

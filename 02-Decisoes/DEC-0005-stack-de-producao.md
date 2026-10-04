@@ -21,4 +21,4 @@ data-registro: 2026-10-02
 **Regras:** estado de negócio fica no backend/banco, não escondido no n8n; estado operacional nunca depende só de memória semântica.
 
 **NÃO decidido (ver [[perguntas-em-aberto]]):** linguagem/framework de backend e frontend; provedor de LLM; vector store; hospedagem.
-**Observação:** o `docker-compose.yml` do starter fixa `n8nio/n8n:latest`; a regra de produção do starter pede artefatos pinados após o início do release. Registrar versão ao iniciar a camada de código.
+**Observação:** o `docker-compose.yml` do starter fixa `n8nio/n8n:latest`; a regra de produção do starter pede artefatos pinados após o início do release. Registrar versão ao iniciar a camada de código. Compose único em `infrastructure/compose/docker-compose.dev.yml` ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D5).

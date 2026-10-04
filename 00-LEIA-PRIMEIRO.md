@@ -2,7 +2,7 @@
 tipo: indice
 projeto: fabrica-de-lancamentos
 criado: 2026-10-02
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Fábrica de Lançamentos — Memória do Projeto
 
@@ -10,7 +10,7 @@ Vault Obsidian com a memória do projeto. Estrutura adaptada do padrão BRAVY SC
 
 **O projeto em uma frase:** LAUNCH OS — uma empresa de lançamentos autônoma baseada na metodologia de *A Fórmula do Lançamento*, operada por 11 agentes de IA (A0–A10) sobre backend + n8n + PostgreSQL + Redis, construída por Claude Codes coordenados no Maestri, com humano nas decisões críticas. Detalhe em [[visao-do-projeto]].
 
-**Estado:** FASE 1 - BASE (documentação e arquitetura), sem código. Decisões canônicas v1 aprovadas. Próximo marco autorizado: **M00 Foundation** (início formal pendente). Ver [[2026-10-02-leitura-fase-1]].
+**Estado:** FASE 1 - BASE (documentação e arquitetura), sem código. Decisões canônicas v1 aprovadas; em 2026-10-04 foram resolvidas P04, P05, P06 e P08 ([[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]], [[DEC-0012-lista-de-entidades-do-blueprint]], [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]). Próximo marco autorizado: **M00 Foundation** (início formal pendente). Ver [[2026-10-02-leitura-fase-1]] e [[2026-10-04-resolucao-p04-p05-p06]].
 
 ## Áreas
 

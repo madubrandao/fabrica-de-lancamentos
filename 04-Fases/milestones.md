@@ -3,7 +3,7 @@ tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 (critérios canônicos); blueprint v1 §35–§39 (itens de checklist, realocados); starter docs/ROADMAP.md
 status: nao-iniciado
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Milestones M00–M06 (checklists)
 
@@ -19,6 +19,7 @@ Valida: fundação documental, repositório, Maestri, Claude Code, infraestrutur
 - [ ] Claude Code instalado e verificado; decisão WSL/tmux/local
 - [ ] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
 - [ ] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap
+- [ ] Importação do starter conforme [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]: compose único em `infrastructure/compose/`, referências `docs/decisions`/`docs/knowledge` corrigidas, `.claude/rules` sem repetir guardrails ([[starter-zip-inventario]])
 - [ ] Esqueleto de CI
 - [ ] Documentação de arquitetura transferida/linkada ao repo
 

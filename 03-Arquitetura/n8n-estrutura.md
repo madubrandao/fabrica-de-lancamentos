@@ -3,17 +3,18 @@ tipo: arquitetura
 area: 03-Arquitetura
 fonte: blueprint v1 §22–§26; PLANO FINAL §22; starter .claude/rules/n8n.md
 status: rascunho-para-validacao
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # n8n — estrutura de workflows
 
 ## Pastas por domínio
 ```text
-n8n/
+n8n/workflows/
 00_SYSTEM · 01_CEO · 02_INTELLIGENCE · 03_OFFER_PRODUCT · 04_CONTENT_COPY · 05_AUDIENCE_CRM
 06_ACQUISITION · 07_LAUNCH · 08_SALES · 09_CUSTOMER_SUCCESS · 10_PARTNERSHIPS · 11_ANALYTICS
-99_ERRORS   (Plano Final: 99_ERROR_RECOVERY — ver P06)
+99_ERRORS
 ```
+`99_ERRORS` e a localização dentro de `n8n/workflows/` (com `n8n/subworkflows/` só para o reutilizável e `n8n/fixtures/` para testes) vêm do [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] (D1, D3). `99_ERROR_RECOVERY` do Plano Final foi descartado.
 Exemplo no Plano Final: `01_CEO/` contém `create_objective`, `delegate_task`, `approval_gate`, `launch_decision`, `cycle_close`.
 
 ## Padrão

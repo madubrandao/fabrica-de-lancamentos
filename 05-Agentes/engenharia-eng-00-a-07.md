@@ -4,7 +4,7 @@ area: 05-Agentes
 camada: desenvolvimento
 fonte: DEC-0010 §8 (guardrails oficiais); blueprint v1 §4–§7, §40; starter .claude/agents/*.md (superado nos guardrails)
 status: canonico (guardrails)
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Agentes de engenharia — ENG-00 a ENG-07 (camada de desenvolvimento)
 
@@ -81,6 +81,14 @@ Os **guardrails oficiais** abaixo vêm de [[DEC-0010-decisoes-canonicas-fase-1-v
 - Backups verificáveis, não apenas configurados.
 - Health checks e logs obrigatórios para serviços críticos.
 - Nenhuma exposição pública sem autenticação, autorização e observabilidade adequadas.
+
+## Onde ficam guardrails e regras ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D7)
+- Guardrails oficiais: **só** na seção `Guardrails` de cada `.claude/agents/ENG-xx.md` (fonte única).
+- `.claude/rules/*.md`: só regras transversais por tema (architecture, n8n, security, testing), sem repetir guardrail de agente.
+- `CLAUDE.md` raiz: referencia, não copia.
+- `Responsibilities` nas definições: só responsabilidade, sem regras coladas.
+- Dispensa de teste que falha: registrada em `docs/adr/`; não enfraquece o guardrail do ENG-06.
+- Vale ao importar o starter no M00; o starter não foi modificado.
 
 ## Responsabilidades reutilizáveis (Maestri)
 LEAD_ARCHITECT · BACKEND_ENGINEER · DATABASE_ENGINEER · N8N_ENGINEER · AGENT_ENGINEER · FRONTEND_ENGINEER · QA_ENGINEER · DEVOPS_ENGINEER · REVIEWER · TESTER.
