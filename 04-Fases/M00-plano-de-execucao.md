@@ -7,7 +7,7 @@ atualizado: 2026-10-04
 ---
 # M00 Foundation — plano de execução
 
-Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, exceto a verificação de ambiente.
+Início formal: [[DEC-0018-inicio-formal-do-m00]]. **Atualização:** o Maestri saiu do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]); os passos 6 e 7 foram ajustados. Nada abaixo foi executado, exceto a verificação de ambiente.
 
 ## Verificação de ambiente (2026-10-04, somente leitura)
 | Item | Resultado |
@@ -19,7 +19,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 | `core.autocrlf` | **`true` no gitconfig do sistema** (padrão do Git for Windows; correção: a primeira leitura indicou "não configurado" por ter consultado só o nível global). Converte LF para CRLF no checkout, por isso o `.gitattributes` com LF é necessário (DEC-0016 D5) |
 | Disco `C:` | 14 GB livres de 222 GB (94% usado); as imagens Docker (Postgres, Redis, n8n) ocupam alguns GB |
 | `C:\dev` | não existe |
-| Maestri | **não verificado**: não encontrei instalação em `AppData\Local` |
+| Maestri | fora do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]) |
 
 ## Passos
 | # | Passo | Dono | Status |
@@ -29,8 +29,8 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 | 3 | Criar o repositório privado `madubrandao/launch-os` no GitHub e ligar o `origin` (**ação externa**) | Claude, com confirmação | [x] feito em 2026-10-04: https://github.com/madubrandao/launch-os (PRIVATE, branch `main`, commit `3e0b786` enviado) |
 | 4 | Importar o starter aplicando as correções do [[starter-zip-inventario]] (compose único em `infrastructure/compose/`, `docs/adr`, guardrails nos agentes, rules sem repetição) | Claude | [x] feito em 2026-10-04 (commit local no `launch-os`; ainda sem push). Desvios: `FILE_INDEX.txt` não importado (índice estático desatualiza); ADR-0001 a 0004 do starter não duplicados (já são DEC-0001 a 0004 do vault); `docs/ROADMAP.md` reescrito com M00-M06; chave OpenAI removida do `.env.example` (DEC-0016 D2); `name: launch-os` adicionado ao compose; textos do repo em português; `CLAUDE.md` com correções mínimas (substituído no passo 5) |
 | 5 | `CLAUDE.md` raiz com as 14 seções do Blueprint §7.1 (TECH STACK = TypeScript/Node) e os 8 `CLAUDE.md` por domínio | Claude (ENG-00) | [x] feito em 2026-10-04 (raiz com 108 linhas, em português; domínios de 9-10 linhas; referenciam os guardrails em vez de copiá-los; commit local no `launch-os`, sem push) |
-| 6 | Notas pinadas do Maestri: 6 notas do [[DEC-0014-notas-pinadas-no-maestri]] | Madu + Claude | [ ] |
-| 7 | Maestri: workspace, terminais ENG-00…07, conexões | **Madu** (interface do Maestri) | [ ] |
+| 6 | ~~Notas pinadas do Maestri~~ → 6 notas de estado em `docs/status/` no `launch-os` ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]) | Claude | [x] feito em 2026-10-04 (commit local `aeb58d4`) |
+| 7 | ~~Maestri: workspace, terminais ENG-00…07, conexões~~ | — | removido do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]) |
 | 8 | Docker de desenvolvimento: compose com **versões fixas** (inclui o pin do `n8n`), `.env.example`, `bootstrap.ps1`; `docker compose up` com healthchecks verdes | Claude (ENG-07) | [x] feito em 2026-10-04: postgres 17.11, redis 8.10.2, n8n 2.41.6; 3 serviços healthy, `/healthz` 200; n8n na porta 5680 por conflito; `N8N_BASIC_AUTH_ACTIVE` removida; `.env` local com segredos aleatórios; pilha parada com `down` (volumes preservados); commit local no `launch-os` ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]]) |
 | 9 | Esqueleto de CI (GitHub Actions, sem lógica de negócio) | Claude (ENG-07) | [x] implementado e testado localmente em 2026-10-04 (commit local `effbd86` no `launch-os`); **validado no GitHub Actions**: execução `37238422875` no commit `effbd86`, `success`, as 10 verificações `ok` e `RESULTADO: aprovado` no log; push feito |
 | 10 | Documentação de arquitetura **referenciada** no repo, não copiada (fonte única, DEC-0013 D4) | Claude (ENG-00) | [x] feito em 2026-10-04 (commit local no `launch-os`; ainda sem push): `docs/architecture/README.md` indexa o vault sem copiar, mais ponteiros em `docs/agents`, `docs/events` e `docs/workflows`; CI exige os 4 arquivos |
@@ -38,9 +38,9 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 
 ## Pendências do M00
 - Caminho local (`C:\dev\launch-os`) e nome do repositório: confirmar.
-- Maestri instalado? Verificar com a Madu.
+- ~~Maestri instalado?~~ Maestri fora do escopo.
 - ~~Versão fixa do `n8n`~~: resolvida no [[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]] (2.41.6).
-- Onde ficam as notas do Maestri (repo ou Maestri), [[DEC-0014-notas-pinadas-no-maestri]].
+- ~~Onde ficam as notas do Maestri~~ → `docs/status/` ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
 - **Nova:** relação entre as decisões do vault (`DEC-00XX`) e os ADRs do repo (`docs/adr/`). Duplicar cria duas fontes. Proposta a decidir: o vault guarda as decisões do projeto; `docs/adr/` guarda só ADRs técnicos do código, referenciando o vault quando preciso.
 - Bloco B de [[perguntas-em-aberto]] (material faltando), não bloqueia o M00.
 
@@ -67,7 +67,7 @@ O primeiro teste negativo rodou no repositório real, porque o `cp` falhou numa 
 - **Consequência resolvida:** os 3 volumes `launch-os_*` tinham a senha antiga do Postgres; a Madu autorizou e eles foram removidos (nenhum container os usava; volumes dos outros projetos intactos). A pilha foi subida de novo com o `.env` regenerado: 3 serviços `healthy`, `/healthz` 200; depois `down`, com os volumes novos preservados.
 - O teste foi refeito com trava que aborta fora da cópia.
 
-## Pesquisa sobre o Maestri (2026-10-04)
+## Pesquisa sobre o Maestri (2026-10-04; histórico: o Maestri saiu do escopo no [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]])
 - **Fontes de terceiros** (Setapp, AlternativeTo, Product Hunt e resenhas) dizem que o Maestri é um app nativo de macOS, sem versão para Windows ou Linux. **O site oficial** (`themaestri.app`) tem páginas próprias para Windows e Linux e, na página do Windows, informa **versão disponível agora para Windows 11 x64**, com instalador e versão portátil no CDN oficial (`cdn.maestri.dev/win/x64/`). Como o site oficial é a fonte mais recente e primária, vale ele; a divergência indica que as resenhas estão desatualizadas. Não confirmei a versão nem testei o instalador.
 - **Preço (site oficial):** gratuito permanente com agentes ilimitados, canvas infinito, conexões entre agentes e **1 workspace**; Pro com pagamento único de R$95, workspaces ilimitados e uso em até 2 dispositivos (Mac ou Windows), com 7 dias de teste.
 - **Impacto no plano:** o Blueprint §3 e o `MAESTRI_SETUP.md` pedem **8 workspaces**. Com o plano gratuito (1 workspace) não dá para criá-los todos: é preciso o Pro (decisão e custo da Madu) ou adaptar o desenho a 1 workspace. **PENDENTE.**

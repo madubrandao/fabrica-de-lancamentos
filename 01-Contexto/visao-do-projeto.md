@@ -25,10 +25,10 @@ Construir **já com arquitetura de escala**, sem MVP descartável. A arquitetura
 ## Duas camadas (não confundir)
 | Camada | Quem | Papel |
 |---|---|---|
-| Desenvolvimento | Maestri + 8 Claude Codes (ENG-00…07) | CONSTROEM a empresa |
-| Produção | Backend + Agent Runtime + n8n + PostgreSQL + Redis + LLMs; agentes A0–A10 | OPERAM a empresa |
+| Desenvolvimento | Claude Code com 8 subagentes (ENG-00…07) | CONSTROEM a empresa |
+| Produção | n8n (orquestra e executa os agentes) + API fina + PostgreSQL + Redis + LLMs; agentes A0–A10 | OPERAM a empresa |
 
-Maestri e Claude Code podem ser desligados sem derrubar a produção. Ver [[visao-geral]].
+O desenvolvimento (Claude Code) pode ser desligado sem derrubar a produção. O Maestri saiu do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]). Ver [[visao-geral]].
 
 ## Primeiro grande objetivo técnico
 > Cadastrar um produto e conseguir gerar e executar um lançamento inteiro através do sistema.

@@ -8,7 +8,7 @@ atualizado: 2026-10-04
 ---
 # Agentes de engenharia — ENG-00 a ENG-07 (camada de desenvolvimento)
 
-**Não são os agentes A0–A10.** São os Claude Codes que CONSTROEM a empresa, organizados no Maestri ([[DEC-0002-duas-camadas-maestri-so-desenvolvimento]]).
+**Não são os agentes A0–A10.** São os Claude Codes que CONSTROEM a empresa, operados como subagentes do Claude Code ([[DEC-0002-duas-camadas-maestri-so-desenvolvimento]], substituída em parte pelo [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
 
 Os **guardrails oficiais** abaixo vêm de [[DEC-0010-decisoes-canonicas-fase-1-v1]] §8 e **substituem** os do starter (que estavam vazios/incompletos). O starter implementa decisões; não as redefine.
 
@@ -82,6 +82,9 @@ Os **guardrails oficiais** abaixo vêm de [[DEC-0010-decisoes-canonicas-fase-1-v
 - Health checks e logs obrigatórios para serviços críticos.
 - Nenhuma exposição pública sem autenticação, autorização e observabilidade adequadas.
 
+## Efeito do DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes
+O runtime dos agentes A0-A10 passa para o n8n. Os guardrails oficiais acima **não mudam**. O escopo do ENG-04 e o papel do `agent runtime gateway` do ENG-01 ficam **PENDENTES** até o desenho do ENG-00 no M01.
+
 ## Onde ficam guardrails e regras ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D7)
 - Guardrails oficiais: **só** na seção `Guardrails` de cada `.claude/agents/ENG-xx.md` (fonte única).
 - `.claude/rules/*.md`: só regras transversais por tema (architecture, n8n, security, testing), sem repetir guardrail de agente.
@@ -90,10 +93,10 @@ Os **guardrails oficiais** abaixo vêm de [[DEC-0010-decisoes-canonicas-fase-1-v
 - Dispensa de teste que falha: registrada em `docs/adr/`; não enfraquece o guardrail do ENG-06.
 - Vale ao importar o starter no M00; o starter não foi modificado.
 
-## Responsabilidades reutilizáveis (Maestri)
+## Responsabilidades reutilizáveis (histórico; Maestri fora do escopo)
 LEAD_ARCHITECT · BACKEND_ENGINEER · DATABASE_ENGINEER · N8N_ENGINEER · AGENT_ENGINEER · FRONTEND_ENGINEER · QA_ENGINEER · DEVOPS_ENGINEER · REVIEWER · TESTER.
 
-## Conexões recomendadas no canvas
+## Conexões recomendadas no canvas (histórico; Maestri fora do escopo)
 ARCHITECT → todos · BACKEND ⇄ DATABASE · BACKEND ⇄ AGENT ENGINE · BACKEND ⇄ N8N · AGENT ENGINE ⇄ N8N · FRONTEND ⇄ BACKEND · QA ⇄ BACKEND/N8N/AGENT ENGINE · DEVOPS ⇄ todos.
 
 Ver [[starter-zip-inventario]].

@@ -28,8 +28,8 @@ Só termos que aparecem nos documentos. O PDF do livro é fonte externa e não f
 | Gate | Regra do sistema: o lançamento não muda de estado sem cumprir o gate. |
 | HITL | Human-in-the-loop: níveis AUTO, SUPERVISED, HUMAN DECISION. |
 | Company Memory | Memória empresarial estruturada (PostgreSQL) + semântica (embeddings, quando valer) + operacional (estado transacional). |
-| Maestri | Cockpit/canvas que organiza os Claude Codes; não é dependência de runtime. |
-| Partitura | Configuração de canvas salva do Maestri. |
+| Maestri | Cockpit/canvas para orquestrar Claude Codes. **Fora do escopo** do projeto desde 2026-10-04 ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]). |
+| Partitura | Configuração de canvas salva do Maestri (histórico; fora do escopo). |
 | ADR | Architecture Decision Record. |
 | VOC | Voice of Customer (dataset de linguagem do cliente, saída de A1). |
 | CORE v0.1 | Primeira entrega de desenvolvimento ([[CORE-v0.1]]). |

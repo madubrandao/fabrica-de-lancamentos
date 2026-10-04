@@ -12,7 +12,7 @@ Esta distinção **deve permanecer explícita** em toda a documentação (Bluepr
 
 **Derivado da fonte (livro):** pré-pré-lançamento; pré-lançamento; PLC; abertura e fechamento do carrinho; pós-lançamento; Seed Launch; Lançamento Interno; Lançamento Conjunto; múltiplas ofertas; relançamento; Lançamento Perene; Circle of Awesome; importância da lista e do relacionamento; acompanhamento de clientes e não compradores.
 
-**Engenharia nossa:** 11 agentes de produção; 8 Claude Codes de engenharia; Maestri como cockpit; PostgreSQL/Redis; event bus; schemas; permissões; runtime de agentes; dashboard; state machine formal; gates; observabilidade; estrutura de repositório; Partituras do Maestri; workspaces; branches/worktrees.
+**Engenharia nossa:** 11 agentes de produção; 8 Claude Codes de engenharia; PostgreSQL/Redis; event bus; schemas; permissões; runtime de agentes; dashboard; state machine formal; gates; observabilidade; estrutura de repositório; branches/worktrees.
 
 Regras: não atribuir ao livro decisões de arquitetura; não converter o livro em promessa de resultado (o próprio livro diz que PLF não é "fácil ou automática").
 

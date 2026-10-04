@@ -8,6 +8,8 @@ data-registro: 2026-10-02
 ---
 # DEC-0005 — Stack de produção
 
+> **Ajustada pelo [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] (2026-10-04):** o runtime dos agentes passa do backend para o n8n; o backend vira uma API fina de estado, gates, aprovações, audit e eventos (escopo final PENDENTE).
+
 **Decidido nas fontes:**
 | Componente | Papel |
 |---|---|

@@ -14,7 +14,7 @@ O [[DEC-0010-decisoes-canonicas-fase-1-v1]] §10 proíbe qualquer código ou rep
 ## Decisão
 A Madu autorizou, em 2026-10-04, o **início formal do M00 Foundation**.
 
-**Escopo autorizado (DEC-0010 §7):** fundação documental, repositório, Maestri, Claude Code e infraestrutura de desenvolvimento. Itens em [[milestones]] e [[M00-plano-de-execucao]].
+**Escopo autorizado (DEC-0010 §7):** fundação documental, repositório, Claude Code e infraestrutura de desenvolvimento (o Maestri saiu do escopo em [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]). Itens em [[milestones]] e [[M00-plano-de-execucao]].
 
 **Fora do escopo:** qualquer código de aplicação, schema, migration, evento, agente ou workflow. Isso é M01 em diante. O M00 não autoriza o M01.
 

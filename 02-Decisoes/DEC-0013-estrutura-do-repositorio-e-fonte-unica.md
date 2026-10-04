@@ -47,7 +47,7 @@ Um único compose de desenvolvimento: `infrastructure/compose/docker-compose.dev
 
 ### D6: decisões e conhecimento (fecha a P08)
 - `docs/adr/` é a fonte única das decisões, um arquivo por ADR.
-- `DECISIONS.md` fica só como nota-índice do Maestri, apontando para `docs/adr/`, sem texto próprio.
+- `DECISIONS.md` fica só como nota-índice, apontando para `docs/adr/`, sem texto próprio (sem Maestri, o índice fica em `docs/status/DECISIONS.md`, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
 - `docs/decisions`, `docs/DECISIONS.md` (como fonte) e `docs/knowledge` do starter somem.
 - Conhecimento do livro: `knowledge/plf/`, **sem o PDF** (DEC-0010 §2).
 

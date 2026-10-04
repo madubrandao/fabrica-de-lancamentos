@@ -31,7 +31,7 @@ launch-os/
 | Contratos de API, evento e agente | `packages/schemas/` |
 | Publicar/consumir eventos (código) | `packages/events/` |
 | DDL | `database/schema/` |
-| Decisões (ADR) | `docs/adr/` (`DECISIONS.md` é só índice no Maestri) |
+| Decisões (ADR) | `docs/adr/` (`docs/status/DECISIONS.md` é só índice) |
 | Conhecimento do livro | `knowledge/plf/` (sem o PDF) |
 | Compose de desenvolvimento | `infrastructure/compose/docker-compose.dev.yml` |
 

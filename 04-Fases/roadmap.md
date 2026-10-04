@@ -11,7 +11,7 @@ Numeração oficial ([[DEC-0010-decisoes-canonicas-fase-1-v1]] §4). Qualquer ro
 
 | Marco | Nome | O que valida (DEC-0010 §7) |
 |---|---|---|
-| **M00** | Foundation | fundação documental, repositório, Maestri, Claude Code e infraestrutura de desenvolvimento |
+| **M00** | Foundation | fundação documental, repositório, Claude Code e infraestrutura de desenvolvimento (sem Maestri, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]) |
 | **M01** | Core Platform | PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permissions, approvals e state machine |
 | **M02** | Agent Engine | Agent Contract, context assembly, tool registry, memory interfaces, execution lifecycle e policy enforcement |
 | **M03** | First Business Agents | A0–A4 |
@@ -24,7 +24,7 @@ Numeração oficial ([[DEC-0010-decisoes-canonicas-fase-1-v1]] §4). Qualquer ro
 ## Correspondência com as numerações antigas (só referência histórica)
 | Conteúdo | Plano Final (Fases) | Blueprint (antigo) | Starter | **Canônico** |
 |---|---|---|---|---|
-| Repo, CLAUDE.md, Maestri, Claude Code, Docker de dev, docs | Fase 0 (parte) | M01 Core Online (parte) | M0 | **M00** |
+| Repo, CLAUDE.md, Claude Code, Docker de dev, docs | Fase 0 (parte) | M01 Core Online (parte) | M0 | **M00** |
 | Postgres, Redis, migrations, eventos, audit, registry, permissions, approvals, state machine | Fases 0–2 | M01 / M02 (parte) | M1 | **M01** |
 | Agent contract, contexto, tools, memória, execução, policies | — | M02 | M2 | **M02** |
 | A0, A1, A2, A3, A4 | Fases 2–6 | M03 | M3–M4 | **M03** |

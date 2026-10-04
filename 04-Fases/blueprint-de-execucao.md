@@ -13,10 +13,10 @@ Sequência operacional para sair do papel. **Nada abaixo foi executado.** Pré-r
 | # | Passo | Responsável | Status |
 |---|---|---|---|
 | 1 | Criar o repositório `launch-os` | Madu / ENG-07 | [ ] |
-| 2 | Abrir o repo em um Workspace do Maestri | Madu | [ ] |
+| 2 | ~~Abrir o repo em um Workspace do Maestri~~ (fora do escopo, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]): abrir o repo no Claude Code | Madu | [ ] |
 | 3 | Criar terminais ENG-00…07 | Madu | [ ] |
 | 4 | Criar `CLAUDE.md` raiz | ENG-00 | [ ] |
-| 5 | Criar `DECISIONS.md` (só índice do Maestri para `docs/adr/`, [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]), `PROJECT_STATUS.md`, `CURRENT_TASK.md`, `DEFINITION_OF_DONE.md` | ENG-00 | [ ] |
+| 5 | Criar `DECISIONS.md` (só índice em `docs/status/` para `docs/adr/`, [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]), `PROJECT_STATUS.md`, `CURRENT_TASK.md`, `DEFINITION_OF_DONE.md` | ENG-00 | [ ] |
 | 6 | Architect produz `ARCHITECTURE.md`, `DOMAIN_MODEL.md`, `EVENT_CATALOG.md`, `AGENT_MODEL.md` | ENG-00 | [ ] |
 | 7 | Database cria schema e migrations | ENG-02 | [ ] |
 | 8 | Backend cria API e state machine | ENG-01 | [ ] |
@@ -28,7 +28,7 @@ Sequência operacional para sair do papel. **Nada abaixo foi executado.** Pré-r
 | 14 | Construir A0 → A1 → A2 → A3 → A4 | ENG-04 + ENG-03 | [ ] |
 | 15 | Executar o primeiro INTERNAL LAUNCH em ambiente de teste | todos | [ ] |
 
-## Primeira sessão no Maestri (starter FIRST_SESSION)
+## Primeira sessão no Claude Code (starter FIRST_SESSION, sem Maestri)
 1. Abrir `00-COMMAND-CENTER` apontando para a raiz do repo.
 2. Iniciar ENG-00 ARCHITECT; `/context`; verificar que `CLAUDE.md` carregou e ler DECISIONS, DEFINITION_OF_DONE, ROADMAP.
 3. Pedir ao Architect uma **auditoria** contra o CLAUDE.md (sem implementar): artefatos existentes, lacunas, riscos, dependências e ordem de execução do Milestone 1.
@@ -42,10 +42,10 @@ Humano → Architect → Spec/ADR → { Backend, Database, N8N } → Agent Engin
 ## Formato obrigatório de tarefa para Claude Code (Blueprint §42)
 `CONTEXT · OBJECTIVE · SCOPE · INPUTS · OUTPUTS · CONSTRAINTS · DEPENDENCIES · TESTS · DEFINITION OF DONE`.
 
-## Maestri (referência, Blueprint §3–§6, §10–§11)
+## Maestri (histórico: fora do escopo, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]; referência do Blueprint §3–§6, §10–§11)
 - **Workspaces:** 00-COMMAND-CENTER · 01-CORE-PLATFORM · 02-AGENT-ENGINE · 03-N8N · 04-LAUNCH-ENGINE · 05-DASHBOARD · 06-QA-SECURITY · 07-KNOWLEDGE-PLF.
 - **Partituras:** 00-bootstrap (Architect, Backend, Database, DevOps) · 01-core-platform (+N8N, Agent Engine, QA) · 02-agent-engine · 03-n8n · 04-launch-engine · 05-full-stack (todos; montagem padrão diária) · 06-qa-release.
-- **Notas pinadas (decididas, [[DEC-0014-notas-pinadas-no-maestri]]):** PROJECT_STATUS · CURRENT_MILESTONE · CURRENT_TASK · DECISIONS (índice para `docs/adr/`) · BLOCKERS · DEFINITION_OF_DONE. As 7 do Blueprint §11 e as 6 do starter foram substituídas; AGENT_STATUS e RELEASE_NOTES entram depois, por ADR. Onde as notas ficam (repo ou Maestri) é PENDENTE no M00.
+- **Notas pinadas:** substituídas por 6 arquivos em `docs/status/` do `launch-os` ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]): PROJECT_STATUS · CURRENT_MILESTONE · CURRENT_TASK · DECISIONS (índice) · BLOCKERS · DEFINITION_OF_DONE (ponteiro).
 - **Regra de comunicação:** o Architect coordena; especialistas podem conversar direto para reduzir dependências; decisões arquiteturais voltam ao Architect e são registradas em DECISIONS/ADR.
 - **O humano** prioriza, aprova, interrompe, reorienta, resolve decisões e avalia riscos — não controla linha a linha.
 - Windows: usar WSL ou local/tmux só depois de instalar e verificar Claude Code e toolchain; manter o repo em um único local canônico.
@@ -55,7 +55,7 @@ Os 15 passos acima foram escritos pelo Blueprint com a numeração antiga. Pelo 
 
 ## Antes do passo 1 (M00)
 - **Início formal do M00 autorizado pela Madu em 2026-10-04** ([[DEC-0018-inicio-formal-do-m00]]); plano em [[M00-plano-de-execucao]]. Cada ação de execução ainda é confirmada com a Madu.
-- Pendências P01–P12 todas resolvidas ([[pendencias-de-decisao]]). Resta definir onde as notas do Maestri ficam (DEC-0014) e o pin do `n8n`.
+- Pendências P01–P12 todas resolvidas ([[pendencias-de-decisao]]). Maestri fora do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]); o pin do `n8n` foi resolvido no DEC-0019.
 - Decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]]: TypeScript/Node, LLM via adaptador (Anthropic primeiro), dev em Docker local, Windows nativo, repositório privado fora de `.claude` e sem espaços no caminho. Pendentes: frameworks (M01), caminho e conta do repo, ambientes de teste/produção (antes do M03).
 - Bloco de negócio decidido no [[DEC-0017-modelo-de-negocio-inicial]] (produto fictício, só lançamentos próprios, 1 lançamento por vez). Pendente: número de humanos (antes do M01).
 - Ainda aberto em [[perguntas-em-aberto]]: bloco B (material faltando).

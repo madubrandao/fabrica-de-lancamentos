@@ -8,7 +8,7 @@ Plano e status por fase do projeto. Material original em `FASE  1 - BASE/` (raiz
 
 ## Notas
 
-- [[blueprint-de-execucao]] — os 15 passos, primeira sessão no Maestri, formato de tarefa.
+- [[blueprint-de-execucao]] — os 15 passos, primeira sessão no Claude Code, formato de tarefa.
 - [[roadmap]] — roadmap **canônico M00–M06** (+ correspondência histórica com Plano/Blueprint/Starter).
 - [[milestones]] — M00–M06 com checklist.
 - [[CORE-v0.1]] — nome histórico da primeira entrega.

@@ -2,12 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0014
-status: aceita
+status: substituida (DEC-0020)
 fonte: decisão da Madu em 2026-10-04; blueprint v1 §3.1, §11, §40 (passo 5), §42; starter docs/MAESTRI_SETUP.md
 data-registro: 2026-10-04
 resolve: P07
 ---
 # DEC-0014 — Notas pinadas no Maestri (`00-COMMAND-CENTER`)
+
+> **Substituída pelo [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] (2026-10-04):** sem Maestri, as 6 notas viram arquivos em `docs/status/` do repositório `launch-os`. O texto abaixo é o registro histórico.
 
 ## Contexto
 As fontes divergiam sobre o conjunto de notas: Blueprint §3.1 = 5, Blueprint §11 = 7, starter = 6 (com `TASK_BOARD.md`). Ao todo eram 10 nomes diferentes. O passo 5 do Blueprint (§40) manda criar `CURRENT_TASK`, e o formato de tarefa do §42 pressupõe uma nota de tarefa corrente. `ARCHITECTURE` já existe como arquivo do repositório (`docs/architecture/`), e `DECISIONS` já é só índice para `docs/adr/` ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D6).

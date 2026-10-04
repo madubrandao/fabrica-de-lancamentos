@@ -10,6 +10,8 @@ resolve: P01, P02, P03, P09 (e P04, P05, P06, P08 por aplicação da hierarquia 
 # DEC-0010 — FASE 1 - BASE — Decisões Canônicas v1
 
 > Esta nota é a **fonte de maior autoridade** do projeto (nível 1 da hierarquia abaixo). Em caso de conflito com qualquer outra nota, vale esta.
+>
+> **Nota de 2026-10-04:** a camada de desenvolvimento e o critério do M00 (§7) foram substituídos em parte pelo [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] (Maestri fora do escopo; o n8n executa os agentes). O texto do documento foi preservado.
 
 Status: APROVADO PARA IMPLEMENTAÇÃO
 

@@ -2,11 +2,13 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0002
-status: aceita-nas-fontes
+status: substituida-parcialmente (DEC-0020)
 fonte: blueprint v1 §1–§2; starter docs/DECISIONS.md (ADR-0002); .claude/rules/architecture.md
 data-registro: 2026-10-02
 ---
 # DEC-0002 — Duas camadas: desenvolvimento x produção; Maestri só desenvolvimento
+
+> **Substituída em parte pelo [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] (2026-10-04):** continua a separação entre desenvolvimento e produção; o Maestri saiu do escopo e o desenvolvimento usa Claude Code com subagentes. O texto abaixo é o registro histórico.
 
 **Contexto:** Maestri e Claude Code organizam o time que constrói; a empresa em produção não pode depender deles.
 **Decisão:**

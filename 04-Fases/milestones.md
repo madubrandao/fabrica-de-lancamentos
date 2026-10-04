@@ -13,10 +13,10 @@ Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer mar
 
 ## M00 — Foundation
 **Status: em andamento** (início formal em 2026-10-04, [[DEC-0018-inicio-formal-do-m00]]). Passo a passo em [[M00-plano-de-execucao]].
-Valida: fundação documental, repositório, Maestri, Claude Code, infraestrutura de desenvolvimento.
+Valida: fundação documental, repositório, Claude Code, infraestrutura de desenvolvimento (sem Maestri, [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
 - [x] Início formal do M00 autorizado pela Madu (DEC-0010 §10; [[DEC-0018-inicio-formal-do-m00]])
 - [ ] Repositório Git `launch-os` (privado, GitHub, fora de `.claude`, sem espaços no caminho; D6) · [ ] `CLAUDE.md` raiz (+ por domínio), com TECH STACK = TypeScript/Node (D1)
-- [ ] Maestri: workspace, terminais ENG-00…07, responsabilidades, 6 notas pinadas ([[DEC-0014-notas-pinadas-no-maestri]]); definir onde ficam (repo ou Maestri)
+- [x] ~~Maestri~~ removido do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]); 6 notas de estado em `docs/status/` no `launch-os`
 - [ ] Claude Code instalado e verificado; ambiente = Windows nativo + Docker Desktop ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D5); `.gitattributes` fixando LF
 - [ ] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
 - [x] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]], validado em 2026-10-04)

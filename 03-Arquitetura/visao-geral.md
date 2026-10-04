@@ -9,26 +9,25 @@ atualizado: 2026-10-02
 
 ## Camada de produção
 ```text
-USUÁRIO → DASHBOARD / API → BACKEND
-                              ├── AGENT RUNTIME → LLMs / TOOLS
-                              └── N8N → APIs / WEBHOOKS
+USUÁRIO → DASHBOARD / API FINA (estado, gates, aprovações, audit)
+                              └── N8N (orquestra e executa os agentes A0-A10) → LLMs / TOOLS / APIs / WEBHOOKS
                                    ↓
                               POSTGRESQL ── REDIS ── MEMORY ── EVENTS
 ```
 
 ## Camada de desenvolvimento
 ```text
-HUMANO → MAESTRI → Claude Codes (ENG-00…07) → GITHUB/GIT → CÓDIGO + DOCS + TESTES
+HUMANO → Claude Code (subagentes ENG-00…07) → GITHUB/GIT → CÓDIGO + DOCS + TESTES
 ```
 Ver [[DEC-0002-duas-camadas-maestri-so-desenvolvimento]] e [[engenharia-eng-00-a-07]].
 
 ## Papéis
 | Peça | Papel |
 |---|---|
-| Maestri | coordenação do time que CONSTRÓI |
+| ~~Maestri~~ | fora do escopo ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]) |
 | Claude Code | executor de engenharia |
-| n8n | orquestrador de processos de negócio |
-| Backend | núcleo de aplicação (regras, APIs, eventos, runtime de agentes) |
+| n8n | orquestrador de processos de negócio e executor dos agentes A0-A10 |
+| Backend (API fina) | estado, regras críticas, gates, aprovações, audit e eventos; escopo final PENDENTE |
 | PostgreSQL | fonte de verdade do estado estruturado |
 | Redis | cache, filas, execução assíncrona |
 | A0–A10 | força de trabalho cognitiva da empresa |
