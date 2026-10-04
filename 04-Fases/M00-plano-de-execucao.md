@@ -102,6 +102,13 @@ Evidências coletadas depois do push de `aeb58d4` (`launch-os`) e `7246f9f` (vau
 - **Disco `C:` com 8,9 GB livres (97% usado)**, caindo a cada imagem Docker baixada; precisa de limpeza antes do M01.
 - Pendências herdadas, nenhuma bloqueia o fechamento: ver `docs/status/BLOCKERS.md` no `launch-os`.
 
+## Revisão independente e limpeza de recursos (2026-10-04)
+**Revisão independente (parcial):** rodada com `/code-review` (nível high) sobre `C:\dev\launch-os`. Achou 5 inconsistências, todas em `docs/status/` (o que o último commit alterou): verificação marcada como feita com a revisão ainda aberta; `BLOCKERS.md` contraditório ("nenhum bloqueio" com itens pendentes); número de disco volátil sem critério; `CURRENT_TASK.md` desalinhado; três níveis sem definição. Nenhum defeito em código ou configuração foi apontado, mas **não há evidência de cobertura do repositório inteiro**: a revisão completa segue como decisão em aberto da Madu. As 5 correções foram aplicadas em `docs/status/`.
+
+**Disco (autorizado pela Madu):** `npm cache clean --force` (cache de 13 GB para 969 MB) e `pnpm store prune` (721 MB, 273 pacotes). `C:` passou de **8,8 GB para 22 GB livres** (97% para 91% usado), acima do critério de 20 GB definido pela Madu para autorizar o M01. Não foram tocados: Clipchamp (16 GB), app Claude (9,5 GB), Chrome (10 GB), imagens e volumes do Docker de outros projetos, nem o VHDX do Docker (compactação não autorizada).
+
+**RAM:** 7,7 GB no total, ~0,8 GB livre (90% em uso), com 4 containers de outros projetos rodando (`qg-madu-n8n`, `n8n-n8n-1`, `app-postgres_app-1`, `n8n-postgres_n8n-1`, todos `unless-stopped`). A Madu autorizou pará-los enquanto se trabalha no LAUNCH OS; **ainda não foram parados**, porque a pilha do LAUNCH OS está desligada. Comandos de parar e religar em `docs/status/BLOCKERS.md` do `launch-os`.
+
 ## Riscos conhecidos
 - Docker parado: o passo 8 não passa sem o daemon.
 - Com `core.autocrlf=true` no sistema, sem `.gitattributes` os scripts e o JSON do n8n podem quebrar por CRLF (mitigado no passo 2; o repo usa `core.autocrlf=false` local).
