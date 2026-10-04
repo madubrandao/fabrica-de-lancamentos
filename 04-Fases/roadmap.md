@@ -19,7 +19,7 @@ Numeração oficial ([[DEC-0010-decisoes-canonicas-fase-1-v1]] §4). Qualquer ro
 | **M05** | Learning Loop | análise, experimentação e learning loop |
 | **M06** | Operator Dashboard | painel operacional e aprovação humana |
 
-**Próximo marco autorizado: M00 Foundation.** Mas nenhum código é criado sem iniciar o M00 **formalmente** (DEC-0010 §10). A FASE 1 - BASE segue como documentação e arquitetura.
+**M00 Foundation: iniciado formalmente em 2026-10-04** ([[DEC-0018-inicio-formal-do-m00]]; plano em [[M00-plano-de-execucao]]). O escopo é só o do M00; o M01 não está autorizado. A FASE 1 - BASE (documentação e arquitetura) está concluída.
 
 ## Correspondência com as numerações antigas (só referência histórica)
 | Conteúdo | Plano Final (Fases) | Blueprint (antigo) | Starter | **Canônico** |

@@ -25,6 +25,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0015-alocacao-do-roadmap-m01-m04]] — M04 valida A5–A10 ao final, A6 mínimo no M03, `CORE v0.1` = M01+M02+M03, API skeleton e event schema no M01; resolve P10, P11 e P12.
 - [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] — TypeScript/Node, LLM via adaptador (Anthropic primeiro), dev em Docker local, Windows nativo, repo privado; adia vector store, estado→gate e limites numéricos.
 - [[DEC-0017-modelo-de-negocio-inicial]] — produto fictício de teste, só lançamentos próprios, capacidade de 1 lançamento por vez, orçamento antes do M04, plataformas simuladas; resolve o bloco C.
+- [[DEC-0018-inicio-formal-do-m00]] — início formal do M00 Foundation (2026-10-04); escopo só do M00.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos** (P09 mantém o pin do `n8n` aberto).
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.

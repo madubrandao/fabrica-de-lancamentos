@@ -10,7 +10,7 @@ Vault Obsidian com a memória do projeto. Estrutura adaptada do padrão BRAVY SC
 
 **O projeto em uma frase:** LAUNCH OS — uma empresa de lançamentos autônoma baseada na metodologia de *A Fórmula do Lançamento*, operada por 11 agentes de IA (A0–A10) sobre backend + n8n + PostgreSQL + Redis, construída por Claude Codes coordenados no Maestri, com humano nas decisões críticas. Detalhe em [[visao-do-projeto]].
 
-**Estado:** FASE 1 - BASE (documentação e arquitetura), sem código. Decisões canônicas v1 aprovadas; em 2026-10-04 foram resolvidas todas as pendências P01–P12 entre documentos ([[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]], [[DEC-0012-lista-de-entidades-do-blueprint]], [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]], [[DEC-0014-notas-pinadas-no-maestri]], [[DEC-0015-alocacao-do-roadmap-m01-m04]]); o bloco técnico foi decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]]; o bloco de negócio foi decidido no [[DEC-0017-modelo-de-negocio-inicial]]; resta o pin do `n8n` e o bloco B de [[perguntas-em-aberto]] (material faltando). Próximo marco autorizado: **M00 Foundation** (início formal pendente). Ver [[2026-10-02-leitura-fase-1]] e [[2026-10-04-resolucao-p04-p05-p06]].
+**Estado:** **M00 Foundation em andamento** (início formal em 2026-10-04, [[DEC-0018-inicio-formal-do-m00]]; plano em [[M00-plano-de-execucao]]). A FASE 1 - BASE (documentação e arquitetura) está concluída; ainda sem código de aplicação. Decisões canônicas v1 aprovadas; em 2026-10-04 foram resolvidas todas as pendências P01–P12 entre documentos ([[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]], [[DEC-0012-lista-de-entidades-do-blueprint]], [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]], [[DEC-0014-notas-pinadas-no-maestri]], [[DEC-0015-alocacao-do-roadmap-m01-m04]]); o bloco técnico foi decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]]; o bloco de negócio foi decidido no [[DEC-0017-modelo-de-negocio-inicial]]; resta o pin do `n8n` e o bloco B de [[perguntas-em-aberto]] (material faltando). Próximo marco autorizado: **M00 Foundation** (início formal pendente). Ver [[2026-10-02-leitura-fase-1]] e [[2026-10-04-resolucao-p04-p05-p06]].
 
 ## Áreas
 
@@ -40,5 +40,5 @@ Vault Obsidian com a memória do projeto. Estrutura adaptada do padrão BRAVY SC
 - Nunca versionar segredos (tokens, senhas, .env).
 - Tudo que os documentos não definem fica marcado **PENDENTE**; nada é inventado (DEC-0010 §9).
 - Hierarquia: decisões em `02-Decisoes` > Blueprint > arquitetura/roadmap derivados > starter > rascunhos.
-- Nenhum código sem iniciar o M00 formalmente (DEC-0010 §10).
+- Nenhum código sem iniciar o M00 formalmente (DEC-0010 §10): M00 iniciado em 2026-10-04; o escopo autorizado é só o do M00 ([[DEC-0018-inicio-formal-do-m00]]).
 - Distinguir sempre: **derivado do livro** x **engenharia nossa**; **agentes A0–A10 (produção)** x **ENG-00…07 (desenvolvimento)**.

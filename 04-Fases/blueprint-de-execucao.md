@@ -54,7 +54,7 @@ Humano → Architect → Spec/ADR → { Backend, Database, N8N } → Agent Engin
 Os 15 passos acima foram escritos pelo Blueprint com a numeração antiga. Pelo roadmap canônico ([[roadmap]]): passos 1–6 e 9 ≈ **M00**; passos 7–8 ≈ **M01**; passo 10 ≈ **M02**; passo 14 ≈ **M03**; passo 15 ≈ validação de M03/M04; passo 11–12 acompanham M01–M04; passo 13 ≈ **M06** (painel mínimo antes, completo depois). Alocação confirmada em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12).
 
 ## Antes do passo 1 (M00)
-- **Início formal do M00** pela Madu: nenhum código/repositório é criado como consequência automática do DEC-0010 (§10).
+- **Início formal do M00 autorizado pela Madu em 2026-10-04** ([[DEC-0018-inicio-formal-do-m00]]); plano em [[M00-plano-de-execucao]]. Cada ação de execução ainda é confirmada com a Madu.
 - Pendências P01–P12 todas resolvidas ([[pendencias-de-decisao]]). Resta definir onde as notas do Maestri ficam (DEC-0014) e o pin do `n8n`.
 - Decidido no [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]]: TypeScript/Node, LLM via adaptador (Anthropic primeiro), dev em Docker local, Windows nativo, repositório privado fora de `.claude` e sem espaços no caminho. Pendentes: frameworks (M01), caminho e conta do repo, ambientes de teste/produção (antes do M03).
 - Bloco de negócio decidido no [[DEC-0017-modelo-de-negocio-inicial]] (produto fictício, só lançamentos próprios, 1 lançamento por vez). Pendente: número de humanos (antes do M01).
