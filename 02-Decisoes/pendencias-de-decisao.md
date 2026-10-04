@@ -3,7 +3,7 @@ tipo: decisao
 area: 02-Decisoes
 status: parcialmente-resolvido
 fonte: comparação Plano Final x Blueprint v1 x starter zip (2026-10-02); resoluções por [[DEC-0010-decisoes-canonicas-fase-1-v1]]
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Pendências de decisão (conflitos entre documentos)
 
@@ -16,8 +16,8 @@ Legenda: **RESOLVIDO** = decidido explicitamente no DEC-0010. **RESOLVIDO (por h
 | P01 | Gates: 10 (Plano) x 12 (Blueprint) | **RESOLVIDO** (DEC-0010 §3) | 12 gates do Blueprint. "Budget Approved" **não** é gate: é pré-condição/policy check `BUDGET_AUTHORIZED = true` antes de qualquer gasto, registrado em audit log. Ver [[gates]]. |
 | P02 | Destinos pós-`DECISION` | **RESOLVIDO** (§5–§6) | SEED/INTERNAL/JOINT/RELAUNCH/EVERGREEN são **tipo/próxima ação**, não estados. `DECISION` gera uma decisão de continuidade que cria novo Launch (ou ativa sequência perene, ou `ARCHIVE`). `launch.status` ≠ `launch.type`. Ver [[launch-state-machine]]. |
 | P03 | Três numerações de roadmap | **RESOLVIDO** (§4, §7) | Oficial: **M00–M06**. Starter M0–M8 é histórico. Ver [[roadmap]], [[milestones]]. |
-| P04 | Nomes/catálogo de eventos (Plano x Blueprint) | RESOLVIDO (por hierarquia) | Blueprint prevalece sobre o Plano Final. Ver [[catalogo-de-eventos]]. Sub-pendência **ABERTA**: padronizar `approval.completed` (§30) x `approval.granted/rejected` (§16). |
-| P05 | Entidades (`Approval`, `AuditLog`, `AudienceSegment`) | RESOLVIDO (por hierarquia) | Lista do Blueprint. |
+| P04 | Nomes/catálogo de eventos (Plano x Blueprint) | **RESOLVIDO** ([[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]]) | Hierarquia confirmada pela Madu em 2026-10-04: Blueprint prevalece sobre o Plano Final. Padrão único `approval.requested/granted/rejected`; `approval.completed` removido. Ver [[catalogo-de-eventos]]. Novo PENDENTE: `approval.expired` (D8). |
+| P05 | Entidades (`Approval`, `AuditLog`, `AudienceSegment`) | **RESOLVIDO** ([[DEC-0012-lista-de-entidades-do-blueprint]]) | Confirmado pela Madu em 2026-10-04: lista do Blueprint §14, 22 entidades; `audience` é nome histórico de `AudienceSegment`. |
 | P06 | `99_ERRORS` x `99_ERROR_RECOVERY`; estrutura de repo Plano x Blueprint | RESOLVIDO (por hierarquia) | `99_ERRORS` e a árvore de repositório do Blueprint §8. |
 | P07 | Conjunto de notas pinadas no Maestri (Blueprint §3.1 = 5, §11 = 7; starter = 6 com `TASK_BOARD.md`) | **ABERTO** | Conflito dentro do próprio Blueprint; o DEC-0010 não decide. Decidir em M00. |
 | P08 | Local do conhecimento do livro e dos ADRs (`knowledge/plf` x `docs/knowledge`; `docs/DECISIONS.md` x `docs/decisions`) | RESOLVIDO (por hierarquia) | Blueprint §8/§12. **Porém** DEC-0010 §2 proíbe incorporar o PDF a `knowledge/plf/` nesta fase: a pasta fica reservada, sem o PDF. |

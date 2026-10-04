@@ -3,14 +3,14 @@ tipo: arquitetura
 area: 03-Arquitetura
 fonte: blueprint v1 §14; PLANO FINAL §16–§17
 status: rascunho-para-validacao
-atualizado: 2026-10-02
+atualizado: 2026-10-04
 ---
 # Modelo de entidades
 
-## Entidades (Blueprint §14 — lista vigente, ver P05 em [[pendencias-de-decisao]])
+## Entidades (lista oficial, 22 — [[DEC-0012-lista-de-entidades-do-blueprint]])
 Organization · User · Agent · Product · Offer · Launch · Contact · AudienceSegment · Campaign · Content · Sequence · Partner · Customer · Conversation · Objection · Experiment · Metric · Event · Decision · Learning · Approval · AuditLog
 
-(O Plano Final lista as mesmas, com `audience` no lugar de `AudienceSegment` e sem `Approval`/`AuditLog`.)
+(O Plano Final lista as mesmas, com `audience` no lugar de `AudienceSegment` e sem `Approval`/`AuditLog`. `audience` é nome histórico; vale `AudienceSegment`.)
 
 ## Entidade central `launch` (Plano Final §17)
 `launch_id · organization_id · product_id · offer_id · launch_type · objective · audience_segment · start_date · cart_open · cart_close · status · owner_agent · approval_state · result`
