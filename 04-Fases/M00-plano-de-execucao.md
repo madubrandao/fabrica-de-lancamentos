@@ -67,6 +67,12 @@ O primeiro teste negativo rodou no repositório real, porque o `cp` falhou numa 
 - **Consequência resolvida:** os 3 volumes `launch-os_*` tinham a senha antiga do Postgres; a Madu autorizou e eles foram removidos (nenhum container os usava; volumes dos outros projetos intactos). A pilha foi subida de novo com o `.env` regenerado: 3 serviços `healthy`, `/healthz` 200; depois `down`, com os volumes novos preservados.
 - O teste foi refeito com trava que aborta fora da cópia.
 
+## Pesquisa sobre o Maestri (2026-10-04)
+- **Fontes de terceiros** (Setapp, AlternativeTo, Product Hunt e resenhas) dizem que o Maestri é um app nativo de macOS, sem versão para Windows ou Linux. **O site oficial** (`themaestri.app`) tem páginas próprias para Windows e Linux e, na página do Windows, informa **versão disponível agora para Windows 11 x64**, com instalador e versão portátil no CDN oficial (`cdn.maestri.dev/win/x64/`). Como o site oficial é a fonte mais recente e primária, vale ele; a divergência indica que as resenhas estão desatualizadas. Não confirmei a versão nem testei o instalador.
+- **Preço (site oficial):** gratuito permanente com agentes ilimitados, canvas infinito, conexões entre agentes e **1 workspace**; Pro com pagamento único de R$95, workspaces ilimitados e uso em até 2 dispositivos (Mac ou Windows), com 7 dias de teste.
+- **Impacto no plano:** o Blueprint §3 e o `MAESTRI_SETUP.md` pedem **8 workspaces**. Com o plano gratuito (1 workspace) não dá para criá-los todos: é preciso o Pro (decisão e custo da Madu) ou adaptar o desenho a 1 workspace. **PENDENTE.**
+- **Instalação:** o download do instalador foi bloqueado pelo classificador de segurança do Claude Code (executável externo). Nada foi baixado nem instalado. A decisão de como proceder (a Madu baixar, ou liberar a permissão) está com a Madu.
+
 ## Riscos conhecidos
 - Docker parado: o passo 8 não passa sem o daemon.
 - Com `core.autocrlf=true` no sistema, sem `.gitattributes` os scripts e o JSON do n8n podem quebrar por CRLF (mitigado no passo 2; o repo usa `core.autocrlf=false` local).
