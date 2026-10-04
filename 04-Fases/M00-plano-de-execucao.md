@@ -26,7 +26,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 |---|---|---|---|
 | 1 | Iniciar o Docker Desktop e confirmar o daemon | Madu | [ ] |
 | 2 | Criar a pasta `C:\dev\launch-os` e `git init` com `.gitattributes` (LF) e `.gitignore` do starter | Claude | [x] feito em 2026-10-04 (commit local inicial; sem remote) |
-| 3 | Criar o repositório privado `madubrandao/launch-os` no GitHub e ligar o `origin` (**ação externa**) | Claude, com confirmação | [ ] |
+| 3 | Criar o repositório privado `madubrandao/launch-os` no GitHub e ligar o `origin` (**ação externa**) | Claude, com confirmação | [x] feito em 2026-10-04: https://github.com/madubrandao/launch-os (PRIVATE, branch `main`, commit `3e0b786` enviado) |
 | 4 | Importar o starter aplicando as correções do [[starter-zip-inventario]] (compose único em `infrastructure/compose/`, `docs/adr`, guardrails nos agentes, rules sem repetição) | Claude | [ ] |
 | 5 | `CLAUDE.md` raiz com as 14 seções do Blueprint §7.1 (TECH STACK = TypeScript/Node) e os 8 `CLAUDE.md` por domínio | Claude (ENG-00) | [ ] |
 | 6 | Notas pinadas do Maestri: 6 notas do [[DEC-0014-notas-pinadas-no-maestri]] | Madu + Claude | [ ] |
