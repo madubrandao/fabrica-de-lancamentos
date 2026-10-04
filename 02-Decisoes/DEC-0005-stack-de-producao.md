@@ -22,4 +22,4 @@ data-registro: 2026-10-02
 
 **Decidido depois ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]], 2026-10-04):** TypeScript/Node; LLM via adaptador com Anthropic primeiro; ambiente de dev em Docker local; vector store adiado.
 **Ainda NÃO decidido (ver [[perguntas-em-aberto]]):** framework de backend e frontend; modelo por agente; hospedagem de teste e produção.
-**Observação:** o `docker-compose.yml` do starter fixa `n8nio/n8n:latest`; a regra de produção do starter pede artefatos pinados após o início do release. Registrar versão ao iniciar a camada de código. Compose único em `infrastructure/compose/docker-compose.dev.yml` ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D5).
+**Observação:** o `docker-compose.yml` do starter fixa `n8nio/n8n:latest`; a regra de produção do starter pede artefatos pinados após o início do release. Registrar versão ao iniciar a camada de código. Compose único em `infrastructure/compose/docker-compose.dev.yml` ([[DEC-0013-estrutura-do-repositorio-e-fonte-unica]] D5). Versões fixadas em [[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]] (postgres 17.11, redis 8.10.2, n8n 2.41.6).

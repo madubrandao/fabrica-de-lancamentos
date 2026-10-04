@@ -19,7 +19,7 @@ Valida: fundação documental, repositório, Maestri, Claude Code, infraestrutur
 - [ ] Maestri: workspace, terminais ENG-00…07, responsabilidades, 6 notas pinadas ([[DEC-0014-notas-pinadas-no-maestri]]); definir onde ficam (repo ou Maestri)
 - [ ] Claude Code instalado e verificado; ambiente = Windows nativo + Docker Desktop ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D5); `.gitattributes` fixando LF
 - [ ] Guardrails oficiais ENG-00…07 aplicados às definições de agente ([[engenharia-eng-00-a-07]])
-- [ ] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap
+- [x] Docker de desenvolvimento (Postgres, Redis, n8n com versão fixa) · `.env.example` · bootstrap ([[DEC-0019-versoes-fixas-do-ambiente-de-desenvolvimento]], validado em 2026-10-04)
 - [ ] Importação do starter conforme [[DEC-0013-estrutura-do-repositorio-e-fonte-unica]]: compose único em `infrastructure/compose/`, referências `docs/decisions`/`docs/knowledge` corrigidas, `.claude/rules` sem repetir guardrails ([[starter-zip-inventario]])
 - [ ] Esqueleto de CI
 - [ ] Documentação de arquitetura transferida/linkada ao repo
