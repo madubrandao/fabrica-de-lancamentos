@@ -16,7 +16,8 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 | Claude Code | 2.1.289: ok |
 | GitHub CLI | 2.98 autenticado como `madubrandao`, escopos `repo`, `read:org`, `gist` |
 | Docker | CLI 29.5 instalado, mas **o daemon não está rodando** (Docker Desktop parado) |
-| `core.autocrlf` | **não configurado** (confirma a necessidade do `.gitattributes`, DEC-0016 D5) |
+| `core.autocrlf` | **`true` no gitconfig do sistema** (padrão do Git for Windows; correção: a primeira leitura indicou "não configurado" por ter consultado só o nível global). Converte LF para CRLF no checkout, por isso o `.gitattributes` com LF é necessário (DEC-0016 D5) |
+| Disco `C:` | 14 GB livres de 222 GB (94% usado); as imagens Docker (Postgres, Redis, n8n) ocupam alguns GB |
 | `C:\dev` | não existe |
 | Maestri | **não verificado**: não encontrei instalação em `AppData\Local` |
 
@@ -24,7 +25,7 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 | # | Passo | Dono | Status |
 |---|---|---|---|
 | 1 | Iniciar o Docker Desktop e confirmar o daemon | Madu | [ ] |
-| 2 | Criar a pasta `C:\dev\launch-os` e `git init` com `.gitattributes` (LF) e `.gitignore` do starter | Claude | [ ] |
+| 2 | Criar a pasta `C:\dev\launch-os` e `git init` com `.gitattributes` (LF) e `.gitignore` do starter | Claude | [x] feito em 2026-10-04 (commit local inicial; sem remote) |
 | 3 | Criar o repositório privado `madubrandao/launch-os` no GitHub e ligar o `origin` (**ação externa**) | Claude, com confirmação | [ ] |
 | 4 | Importar o starter aplicando as correções do [[starter-zip-inventario]] (compose único em `infrastructure/compose/`, `docs/adr`, guardrails nos agentes, rules sem repetição) | Claude | [ ] |
 | 5 | `CLAUDE.md` raiz com as 14 seções do Blueprint §7.1 (TECH STACK = TypeScript/Node) e os 8 `CLAUDE.md` por domínio | Claude (ENG-00) | [ ] |
@@ -45,7 +46,9 @@ Início formal: [[DEC-0018-inicio-formal-do-m00]]. Nada abaixo foi executado, ex
 
 ## Riscos conhecidos
 - Docker parado: o passo 8 não passa sem o daemon.
-- Sem `autocrlf`/`.gitattributes`, scripts e JSON do n8n podem quebrar por CRLF.
+- Com `core.autocrlf=true` no sistema, sem `.gitattributes` os scripts e o JSON do n8n podem quebrar por CRLF (mitigado no passo 2; o repo usa `core.autocrlf=false` local).
+- O `bootstrap.ps1` do starter tem texto com acento e pode ler errado no Windows PowerShell 5.1 se estiver sem BOM: verificar no passo 8.
+- Pouco espaço em disco: acompanhar o tamanho das imagens e volumes Docker.
 - Criar o repositório no GitHub e fazer push são ações externas: só com confirmação.
 - O `docker-compose.yml` do starter usa `n8nio/n8n:latest` e `CHANGE_ME` como senhas padrão: não usar assim fora do ambiente local.
 
