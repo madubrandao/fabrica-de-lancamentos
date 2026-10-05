@@ -32,7 +32,7 @@ Definition of Done aplicada à fundação: critérios de código, evento, schema
 Nenhum código de aplicação, schema, migration, evento, agente ou workflow. O repositório tem a fundação: estrutura de pastas do Blueprint §8, agentes e regras, Docker de desenvolvimento, CI estrutural, documentação e estado.
 
 ## Antes de autorizar o M01 (PENDENTES, a decidir pela Madu)
-- **Número de humanos** que operam e aprovam os lançamentos (DEC-0017 C3).
+- ~~Número de humanos que operam e aprovam os lançamentos (DEC-0017 C3)~~: **respondido pela Madu em 2026-10-04: só ela (1 pessoa)**, no plano do M01 ([[M01-plano-de-execucao]]).
 - **Disco:** manter pelo menos 20 GB livres em `C:` e RAM disponível (parar os containers de outros projetos ao subir a pilha; comandos em `docs/status/BLOCKERS.md` do `launch-os`).
 - **Framework de backend e de frontend** (ADR no M01) e a **ferramenta de orquestração do desenvolvimento** (DEC-0020).
 - **Desenho do ENG-00 para o M01:** escopo do ENG-04, de `packages/agents` e do `agent runtime gateway` do ENG-01 com o runtime no n8n; adaptador de LLM x nós de IA do n8n.

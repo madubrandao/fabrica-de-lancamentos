@@ -23,7 +23,7 @@ Uma única `Organization`. O `organization_id` permanece no modelo de dados e no
 
 ### C3 — Dimensionamento: capacidade inicial de 1 lançamento por vez
 Ativa o caminho crítico ([[DEC-0008-caminho-critico-primeiro]]) com a arquitetura preparada para 5 lançamentos simultâneos (filas). O termo "MVP" do MAPA vira "capacidade inicial" (o DEC-0001 rejeita MVP descartável). Os 11 agentes já estão fechados (DEC-0003).
-- **PENDENTE:** número de humanos que operam e aprovam os lançamentos. O vault só registra a Madu como autoridade máxima; não assumido.
+- ~~PENDENTE: número de humanos que operam e aprovam~~ **Respondido pela Madu em 2026-10-04: só ela (1 pessoa)**, no plano do M01 ([[M01-plano-de-execucao]]).
 
 ### C4 — Orçamento: adiado para antes do M04
 O lançamento simulado não gasta. Antes do M04 a Madu define: moeda, limite por campanha, por lançamento e por período, e quem aprova acima do limite. Os valores são configuração por política ([[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D8), não valor fixo no código. O policy check `BUDGET_AUTHORIZED = true` continua valendo ([[gates]]).
@@ -41,7 +41,7 @@ Nos M03 e M04 as integrações têm **implementação simulada** atrás de inter
 
 ## Consequências
 - O M03 precisa do produto fictício definido; o schema do M01 mantém `organization_id` com uma única organização.
-- PENDENTES: produto fictício (antes do M03), número de humanos (antes do M01), política de orçamento (antes do M04), limite de custo de LLM (M02), plataformas reais (antes do primeiro lançamento real).
+- PENDENTES: produto fictício (antes do M03), ~~número de humanos~~ (respondido: só a Madu), política de orçamento (antes do M04), limite de custo de LLM (M02), plataformas reais (antes do primeiro lançamento real).
 - Nada foi implementado.
 
 Ver [[perguntas-em-aberto]] · [[visao-do-projeto]] · [[A5-acquisition-growth]] · [[milestones]].

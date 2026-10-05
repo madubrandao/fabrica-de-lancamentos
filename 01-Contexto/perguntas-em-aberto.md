@@ -19,7 +19,7 @@ Itens que os documentos **não respondem**. Nada aqui foi assumido. Conflitos en
 ## Negócio (decidido no [[DEC-0017-modelo-de-negocio-inicial]], 2026-10-04)
 - [x] ~~Primeiro produto/oferta de teste~~ **produto fictício de teste** (C1). Pendente: definir o produto fictício, antes do M03.
 - [x] ~~Modelo de operação~~ **só lançamentos próprios, uma única organização**; revisitar antes do M04 (C2).
-- [x] ~~Dimensionamento~~ **capacidade inicial de 1 lançamento por vez**, arquitetura preparada para 5 (C3). Pendente: número de humanos que operam e aprovam, antes do M01.
+- [x] ~~Dimensionamento~~ **capacidade inicial de 1 lançamento por vez**, arquitetura preparada para 5 (C3). Número de humanos que operam e aprovam: **só a Madu (1 pessoa)**, respondido em 2026-10-04 ([[M01-plano-de-execucao]]).
 - [x] ~~Orçamento e limites de gasto~~ **adiado para antes do M04** (C4). Aberto: limite de custo de LLM (reavaliar no M02).
 - [x] ~~Plataformas~~ **adaptadores simulados agora; plataformas reais por ADR antes do primeiro lançamento real** (C5).
 

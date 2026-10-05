@@ -25,6 +25,7 @@ Valida: fundação documental, repositório, Claude Code, infraestrutura de dese
 - [x] Documentação de arquitetura transferida/linkada ao repo (referenciada, não copiada: `docs/architecture/README.md`)
 
 ## M01 — Core Platform
+**Status: não autorizado** (plano proposto em [[M01-plano-de-execucao]]; só começa com novo início formal da Madu).
 Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permissions, approvals e state machine.
 - [ ] PostgreSQL + schema inicial + migrations reversíveis
 - [ ] Redis
