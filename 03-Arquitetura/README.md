@@ -18,5 +18,6 @@ Arquitetura técnica, integrações, dados e infraestrutura. Tudo é **especific
 - [[n8n-estrutura]]
 - [[estrutura-do-repositorio]] — repo `launch-os` (ainda não criado).
 - [[observabilidade-e-testes]]
+- [[spec-core-01-servicos-e-limites]] — **M01/F1, bloco 1** (proposta aguardando a Madu): serviços e limites entre a API e o n8n.
 
 Voltar: [[00-LEIA-PRIMEIRO]]
