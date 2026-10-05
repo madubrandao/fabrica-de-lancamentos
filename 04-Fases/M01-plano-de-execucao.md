@@ -2,12 +2,12 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 e §10; DEC-0015; DEC-0017; DEC-0020; DEC-0021; blueprint v1 §14–§21, §41; plano aprovado pela Madu em 2026-10-04
-status: proposto (M01 NAO autorizado; aguarda novo início formal da Madu)
+status: em execução (início formal em 2026-10-04, DEC-0022); F0 concluída; F1 (especificação) é a próxima
 atualizado: 2026-10-04
 ---
 # M01 Core Platform — plano de execução (proposta)
 
-> **O M01 não está autorizado.** Este plano é uma proposta. Ele só vale como execução depois de um **novo início formal** da Madu, registrado como DEC próprio (DEC-0010 §10). Nenhum código, schema ou migration deve ser criado antes disso. Antecedente: [[DEC-0021-m00-foundation-concluido]].
+> **O M01 foi autorizado pela Madu em 2026-10-04** ([[DEC-0022-inicio-formal-do-m01]]). Nenhum código de aplicação, schema ou migration é criado antes de a Madu aprovar a especificação (portão F1). Antecedente: [[DEC-0021-m00-foundation-concluido]].
 
 ## Escopo
 Validar PostgreSQL, Redis, migrations reversíveis, eventos e event schema, audit log, Agent Registry, permissions, approvals (os 12 gates e o policy check `BUDGET_AUTHORIZED`), launch state machine (status x type, decisão de continuidade) e API skeleton ([[DEC-0010-decisoes-canonicas-fase-1-v1]] §7, [[DEC-0015-alocacao-do-roadmap-m01-m04]]). A **API é fina**: o n8n executa os agentes ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]).
@@ -62,7 +62,7 @@ Schema só com migration reversível ou plano de rollback, sem migração destru
 ## Critérios de pronto do M01
 Todas as capacidades cumprindo o [[definicao-de-pronto]] (código, testes passando, logs, erros tratados, permissões, documentação, evento definido, schema versionado, ADR atualizado, revisão por outro agente); CI verde com testes de integração e migration round-trip; as 12 transições com gate testadas positiva e negativamente; completude do audit demonstrada; pilha Docker com a API saudável; disco ≥ 20 GB; revisão independente completa; DEC de fechamento aprovado pela Madu.
 
-## Pendência de coerência entre repositórios
-O `docs/status/BLOCKERS.md` do `launch-os` ainda lista "número de humanos" como pendente; a Madu respondeu em 2026-10-04 (só ela). Atualizar na F0, junto com o DEC de início do M01, porque este plano não altera o `launch-os`.
+## F0 concluída (2026-10-04)
+Pré-condições conferidas e registradas no [[DEC-0022-inicio-formal-do-m01]]: disco 22 GB livres, CI verde em `f00f597`, repositórios sincronizados, Claude Code 2.1.289, número de humanos respondido (só a Madu). O `docs/status/` do `launch-os` foi atualizado para refletir o M01 em andamento. **Achado:** a proteção de branch não existe neste repositório privado (exige GitHub Pro ou repositório público), então a revisão por outro agente antes do merge vale por convenção. As branches `feat/*` são criadas quando cada fase começa; a F1 começa em `feat/core-platform`.
 
 Ver [[milestones]] · [[roadmap]] · [[M00-plano-de-execucao]].

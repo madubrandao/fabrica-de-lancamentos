@@ -7,7 +7,7 @@ atualizado: 2026-10-04
 ---
 # Milestones M00–M06 (checklists)
 
-Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens vêm do Blueprint e do starter e foram **alocados por mim ao marco correspondente**; a alocação foi confirmada pela Madu em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12). O M00 está concluído ([[DEC-0021-m00-foundation-concluido]]); o M01 não está autorizado e nenhum código de aplicação existe. Cada capability só está pronta quando cumprir [[definicao-de-pronto]].
+Critério de cada marco: [[DEC-0010-decisoes-canonicas-fase-1-v1]] §7. Os itens vêm do Blueprint e do starter e foram **alocados por mim ao marco correspondente**; a alocação foi confirmada pela Madu em [[DEC-0015-alocacao-do-roadmap-m01-m04]] (P12). O M00 está concluído ([[DEC-0021-m00-foundation-concluido]]); o M01 está em andamento ([[DEC-0022-inicio-formal-do-m01]]) na fase F1 (especificação), e nenhum código de aplicação existe ainda. Cada capability só está pronta quando cumprir [[definicao-de-pronto]].
 
 Transversal: o check `BUDGET_AUTHORIZED = true` pode ser exigido em qualquer marco para ações com gasto ([[gates]]).
 
@@ -25,7 +25,7 @@ Valida: fundação documental, repositório, Claude Code, infraestrutura de dese
 - [x] Documentação de arquitetura transferida/linkada ao repo (referenciada, não copiada: `docs/architecture/README.md`)
 
 ## M01 — Core Platform
-**Status: não autorizado** (plano proposto em [[M01-plano-de-execucao]]; só começa com novo início formal da Madu).
+**Status: em andamento** (início formal em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 concluída; **F1 (especificação, sem código) é a próxima**; código só depois de a Madu aprovar a especificação.
 Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permissions, approvals e state machine.
 - [ ] PostgreSQL + schema inicial + migrations reversíveis
 - [ ] Redis

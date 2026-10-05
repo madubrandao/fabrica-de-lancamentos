@@ -40,7 +40,7 @@ Nenhum código de aplicação, schema, migration, evento, agente ou workflow. O 
 - **Antes do M03:** produto fictício de teste, definição do A6 mínimo, ambientes de teste e produção. **Antes do M04:** política de orçamento.
 
 ## Consequências
-- O estado do projeto passa de "M00 em andamento" para "M00 concluído; aguardando decisão sobre o M01".
+- O estado do projeto passou de "M00 em andamento" para "M00 concluído". **Atualização:** o M01 foi autorizado no [[DEC-0022-inicio-formal-do-m01]].
 - Qualquer código de aplicação, schema ou migration continua proibido até o início formal do M01 (DEC-0010 §10).
 
 Ver [[M00-plano-de-execucao]] · [[roadmap]] · [[milestones]].
