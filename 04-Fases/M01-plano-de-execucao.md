@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 e §10; DEC-0015; DEC-0017; DEC-0020; DEC-0021; blueprint v1 §14–§21, §41; plano aprovado pela Madu em 2026-10-04
-status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F0, F1, F2, F3, F4 e F6 fechadas (DEC-0023 a DEC-0026); F5 é a próxima
+status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F0, F1, F2, F3, F4 e F6 fechadas (DEC-0023 a DEC-0026); F5 implementada (PR #5), aguarda o DEC-0027 (proposta)
 atualizado: 2026-10-04
 ---
 # M01 Core Platform — plano de execução (proposta)
@@ -69,7 +69,10 @@ Pré-condições conferidas e registradas no [[DEC-0022-inicio-formal-do-m01]]: 
 Plano único aprovado pela Madu em 2026-10-07. Branch `feat/events` no `launch-os` (PR #3): `packages/schemas` (contrato de 23 tipos de evento, validação, guarda de segredos, `dedupe_key`, constantes de estados, gates e transições) e `packages/events` (publicação, idempotência, entregador, claim e ack, reprocesso e limpeza). **Evidências:** 44 testes unitários e 112 de integração contra PostgreSQL 17.11; provas negativas da ordem e do claim; revisão independente (2 altos, 5 médios e 3 baixos, todos tratados); CI verde. **Valores numéricos da entrega seguem PENDENTES** (a Madu define; sem padrão no código). Acréscimo à especificação: o evento recebido e nunca reivindicado é reaberto (adendo no bloco 4, seção 5; ADR-0018). Fechada e mesclada na `main` (merge `997c1a5`); fechamento aprovado pela Madu em 2026-10-07 ([[DEC-0025-fechamento-da-f3-do-m01]]). **Próxima: F4**, com plano único a aprovar.
 
 ### F4 — implementada (2026-10-07)
-Plano único aprovado em 2026-10-07. Branch `feat/api` no `launch-os` (PR #4, CI verde): `apps/api`, `apps/cli`, migration 0008, ADR-0019 e ADR-0020. **Evidências:** 402 testes (57 unitários, 345 de integração); provas negativas do `FOR UPDATE` e do token humano. Revisão independente tratada; mesclada (merge `a142863`); fechamento aprovado em 2026-10-07 ([[DEC-0026-fechamento-da-f4-do-m01]]). **Próxima: F5**, com plano único a aprovar. Valores numéricos seguem PENDENTES.
+Plano único aprovado em 2026-10-07. Branch `feat/api` no `launch-os` (PR #4, CI verde): `apps/api`, `apps/cli`, migration 0008, ADR-0019 e ADR-0020. **Evidências:** 402 testes (57 unitários, 345 de integração); provas negativas do `FOR UPDATE` e do token humano. Revisão independente tratada; mesclada (merge `a142863`); fechamento aprovado em 2026-10-07 ([[DEC-0026-fechamento-da-f4-do-m01]]). **Próxima: F5**, com plano único a aprovar.
+
+### F5 — implementada (2026-10-07)
+Plano único aprovado em 2026-10-07. Branch `feat/registry` (PR #5, merge `511d750`): modelo de permissões, registry na API, `/permissions/check`, aplicação por `requirePermission`, semente de permissões mínimas, comandos `agents` da CLI, ADR-0021. 72 unitários e 379 de integração; prova negativa; revisão independente tratada. Fechamento: [[DEC-0027-fechamento-da-f5-do-m01]] (proposta). Escopos reais dos agentes seguem PENDENTES (M02/M03). Valores numéricos seguem PENDENTES.
 
 ## F2 e F6 implementadas e testadas localmente (2026-10-07)
 Plano único aprovado pela Madu em 2026-10-07. Branches locais `feat/devops` (F6) e `feat/database` (F2), no `launch-os`, **sem push**. Evidências: 52 testes de integração e 4 unitários passando contra PostgreSQL 17.11 em Docker, `check-repo.sh` aprovado, round-trip das 7 migrations, provisionamento idempotente, n8n em banco próprio, Redis com senha e como usuário `redis`; revisão independente sem achados críticos ou altos, com os ajustes aplicados. **Fechamento aprovado pela Madu em 2026-10-07 ([[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]]), com push e pull requests autorizados. **Falta:** CI verde no GitHub e o merge. Próxima fase: F3 (eventos), com plano único a aprovar.
