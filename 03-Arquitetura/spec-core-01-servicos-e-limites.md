@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: DEC-0004; DEC-0005; DEC-0007; DEC-0009; DEC-0020; blueprint v1 §1.2, §16–§18, §22–§23, §30, §41; PLANO FINAL §18
-status: proposta do eng-00-architect, aguardando aprovação da Madu (M01, F1, bloco 1 de 6)
+status: decisões D1.1 a D1.5 aprovadas pela Madu em 2026-10-07 (recomendações do ENG-00); R1 a R8 seguem como proposta até a revisão final da especificação (M01, F1, bloco 1 de 6)
 atualizado: 2026-10-04
 ---
 # Especificação do Core, bloco 1: serviços e limites entre a API e o n8n
@@ -65,7 +65,7 @@ Regra comum: **só a API muda o estado de negócio**; o n8n pede, e a API decide
 - **R7.** Só a API transiciona a state machine; nenhum agente contorna um gate.
 - **R8.** Aprovações só mudam por canal **humano autenticado**, nunca por chamada de workflow ou de agente.
 
-## 5. Decisões para a Madu
+## 5. Decisões (D1.1 a D1.5 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
 | **D1.1** | Como o n8n acessa o estado de negócio? | **A)** só pela API (R1). **B)** leitura direta no banco e escrita pela API. **C)** acesso direto (contraria os guardrails do ENG-01 e do ENG-03) | **A.** Uma única porta de entrada: toda regra, permissão e audit passam pela API. Custo: um endpoint por leitura que o n8n precisar. B reduz endpoints, mas espalha o conhecimento do schema para dentro dos workflows |
