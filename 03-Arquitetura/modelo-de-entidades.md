@@ -23,4 +23,4 @@ PRODUCT → OFFER → LAUNCH → { CONTENT, CAMPAIGN, PARTNERS } → AUDIENCE �
 ```
 
 ## Pendente
-Colunas, tipos, chaves e constraints de cada entidade **não estão definidos** nos documentos. Serão produzidos pelo ENG-02 DATABASE a partir da especificação do ENG-00 ARCHITECT (Blueprint §41). Nada aqui deve ser lido como schema final.
+Colunas, tipos, chaves e constraints de cada entidade **não estão definidos** nos documentos. Há uma **proposta** (aguardando a Madu) em [[spec-core-02-entidades-e-schema]]; o ENG-02 DATABASE produz o schema a partir da especificação aprovada pelo ENG-00 ARCHITECT (Blueprint §41). Nada aqui deve ser lido como schema final.
