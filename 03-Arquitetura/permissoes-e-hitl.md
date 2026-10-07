@@ -45,5 +45,8 @@ mudanças estratégicas críticas, contratos relevantes, grandes alterações de
 ## Orçamento como policy check (DEC-0010 §3)
 Toda execução que envolva gasto exige `BUDGET_AUTHORIZED = true`, registrado em audit log. Não é gate da máquina de estados. Vale em qualquer marco; ao A5 isso se aplica antes de criar/escalar campanha.
 
+## Proposta do M01
+Autenticação, aplicação das permissões, aprovações (prazo, `approval.expired`) e `BUDGET_AUTHORIZED`: proposta em [[spec-core-05-permissoes-e-aprovacoes]] (aguardando a Madu). Nada nela é decisão até a aprovação.
+
 ## Pendente (não inventar, DEC-0010 §9)
 Limites numéricos de orçamento, tempo de aprovação e SLA (adiados para o M01 como configuração por política; aprovação sem resposta vale como **não aprovada**; orçamento antes do M04: [[DEC-0016-stack-ambiente-e-adiamentos-tecnicos]] D8), scopes dos 11 agentes, regras detalhadas de autonomia, quem aprova o quê por gate ([[gates]]).

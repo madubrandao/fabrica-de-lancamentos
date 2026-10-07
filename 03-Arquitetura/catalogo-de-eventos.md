@@ -47,4 +47,4 @@ atualizado: 2026-10-04
 Observação: os eventos de aprovação foram padronizados pelo [[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]]. `approval.completed` (§30) **foi removido**; vale `approval.requested/granted/rejected` do §16. `approval.expired` é **PENDENTE** (ligado ao D8).
 
 ## Pendente
-Payload de cada evento, produtor/consumidor por evento, política de idempotência e retenção. Responsável: ENG-00 + ENG-02 ([[engenharia-eng-00-a-07]]). **Proposta (aguardando a Madu)** em [[spec-core-04-eventos]]; nada aqui é decisão até a aprovação.
+Payload de cada evento, produtor/consumidor por evento, política de idempotência e retenção. Responsável: ENG-00 + ENG-02 ([[engenharia-eng-00-a-07]]). Decisões D4.x aprovadas pela Madu em 2026-10-07 em [[spec-core-04-eventos]] (payloads, entrega, idempotência, retenção, 5 eventos novos); valores numéricos seguem PEND.

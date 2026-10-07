@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: DEC-0004; DEC-0005; DEC-0011; DEC-0016 D8; DEC-0020; blueprint v1 §16, §17, §30–§31; catalogo-de-eventos; observabilidade-e-testes; M01-plano-de-execucao (F1, F3)
-status: proposta do eng-00-architect, aguardando aprovação da Madu (M01, F1, bloco 4 de 6)
+status: decisões D4.1 a D4.8 aprovadas pela Madu em 2026-10-07 (recomendações do ENG-00); valores numéricos seguem PEND (M01, F1, bloco 4 de 6)
 atualizado: 2026-10-07
 ---
 # Especificação do Core, bloco 4: eventos
@@ -162,7 +162,7 @@ O Blueprint §30 lista `agent.execution.*`, `workflow.*`, `api.request/error`, `
 - **Falha total de entrega:** esgota tentativas, vira `dead`, gera `error.detected` e audit; reprocesso só pelo operador.
 - **Redis fora do ar:** nenhuma perda de evento (a entrega não depende dele).
 
-## 11. Decisões para a Madu
+## 11. Decisões (D4.1 a D4.8 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
 | **D4.1** | Como entregar os eventos e qual o papel do Redis no M01 | **A)** outbox no PostgreSQL com tabela `event_delivery` e entregador na API; Redis fora do caminho crítico. **B)** fila no Redis como caminho principal. **C)** combinação (outbox e Redis acordando o entregador) | **A.** Persistência e entrega na mesma base e na mesma transação evitam perda de evento; Redis como caminho principal obrigaria a resolver consistência entre dois sistemas. Custo: uma tabela fora da lista de 22 (`event_delivery`), de infraestrutura. C só quando houver volume |
