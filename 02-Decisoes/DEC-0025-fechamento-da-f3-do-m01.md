@@ -2,13 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0025
-status: PROPOSTA — aguardando a decisão da Madu (não vale até ela aprovar)
+status: aceita
 fonte: M01-plano-de-execucao (F3); plano único da F3 aprovado em 2026-10-07; spec-core-04-eventos; ADR-0018 no launch-os; evidências de 2026-10-07
 data-registro: 2026-10-07
+data-decisao: 2026-10-07 (a Madu aprovou seguindo as recomendações do ENG-00)
 ---
 # DEC-0025 — Fechamento da F3 (eventos) do M01
 
-> **Rascunho para a Madu decidir.** O código da F3 já está no `launch-os` (PR #3, branch `feat/events`). O merge na `main` foi autorizado pelo plano único, desde que a CI esteja verde e a revisão independente registrada; este DEC é o fechamento da fase.
+> **Aprovado pela Madu em 2026-10-07.** O PR #3 do `launch-os` foi mesclado na `main` (merge `997c1a5`) com a CI verde e a revisão independente registrada; este DEC é o fechamento da fase.
 
 ## Entrega
 `packages/schemas` e `packages/events` no `launch-os`, conforme o [[spec-core-04-eventos]] aprovado:
@@ -28,10 +29,10 @@ data-registro: 2026-10-07
 3. **Coerência do payload** mais estrita que o esboço: o evento de transição leva exatamente os gates da transição, uma aprovação por gate e o dono do novo estado; `launch.created` nasce em `IDEA` com o `A0`; `expired` é do sistema e `rejected` é humano, ambos com motivo.
 4. **Itens PROP:** `batchSize` como sexta configuração; cabeçalhos `x-correlation-id` e `x-event-id`; códigos `delivery_exhausted`, `claim_expired` e `not_claimed`; assinantes `create-launch`, `approval-resume` e `notify` e o mapeamento mínimo evento-assinante.
 
-## Decisão proposta
-1. **Aprovar o fechamento da F3** com a entrega acima e confirmar os 4 itens da seção anterior.
-2. **O merge do PR #3 na `main`** (já autorizado pelo plano, com CI verde e revisão registrada).
-3. A próxima fase é a **F4 (API fina, state machine e aprovações)**, com plano único e as mesmas paradas.
+## Decisão
+1. **Aprovado o fechamento da F3** com a entrega acima e **confirmados** os 4 itens da seção anterior (evento recebido e nunca reivindicado reaberto, claim que trava a linha, coerência mais estrita dos payloads e os itens PROP).
+2. **Mesclado** o PR #3 na `main` (feito).
+3. A próxima fase é a **F4 (API fina, state machine e aprovações)**, com plano único e as mesmas paradas; ela só começa depois de o plano ser aprovado.
 
 ## PENDENTE (não bloqueia o fechamento)
 - **Valores definidos pela Madu:** tentativas, esperas, tempo limite, validade do claim e tamanho do lote da entrega; prazos de limpeza das entregas e das chaves de idempotência.
@@ -40,7 +41,7 @@ data-registro: 2026-10-07
 - Validar no n8n 2.41.6 que o webhook responde 2xx ao receber, quando existirem os workflows (M02 e M03); URLs e segredo dos webhooks.
 - Payload dos eventos de domínio (M03 em diante).
 
-## Consequências, se aprovado
-- A F4 passa a ser a próxima fase. [[milestones]], [[roadmap]] e [[M01-plano-de-execucao]] são atualizados depois da decisão.
+## Consequências
+- A F4 passa a ser a próxima fase. [[milestones]], [[roadmap]] e [[M01-plano-de-execucao]] foram atualizados em 2026-10-07.
 
 Ver [[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]] · [[spec-core-04-eventos]] · [[M01-plano-de-execucao]].
