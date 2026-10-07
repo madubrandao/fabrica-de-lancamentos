@@ -35,8 +35,11 @@ O [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] liberou a F2 e a F6.
 3. **Confirmadas as constraints propostas** (PROP) listadas no cabeçalho de `database/migrations/0001_base.up.sql`.
 4. A próxima fase é a **F3 (eventos)**. Ela só começa depois de um plano único aprovado pela Madu, com as mesmas paradas.
 
+## Resultado da CI (2026-10-07)
+Push das branches `feat/devops` e `feat/database` e pull requests no `madubrandao/launch-os`. No **PR #2** (`feat/database` → `main`, reúne a F6 e a F2), os 3 jobs passaram: validação do repositório, qualidade (lint, tipos, unitários e `pnpm audit`) e integração (provisionamento com `psql`, Redis com senha, `corepack` com `pnpm@11.28.2`, Node 24.21.0, 52 testes). O **PR #1** (só a F6) foi fechado como substituído: sem os testes da F2, o job de integração falhava apenas por "No test files found", e as etapas anteriores passaram. **O merge na `main` ainda não foi feito.**
+
 ## Condições abertas (não bloqueiam o fechamento, mas ficam registradas)
-- **CI no GitHub não executada.** No primeiro push, conferir: `psql` 15+ no runner (usa `\getenv`), `corepack` com `pnpm@11.28.2` e o cache do pnpm, `pnpm audit --audit-level=high` (pode bloquear por aviso novo em dependência de desenvolvimento; avaliar `continue-on-error`), download do Node 24.21.0, Redis com senha no job de integração.
+- `pnpm audit --audit-level=high` bloqueia a CI por aviso novo em dependência de desenvolvimento, sem mudança de código; avaliar `continue-on-error` ou um job agendado se atrapalhar.
 - **Node local** continua na 24.16.0; a CI usa a 24.21.0. Atualizar é decisão da Madu.
 - **Major do pnpm:** fixada a 11 (11.28.2); a 12 (`latest` 12.9.1) não foi avaliada (adendo no ADR-0006).
 - **Snapshot em `database/schema/`:** PENDENTE.
