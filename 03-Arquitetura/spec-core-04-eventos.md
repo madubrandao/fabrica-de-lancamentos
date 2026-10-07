@@ -127,6 +127,13 @@ Garantia: **pelo menos uma vez** (at-least-once). Duplicados são esperados e tr
 
 **Falha parcial (casos a testar):** a API cai depois de gravar e antes de entregar (o entregador retoma da tabela); n8n responde depois do timeout (reenvio gera duplicado e o consumidor deduplica); n8n responde 2xx e a API cai antes de marcar `delivered` (reenvio duplicado, idem); workflow falha depois do 2xx (o claim vence, a linha volta a `pending` e o evento é reenviado; alerta dispara).
 
+**Adendo da F3 (2026-10-07), achados da implementação e da revisão independente** (código em `packages/schemas` e `packages/events` do `launch-os`; decisão técnica no ADR-0018):
+- **Claim trava a linha:** o claim faz `SELECT ... FOR UPDATE` antes de decidir, para esperar o entregador confirmar o recebimento. Um `UPDATE` direto com `status = 'delivered'` no `WHERE` devolveria `false` na hora, sobre a versão antiga da linha.
+- **Recebido e nunca reivindicado** (acréscimo): o evento `delivered` que nenhum workflow reivindicou além da validade também é reaberto e reenviado (código de erro `not_claimed`). Sem isso, um workflow que respondeu 2xx e nunca chamou o claim deixaria o evento parado, e o "pelo menos uma vez" falharia. `claimValidityMs` passa a valer também como prazo para o workflow começar (e deve ser maior que o tempo limite da chamada).
+- **Alerta que falha não derruba o `dead`:** o `error.detected` roda em um `SAVEPOINT`; a `dedupe_key` do alerta inclui o ciclo de reprocesso.
+- **`last_error` seguro:** não repete a mensagem do `fetch` (pode citar a URL do webhook, que costuma levar token). A URL é validada (`https`, exceto localhost).
+- **Premissa:** a ordem por entidade exige que o chamador serialize as escritas da mesma entidade (bloqueio da linha do launch), porque `position` é atribuída no INSERT.
+
 ## 6. Idempotência (PROP)
 **Pedido mutador (R5):**
 - Todo pedido que muda estado leva o cabeçalho `Idempotency-Key`.

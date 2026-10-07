@@ -32,6 +32,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0022-inicio-formal-do-m01]] — início formal do M01 Core Platform (2026-10-04); especificação primeiro, código só após aprovação (portão F1).
 - [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] — portão F1 aprovado pela Madu em 2026-10-07: especificação do Core aceita; F2 e F6 liberadas (ainda não iniciadas).
 - [[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]] — fechamento da F2 (banco e schema) e da F6 (infra e CI) aprovado pela Madu em 2026-10-07; push e pull requests autorizados; próxima fase: F3.
+- [[DEC-0025-fechamento-da-f3-do-m01]] — **PROPOSTA, aguardando a Madu** (2026-10-07): fechamento da F3 (eventos); só vale depois da decisão dela.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos**, sem subitens abertos.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.
