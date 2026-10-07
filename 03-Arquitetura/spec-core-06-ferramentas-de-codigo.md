@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: DEC-0013; DEC-0016 D1, D5; DEC-0019; DEC-0020; M01-plano-de-execucao (F1, F6); blocos 1 a 5 desta especificação; consulta ao registro do npm e ao nodejs.org em 2026-10-07
-status: proposta do eng-00-architect, aguardando aprovação da Madu (M01, F1, bloco 6 de 6)
+status: decisões D6.1 a D6.10 aprovadas pela Madu em 2026-10-07 (recomendações do ENG-00); versões exatas fixadas na F6; ADRs ainda não gravados no launch-os (M01, F1, bloco 6 de 6)
 atualizado: 2026-10-07
 ---
 # Especificação do Core, bloco 6: ferramentas de código (ADRs)
@@ -121,7 +121,7 @@ Segundo o plano do M01, a F1 só encerra com **revisão independente da especifi
 4. Os ADRs do bloco 6 viram arquivos em `docs/adr/` no `launch-os` (repositório separado: **ação externa, confirmo com você antes**), e o `docs/status/` do `launch-os` é atualizado.
 5. Início da F2 (banco e schema) e da F6 (infra e CI) em paralelo, em `feat/*`.
 
-## 7. Decisões para a Madu
+## 7. Decisões (D6.1 a D6.10 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
 | **D6.1** | Versão do Node | **A)** 24 LTS, patch exato fixado na F6. **B)** Node 26. **C)** Node 22 | **A.** É a LTS vigente; 26 não é LTS. Você decide na F6 se atualiza o 24.16.0 local para o patch fixado |
