@@ -2,13 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0024
-status: PROPOSTA — aguardando a decisão da Madu (não vale até ela aprovar)
+status: aceita
 fonte: M01-plano-de-execucao (F2 e F6); DEC-0023; especificação do Core (spec-core-01 a 07); ADR-0005 a ADR-0017 e adendos no launch-os; evidências de 2026-10-07
 data-registro: 2026-10-07
+data-decisao: 2026-10-07 (a Madu aprovou seguindo as recomendações do ENG-00)
 ---
 # DEC-0024 — Fechamento da F2 (banco e schema) e da F6 (infra e CI) do M01
 
-> **Rascunho para a Madu decidir.** Os commits estão só locais, e a CI no GitHub não rodou. Se ela aprovar o fechamento antes do push, o item "CI verde" fica como condição pendente (ver "Condições abertas").
+> **Aprovado pela Madu em 2026-10-07**, incluindo o push das branches `feat/devops` e `feat/database` e a abertura dos pull requests. O fechamento vale com a condição "CI verde no GitHub": se a CI acusar algo, a correção entra antes do merge (ver "Resultado da CI" ao final, quando houver).
 
 ## Contexto
 O [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] liberou a F2 e a F6. A Madu aprovou em 2026-10-07 um plano único para as duas ([[M01-plano-de-execucao]]), com paradas só em: subir o Docker, atualizar o Node local, push e pull request, qualquer coisa fora da especificação e este fechamento.
@@ -28,11 +29,11 @@ O [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] liberou a F2 e a F6.
 - **Revisão independente** (agente diferente do autor, somente leitura): sem achados críticos nem altos; 3 médios e 12 baixos. Todos tratados em `e58d4ff` e `e0b90e8`, exceto os itens listados em "Condições abertas".
 - **Mudanças em relação ao esboço:** a revisão apontou que o `DELETE` concedido por padrão à aplicação contrariava a D2.1 (sem DELETE físico). Corrigido: só `event_delivery` e `idempotency_key` (limpeza do bloco 4) têm `DELETE`. Também: a aplicação não consegue forjar `event.position`, e o Redis voltou a rodar sem root.
 
-## Decisão proposta
-1. **Aprovar o fechamento** da F2 e da F6 do M01 com as entregas acima.
-2. **Autorizar o push** das branches `feat/devops` e `feat/database` e a abertura do(s) pull request(s) no `madubrandao/launch-os`, para a CI rodar no GitHub. O merge na `main` só com a CI verde e a revisão registrada (DEC-0022, regra 6).
-3. **Confirmar as constraints propostas** (PROP) listadas no cabeçalho de `database/migrations/0001_base.up.sql`.
-4. Seguir para a **F3 (eventos)**, também com plano único e as mesmas paradas.
+## Decisão
+1. **Aprovado o fechamento** da F2 e da F6 do M01 com as entregas acima.
+2. **Autorizado o push** das branches `feat/devops` e `feat/database` e a abertura do(s) pull request(s) no `madubrandao/launch-os`, para a CI rodar no GitHub. O merge na `main` só com a CI verde e a revisão registrada (DEC-0022, regra 6).
+3. **Confirmadas as constraints propostas** (PROP) listadas no cabeçalho de `database/migrations/0001_base.up.sql`.
+4. A próxima fase é a **F3 (eventos)**. Ela só começa depois de um plano único aprovado pela Madu, com as mesmas paradas.
 
 ## Condições abertas (não bloqueiam o fechamento, mas ficam registradas)
 - **CI no GitHub não executada.** No primeiro push, conferir: `psql` 15+ no runner (usa `\getenv`), `corepack` com `pnpm@11.28.2` e o cache do pnpm, `pnpm audit --audit-level=high` (pode bloquear por aviso novo em dependência de desenvolvimento; avaliar `continue-on-error`), download do Node 24.21.0, Redis com senha no job de integração.
@@ -43,8 +44,8 @@ O [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] liberou a F2 e a F6.
 - **Falta o teste do DOWN com dados** nas tabelas e o teste de descer uma migration por vez; o round-trip hoje desce tudo de uma vez com as tabelas vazias.
 - O banco de desenvolvimento do M00 foi **recriado** (`down -v`) com a autorização da Madu; os dados eram só de validação do M00.
 
-## Consequências, se aprovado
-- A F3 passa a ser a próxima fase. Os documentos [[milestones]], [[roadmap]] e [[M01-plano-de-execucao]] são atualizados depois da decisão.
+## Consequências
+- A F3 passa a ser a próxima fase. [[milestones]], [[roadmap]] e [[M01-plano-de-execucao]] foram atualizados em 2026-10-07.
 - Mudar qualquer decisão técnica desta entrega exige ADR ou DEC (guardrail do ENG-00).
 
 Ver [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] · [[spec-core-02-entidades-e-schema]] · [[spec-core-04-eventos]] · [[spec-core-05-permissoes-e-aprovacoes]].
