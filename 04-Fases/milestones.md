@@ -25,7 +25,7 @@ Valida: fundação documental, repositório, Claude Code, infraestrutura de dese
 - [x] Documentação de arquitetura transferida/linkada ao repo (referenciada, não copiada: `docs/architecture/README.md`)
 
 ## M01 — Core Platform
-**Status: em andamento** (início formal em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 concluída; **F1 (especificação, sem código) é a próxima**; código só depois de a Madu aprovar a especificação.
+**Status: em andamento** (início formal em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 e **F1 concluídas** (especificação aprovada pela Madu em 2026-10-07, portão F1: [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]). **F2 (banco) e F6 (infra e CI) liberadas, ainda não iniciadas.** Código, schema e migrations só dentro da especificação e em branches `feat/*`.
 Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permissions, approvals e state machine.
 - [ ] PostgreSQL + schema inicial + migrations reversíveis
 - [ ] Redis

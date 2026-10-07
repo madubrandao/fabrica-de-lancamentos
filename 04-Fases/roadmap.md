@@ -19,7 +19,7 @@ Numeração oficial ([[DEC-0010-decisoes-canonicas-fase-1-v1]] §4). Qualquer ro
 | **M05** | Learning Loop | análise, experimentação e learning loop |
 | **M06** | Operator Dashboard | painel operacional e aprovação humana |
 
-**M00 Foundation: concluído em 2026-10-04 ([[DEC-0021-m00-foundation-concluido]]); o M01 foi iniciado formalmente em 2026-10-04 ([[DEC-0022-inicio-formal-do-m01]]).** M00 iniciado formalmente em 2026-10-04 ([[DEC-0018-inicio-formal-do-m00]]; plano em [[M00-plano-de-execucao]]). O escopo do M00 era só o dele. O M01 está em andamento, na fase F1 (especificação, sem código). A FASE 1 - BASE (documentação e arquitetura) está concluída.
+**M00 Foundation: concluído em 2026-10-04 ([[DEC-0021-m00-foundation-concluido]]); o M01 foi iniciado formalmente em 2026-10-04 ([[DEC-0022-inicio-formal-do-m01]]).** M00 iniciado formalmente em 2026-10-04 ([[DEC-0018-inicio-formal-do-m00]]; plano em [[M00-plano-de-execucao]]). O escopo do M00 era só o dele. O M01 está em andamento: a F1 (especificação) foi aprovada em 2026-10-07 ([[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]) e a F2 e a F6 estão liberadas, ainda não iniciadas. A FASE 1 - BASE (documentação e arquitetura) está concluída.
 
 ## Correspondência com as numerações antigas (só referência histórica)
 | Conteúdo | Plano Final (Fases) | Blueprint (antigo) | Starter | **Canônico** |

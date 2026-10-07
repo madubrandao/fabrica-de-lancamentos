@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 e §10; DEC-0015; DEC-0017; DEC-0020; DEC-0021; blueprint v1 §14–§21, §41; plano aprovado pela Madu em 2026-10-04
-status: em execução (início formal em 2026-10-04, DEC-0022); F0 concluída; F1 (especificação) é a próxima
+status: em execução (início formal em 2026-10-04, DEC-0022); F0 e F1 concluídas (portão F1 aprovado em 2026-10-07, DEC-0023); F2 e F6 liberadas, ainda não iniciadas
 atualizado: 2026-10-04
 ---
 # M01 Core Platform — plano de execução (proposta)
@@ -64,5 +64,8 @@ Todas as capacidades cumprindo o [[definicao-de-pronto]] (código, testes passan
 
 ## F0 concluída (2026-10-04)
 Pré-condições conferidas e registradas no [[DEC-0022-inicio-formal-do-m01]]: disco 22 GB livres, CI verde em `f00f597`, repositórios sincronizados, Claude Code 2.1.289, número de humanos respondido (só a Madu). O `docs/status/` do `launch-os` foi atualizado para refletir o M01 em andamento. **Achado:** a proteção de branch não existe neste repositório privado (exige GitHub Pro ou repositório público), então a revisão por outro agente antes do merge vale por convenção. As branches `feat/*` são criadas quando cada fase começa; a F1 começa em `feat/core-platform`.
+
+## F1 concluída (2026-10-07)
+Especificação em seis blocos mais fechamento, com as decisões D1.1 a D7.7 aprovadas pela Madu ([[spec-core-01-servicos-e-limites]] a [[spec-core-07-revisao-independente-f1]]); revisão independente em duas passadas (0 críticos e 0 altos no final); portão aprovado no [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]. Os ADRs do bloco 6 foram gravados no `launch-os` (ADR-0005 a ADR-0017, commit local, sem push). **Próximo:** F2 (banco e schema) e F6 (infra e CI), cada uma com a confirmação da Madu para começar.
 
 Ver [[milestones]] · [[roadmap]] · [[M00-plano-de-execucao]].
