@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 e §10; DEC-0015; DEC-0017; DEC-0020; DEC-0021; blueprint v1 §14–§21, §41; plano aprovado pela Madu em 2026-10-04
-status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F4 é a próxima
+status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F4 implementada (PR #4), aguarda revisão e o DEC-0026 (proposta)
 atualizado: 2026-10-04
 ---
 # M01 Core Platform — plano de execução (proposta)
@@ -67,6 +67,9 @@ Pré-condições conferidas e registradas no [[DEC-0022-inicio-formal-do-m01]]: 
 
 ## F3 implementada e testada (2026-10-07)
 Plano único aprovado pela Madu em 2026-10-07. Branch `feat/events` no `launch-os` (PR #3): `packages/schemas` (contrato de 23 tipos de evento, validação, guarda de segredos, `dedupe_key`, constantes de estados, gates e transições) e `packages/events` (publicação, idempotência, entregador, claim e ack, reprocesso e limpeza). **Evidências:** 44 testes unitários e 112 de integração contra PostgreSQL 17.11; provas negativas da ordem e do claim; revisão independente (2 altos, 5 médios e 3 baixos, todos tratados); CI verde. **Valores numéricos da entrega seguem PENDENTES** (a Madu define; sem padrão no código). Acréscimo à especificação: o evento recebido e nunca reivindicado é reaberto (adendo no bloco 4, seção 5; ADR-0018). Fechada e mesclada na `main` (merge `997c1a5`); fechamento aprovado pela Madu em 2026-10-07 ([[DEC-0025-fechamento-da-f3-do-m01]]). **Próxima: F4**, com plano único a aprovar.
+
+### F4 — implementada (2026-10-07)
+Plano único aprovado em 2026-10-07. Branch `feat/api` no `launch-os` (PR #4, CI verde): `apps/api`, `apps/cli`, migration 0008, ADR-0019 e ADR-0020. **Evidências:** 402 testes (57 unitários, 345 de integração); provas negativas do `FOR UPDATE` e do token humano. Aguarda a revisão independente e o fechamento ([[DEC-0026-fechamento-da-f4-do-m01]], proposta). Valores numéricos seguem PENDENTES.
 
 ## F2 e F6 implementadas e testadas localmente (2026-10-07)
 Plano único aprovado pela Madu em 2026-10-07. Branches locais `feat/devops` (F6) e `feat/database` (F2), no `launch-os`, **sem push**. Evidências: 52 testes de integração e 4 unitários passando contra PostgreSQL 17.11 em Docker, `check-repo.sh` aprovado, round-trip das 7 migrations, provisionamento idempotente, n8n em banco próprio, Redis com senha e como usuário `redis`; revisão independente sem achados críticos ou altos, com os ajustes aplicados. **Fechamento aprovado pela Madu em 2026-10-07 ([[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]]), com push e pull requests autorizados. **Falta:** CI verde no GitHub e o merge. Próxima fase: F3 (eventos), com plano único a aprovar.
