@@ -63,9 +63,10 @@ Semente do M01: uma linha (DEC-0017 C2).
 | `name` | text | não | PROP | |
 | `email` | text | não | PROP | único por organização |
 | `is_active` | boolean | não | PROP | |
+| `password_hash` | text | não | DER (bloco 5, D5.1) | só o hash forte da senha; nunca texto puro nem devolvido por resposta de API |
 | `created_at`, `updated_at` | timestamptz | não | PROP | |
 
-**PEND (bloco 5):** como o operador se autentica, colunas de credencial e papéis. Nenhuma coluna de senha, token ou papel é proposta aqui. Com um só humano, não há papel nem delegação ([[M01-plano-de-execucao]]).
+Autenticação do operador: [[spec-core-05-permissoes-e-aprovacoes]] (D5.1 aprovada). Com um só humano, não há papel nem delegação ([[M01-plano-de-execucao]]). **PEND:** segundo fator e duração da sessão (valores da Madu).
 
 ### 3.3 `agent`
 | Coluna | Tipo | Nulo | Origem | Nota |
@@ -129,22 +130,26 @@ A lista oficial não tem entidade separada para a continuidade, e o plano do M01
 | `organization_id` | uuid | não | DER | FK |
 | `launch_id` | uuid | sim | DER | FK `launch` |
 | `gate_id` | text | sim | DER | `CHECK` em G01 a G12; nulo quando o pedido não for de gate |
-| `subject_type` | text | não | PROP | o que está sendo aprovado: gate, gasto, outro (lista PEND) |
+| `subject_type` | text | não | DER (bloco 5, D5.5) | `CHECK` em `gate` ou `action` |
 | `subject_id` | uuid | sim | PROP | |
-| `status` | text | não | DER | `CHECK` em `requested`, `granted`, `rejected`. `expired` é **PEND** (D8 do DEC-0016; evento `approval.expired` pendente) |
+| `status` | text | não | DER (bloco 5, D5.6) | `CHECK` em `requested`, `granted`, `rejected`, `expired` |
 | `requested_by_type`, `requested_by_id` | text | não | DER | quem pediu (agente ou sistema) |
 | `requested_at` | timestamptz | não | DER | |
-| `decided_by_user_id` | uuid | sim | DER | FK `user`; só preenchido em `granted` ou `rejected` |
+| `decided_by_type` | text | sim | DER (bloco 5, D5.5) | `CHECK` em `human` ou `system`; `system` em gate de VERIFICAÇÃO concedido pela API e em `expired` |
+| `decided_by_user_id` | uuid | sim | DER | FK `user`; preenchido quando `decided_by_type = human` |
 | `decided_at` | timestamptz | sim | DER | |
-| `reason` | text | sim | PROP | |
-| `expires_at` | timestamptz | sim | PEND | prazo de expiração depende da Madu |
+| `consumed_at` | timestamptz | sim | DER (bloco 5, D5.5) | marcada na mesma transação em que a aprovação concedida é usada; uso único |
+| `reason` | text | sim | PROP | obrigatório ao rejeitar |
+| `expires_at` | timestamptz | sim | DER (bloco 5, D5.6) | calculado da política `approval_expiry`; nulo se a política não existir. Valor do prazo: PEND (Madu) |
 | `correlation_id` | uuid | não | DER | |
 | `created_at`, `updated_at` | timestamptz | não | PROP | |
 
 Constraints propostas:
-- `status IN ('granted','rejected')` exige `decided_by_user_id` e `decided_at` (R8 do bloco 1: aprovação só por canal humano autenticado).
+- `status IN ('granted','rejected')` exige `decided_by_type` e `decided_at`; com `decided_by_type = human` exige também `decided_by_user_id` (R8 do bloco 1: gate HUMANO só por canal humano autenticado). `decided_by_type = system` só vale para gate de VERIFICAÇÃO (bloco 3) e para `expired`.
+- `consumed_at` só pode ser preenchido quando `status = granted`.
+- `rejected` e `expired` são finais; novo pedido é nova linha (bloco 5, 6.1).
 - Sem resposta, `status` permanece `requested` e nada vale como aprovado (regra do DEC-0010).
-- `BUDGET_AUTHORIZED` é policy check e **não** vira linha de `approval` por padrão; o registro dele fica no `audit_log` ([[gates]]). Se a Madu preferir registrá-lo como aprovação, é decisão do bloco 5.
+- `BUDGET_AUTHORIZED` é policy check e **não** vira linha de `approval`; o registro dele fica no `audit_log` ([[gates]]). Gasto acima do limite exige `approval` com `subject_type = action` (bloco 5, seção 7).
 
 ### 3.7 `event` (event store, append-only)
 As 12 colunas vêm do contrato do Blueprint §17.
@@ -163,8 +168,10 @@ As 12 colunas vêm do contrato do Blueprint §17.
 | `causation_id` | uuid | sim | DOC | FK lógica para outro `event_id` |
 | `payload` | jsonb | não | DOC | versionado |
 | `schema_version` | integer | não | DOC | |
+| `position` | bigint | não | DER (bloco 4, D4.3) | sequência crescente, fora do contrato do Blueprint; ordena a entrega por entidade e serve de cursor |
+| `dedupe_key` | text | não | DER (bloco 4, D4.2) | **única**; montada pela API a partir do fato; impede emitir o mesmo fato duas vezes |
 
-**PEND (bloco 4):** chave de idempotência do evento (R5 do bloco 1), retenção, particionamento, ordem de entrega e outbox.
+Decisões do [[spec-core-04-eventos]] (aprovadas): entrega por outbox no PostgreSQL (tabela `event_delivery`), retenção (`event` não é apagado no M01), ordem por entidade. **PEND:** particionamento e os valores numéricos de entrega.
 
 ### 3.8 `audit_log` (imutável)
 Os documentos exigem audit em toda mutação crítica e `execution_id` com audit trail, mas **não definem colunas**. Proposta:
@@ -184,6 +191,16 @@ Os documentos exigem audit em toda mutação crítica e `execution_id` com audit
 | `details` | jsonb | sim | PROP | ex.: `BUDGET_AUTHORIZED = true` e o motivo |
 
 **Constraint:** só `INSERT`; `UPDATE` e `DELETE` bloqueados (ver seção 6). **PEND:** retenção (item 10 das decisões do M01).
+
+### 3.9 Tabelas de infraestrutura (blocos 4 e 5, aprovadas)
+Não são entidades de negócio e **não alteram a lista de 22** do DEC-0012. Cada uma entra na F2 com migration reversível e teste de constraints. As colunas estão nos blocos de origem:
+
+| Tabela | Para quê | Onde está definida |
+|---|---|---|
+| `event_delivery` | controle mutável da entrega de eventos (o `event` é imutável) | [[spec-core-04-eventos]], seção 5 (D4.1) |
+| `idempotency_key` | chave de idempotência dos pedidos mutadores | [[spec-core-04-eventos]], seção 6 (D4.2) |
+| `agent_credential` | hash da credencial de cada agente, com revogação | [[spec-core-05-permissoes-e-aprovacoes]], seção 3.2 (D5.2) |
+| `policy_setting` | política configurável (prazo de aprovação, limites de orçamento), alterável só pela Madu com audit | [[spec-core-05-permissoes-e-aprovacoes]], seção 8 (D5.7) |
 
 ## 4. Entidades de domínio (esqueleto)
 Valem a partir do M03 em diante. O M01 só reserva tabela, chaves e relações; **as colunas de negócio não estão em nenhum documento e não foram inventadas**. Todas têm `id`, `organization_id`, `created_at` e `updated_at`.

@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: DEC-0007; DEC-0010 §3, §8; DEC-0016 D8; DEC-0019; DEC-0020; blueprint v1 §13, §19–§21; permissoes-e-hitl; gates; engenharia-eng-00-a-07; M01-plano-de-execucao (F1, F4, F5)
-status: proposta do eng-00-architect, aguardando aprovação da Madu (M01, F1, bloco 5 de 6)
+status: decisões D5.1 a D5.10 aprovadas pela Madu em 2026-10-07 (recomendações do ENG-00); valores numéricos e escopos dos 11 agentes seguem PEND (M01, F1, bloco 5 de 6)
 atualizado: 2026-10-07
 ---
 # Especificação do Core, bloco 5: permissões, autenticação e aprovações
@@ -170,7 +170,7 @@ O `audit_log` registra, aceito ou negado:
 - **Completude do audit:** cada ação da seção 9 deixa linha de audit, inclusive as negadas.
 - **Concorrência:** duas decisões simultâneas sobre o mesmo `approval` resultam em uma só.
 
-## 11. Decisões para a Madu
+## 11. Decisões (D5.1 a D5.10 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas; ajustes consolidados no bloco 2)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
 | **D5.1** | Como a Madu se autentica | **A)** e-mail e senha com hash forte, token de sessão curto assinado com o `JWT_SECRET`, API só em `127.0.0.1`. **B)** chave de API fixa para o operador. **C)** provedor externo de login | **A.** Distingue com clareza o token humano do token de agente, o que sustenta o R8. B mistura com a credencial de serviço; C é peso desnecessário para uma pessoa só. Segundo fator e duração da sessão ficam PEND para você |
