@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: DEC-0010 §3, §5–§6; DEC-0016 D7, D8; DEC-0011; blueprint v1 §13, §15–§16, §19–§21; launch-state-machine; gates; permissoes-e-hitl; M01-plano-de-execucao (F1)
-status: proposta do eng-00-architect, aguardando aprovação da Madu (M01, F1, bloco 3 de 6)
+status: decisões D3.1 a D3.8 aprovadas pela Madu em 2026-10-07 (recomendações do ENG-00); critérios objetivos dos gates seguem PEND (M01, F1, bloco 3 de 6)
 atualizado: 2026-10-07
 ---
 # Especificação do Core, bloco 3: state machine e gates
@@ -152,7 +152,7 @@ O bloco 2 deixou os valores em aberto. Proposta, derivados do `approval` mais re
   - Decisão de continuidade duplicada: recusada. JOINT sem INTERNAL anterior: recusado.
   - Atomicidade: falha entre mudar o estado e gravar evento/audit não deixa estado parcial (failure injection, F7).
 
-## 9. Decisões para a Madu
+## 9. Decisões (D3.1 a D3.8 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
 | **D3.1** | Mapeamento estado → gate | **A)** a tabela da seção 2: G01 em T3, G02 em T4, G03 em T5, G04 em T6, G05 + G06 + G07 em T7, G08 em T8, G09 em T10, G10 a G12 em T12 a T14; T1, T2, T9 e T11 sem gate. **B)** um gate em cada transição possível, mudando a lista | **A.** Respeita as ligações de nome (G08 é "Cart Open", G09 é "Cart Close") e coloca G04 a G07 entre `PLC` e `CART_OPEN`, como o DEC-0016 pede. Só há 3 transições entre `PRE_PRE` e `CART_OPEN` para 4 gates, então G05, G06 e G07 dividem T7 |
