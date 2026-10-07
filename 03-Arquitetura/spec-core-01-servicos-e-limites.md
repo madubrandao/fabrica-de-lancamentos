@@ -3,11 +3,11 @@ tipo: arquitetura
 area: 03-Arquitetura
 fonte: DEC-0004; DEC-0005; DEC-0007; DEC-0009; DEC-0020; blueprint v1 §1.2, §16–§18, §22–§23, §30, §41; PLANO FINAL §18
 status: decisões D1.1 a D1.5 aprovadas pela Madu em 2026-10-07 (recomendações do ENG-00); R1 a R8 seguem como proposta até a revisão final da especificação (M01, F1, bloco 1 de 6)
-atualizado: 2026-10-04
+atualizado: 2026-10-07
 ---
 # Especificação do Core, bloco 1: serviços e limites entre a API e o n8n
 
-Parte da F1 do [[M01-plano-de-execucao]] ([[DEC-0022-inicio-formal-do-m01]]). **Proposta, sem código.** Nada aqui é decisão até a Madu aprovar; o que os documentos não definem está marcado **PENDENTE**, e as escolhas que dependem dela estão na seção "Decisões para a Madu".
+Parte da F1 do [[M01-plano-de-execucao]] ([[DEC-0022-inicio-formal-do-m01]]). **Sem código.** As decisões D1.1 a D1.5 foram aprovadas pela Madu em 2026-10-07 (seção 5); as regras R1 a R8 seguem como proposta até a revisão final. O que os documentos não definem está marcado **PENDENTE**.
 
 Blocos da especificação: **1 serviços e limites** (este) · 2 entidades e schema · 3 state machine e gates · 4 eventos · 5 permissões e aprovações · 6 ferramentas de código (ADRs).
 
@@ -75,6 +75,26 @@ Regra comum: **só a API muda o estado de negócio**; o n8n pede, e a API decide
 | **D1.5** | O que é o "agent runtime gateway" do ENG-01 (pendência do [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]])? | **A)** a **fachada da API** que os workflows de agentes usam: checagem de permissão, pedido de transição, registro de resultado e emissão de evento. **B)** um serviço separado entre o n8n e a API | **A.** Evita um serviço a mais; define o gateway como o conjunto de endpoints do R1 a R5 |
 
 **PENDENTE para os blocos seguintes** (não decidido aqui): como o n8n se autentica na API e como o operador se autentica (bloco 5); contratos exatos dos endpoints (bloco 4 e depois da aprovação deste); onde a montagem de contexto roda e o que é lido de cada agente (M02, junto da memória); estratégia de entrega confiável dos eventos (bloco 4).
+
+## 5-bis. Catálogo mínimo de endpoints (PROP, revisão independente)
+Só a **lista de intenções**; os contratos exatos (corpo, validação, códigos) saem do schema versionado em `packages/schemas/` nas fases F3 e F4. Cabeçalhos comuns (nomes PROP): `Authorization`, `X-Correlation-Id`, `X-Execution-Id` e, nos pedidos mutadores, `Idempotency-Key`.
+
+| Grupo | Intenção | Quem chama | Idempotente |
+|---|---|---|---|
+| Launch | criar launch; ler launch e contexto; pedir transição | operador ou A0 (criar); agente com permissão (ler); `owner_agent` ou A0 (transição) | criar e transição: sim |
+| Aprovação | pedir aprovação de gate ou de ação; listar pendentes; conceder ou rejeitar | agente (pedir); operador (listar, conceder, rejeitar) | pedir: sim |
+| Decisão | propor e registrar a decisão de continuidade | A0 (propor); operador (confirmar) | sim |
+| Evento | registrar resultado e emitir evento a pedido do n8n; claim e ack de evento | agente (emitir); serviço do n8n (claim e ack) | sim |
+| Permissão | consultar se o agente pode agir | agente | leitura |
+| Correlação | obter um `correlation_id` novo para fluxo que nasce fora da API (por exemplo, agendado no n8n) | serviço do n8n | não |
+| Registry | listar e ler agentes; editar permissões; ativar e desativar; criar e revogar credencial | operador | sim |
+| Política | ler e alterar `policy_setting` | operador | sim |
+| Entrega | listar entregas `dead` e reprocessar | operador | sim |
+| Saúde | healthcheck | local | leitura |
+
+Erros padronizados (códigos HTTP e corpo sem segredo, com `correlation_id`): validação, não autenticado, negado (permissão ou gate), não encontrado, conflito (estado ou chave de idempotência) e falha interna.
+
+**Fora do M01 (revisão independente):** `apps/worker` não existe (D1.3 aprovada: o agendador fica na API); `packages/agents` e o escopo do ENG-04 ficam **PENDENTES** para o M02; o gateway é a fachada da API (D1.5).
 
 ## 6. Riscos
 - **API como ponto único de falha:** se a API cair, nenhum agente muda estado. Mitigação: healthcheck, retries com backoff no n8n e idempotência; é o preço de ter um único dono do estado.

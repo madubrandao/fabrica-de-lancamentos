@@ -23,6 +23,7 @@ Arquitetura técnica, integrações, dados e infraestrutura. Tudo é **especific
 - [[spec-core-03-state-machine-e-gates]] — **M01/F1, bloco 3** (decisões D3.x aprovadas em 2026-10-07): transições, mapeamento estado → gate, aprovadores, `owner_agent` e decisão de continuidade.
 - [[spec-core-04-eventos]] — **M01/F1, bloco 4** (decisões D4.x aprovadas em 2026-10-07): payloads, entrega confiável, idempotência, retenção, eventos faltantes e papel do Redis.
 - [[spec-core-05-permissoes-e-aprovacoes]] — **M01/F1, bloco 5** (decisões D5.x aprovadas em 2026-10-07): autenticação, permissões, aprovações (prazo e `approval.expired`), `BUDGET_AUTHORIZED` e auditoria de segurança.
-- [[spec-core-06-ferramentas-de-codigo]] — **M01/F1, bloco 6** (decisões D6.x aprovadas em 2026-10-07; F1 em revisão independente): ADRs das ferramentas (Node, pnpm, TypeScript, Fastify, Zod, `pg`, migrations, testes, logs, segurança) e fechamento da F1.
+- [[spec-core-06-ferramentas-de-codigo]] — **M01/F1, bloco 6** (decisões D6.x aprovadas em 2026-10-07; F1 em fechamento)
+- [[spec-core-07-revisao-independente-f1]] — **M01/F1, fechamento**: achados da revisão independente (0 críticos, 6 altos), correções aplicadas e decisões D7.1 a D7.7 aguardando a Madu.: ADRs das ferramentas (Node, pnpm, TypeScript, Fastify, Zod, `pg`, migrations, testes, logs, segurança) e fechamento da F1.
 
 Voltar: [[00-LEIA-PRIMEIRO]]

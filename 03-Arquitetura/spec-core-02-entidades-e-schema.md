@@ -7,7 +7,7 @@ atualizado: 2026-10-07
 ---
 # Especificação do Core, bloco 2: entidades e schema
 
-Parte da F1 do [[M01-plano-de-execucao]] ([[DEC-0022-inicio-formal-do-m01]]). **Sem código, sem migration.** As decisões D2.1 a D2.8 foram aprovadas pela Madu em 2026-10-07 com as recomendações do ENG-00 (seção 7). Colunas marcadas PROP seguem como proposta até a revisão final do bloco; nada aqui é schema final. O que os documentos não definem está marcado **PENDENTE**, e as escolhas que dependem dela estão em "Decisões para a Madu". Continua o [[spec-core-01-servicos-e-limites]] (bloco 1, ainda aguardando aprovação).
+Parte da F1 do [[M01-plano-de-execucao]] ([[DEC-0022-inicio-formal-do-m01]]). **Sem código, sem migration.** As decisões D2.1 a D2.8 foram aprovadas pela Madu em 2026-10-07 com as recomendações do ENG-00 (seção 7). Colunas marcadas PROP seguem como proposta até a revisão final do bloco; nada aqui é schema final. O que os documentos não definem está marcado **PENDENTE**, e as escolhas que dependem dela estão em "Decisões para a Madu". Continua o [[spec-core-01-servicos-e-limites]] (bloco 1, decisões aprovadas).
 
 Blocos da especificação: 1 serviços e limites · **2 entidades e schema** (este) · 3 state machine e gates · 4 eventos · 5 permissões e aprovações · 6 ferramentas de código (ADRs).
 
@@ -96,9 +96,9 @@ Autenticação do operador: [[spec-core-05-permissoes-e-aprovacoes]] (D5.1 aprov
 | `cart_open` | timestamptz | sim | DOC | tipo PROP |
 | `cart_close` | timestamptz | sim | DOC | tipo PROP; `CHECK (cart_close > cart_open)` quando ambos existem (PROP) |
 | `status` | text | não | DOC | `CHECK` nos 15 estados; inicial `IDEA` (DER). Só a API altera (R7 do bloco 1) |
-| `owner_agent_id` | uuid | sim | DOC (`owner_agent`) | FK `agent`; regra de `owner_agent` por estado é PEND (bloco 3) |
-| `approval_state` | text | não | DOC | **valores PEND** (bloco 3 ou 5) |
-| `result` | jsonb | sim | DOC | **estrutura PEND** |
+| `owner_agent_id` | uuid | sim | DOC (`owner_agent`) | FK `agent`; a API preenche com o dono do estado e atualiza a cada transição (bloco 3, seção 4, D3.3) |
+| `approval_state` | text | não | DOC | `CHECK` em `NOT_REQUIRED`, `PENDING`, `GRANTED`, `REJECTED`, `EXPIRED` (bloco 3, seção 7, D3.7). Persistida, atualizada na mesma transação de qualquer mudança em `approval` do launch; teste de consistência obrigatório |
+| `result` | jsonb | sim | DOC | **estrutura PEND** (resultado do ciclo; depende de métricas, M05). Nulo no M01 |
 | `previous_launch_id` | uuid | sim | DER | FK `launch`; liga o ciclo ao anterior (a continuidade liga um Launch ao seguinte) |
 | `created_at`, `updated_at` | timestamptz | não | PROP | |
 
@@ -130,6 +130,7 @@ A lista oficial não tem entidade separada para a continuidade, e o plano do M01
 | `organization_id` | uuid | não | DER | FK |
 | `launch_id` | uuid | sim | DER | FK `launch` |
 | `gate_id` | text | sim | DER | `CHECK` em G01 a G12; nulo quando o pedido não for de gate |
+| `from_status` | text | sim | DER (revisão independente) | estado de origem da transição que a aprovação libera; `CHECK` nos 15 estados; obrigatório quando `subject_type = gate` |
 | `subject_type` | text | não | DER (bloco 5, D5.5) | `CHECK` em `gate` ou `action` |
 | `subject_id` | uuid | sim | PROP | |
 | `status` | text | não | DER (bloco 5, D5.6) | `CHECK` em `requested`, `granted`, `rejected`, `expired` |
@@ -147,6 +148,8 @@ A lista oficial não tem entidade separada para a continuidade, e o plano do M01
 Constraints propostas:
 - `status IN ('granted','rejected')` exige `decided_by_type` e `decided_at`; com `decided_by_type = human` exige também `decided_by_user_id` (R8 do bloco 1: gate HUMANO só por canal humano autenticado). `decided_by_type = system` só vale para gate de VERIFICAÇÃO (bloco 3) e para `expired`.
 - `consumed_at` só pode ser preenchido quando `status = granted`.
+- **Índice único parcial** em (`launch_id`, `gate_id`) onde `status = 'requested'`: no máximo um pedido aberto por gate e launch. Sem isso, duas linhas abertas deixariam ambíguo qual aprovação é usada.
+- A checagem de um gate que depende de outro (G08 depende de G07) aceita `granted` **mesmo com `consumed_at` preenchido**, para o mesmo launch; o uso único vale para liberar uma transição, não para provar a dependência.
 - `rejected` e `expired` são finais; novo pedido é nova linha (bloco 5, 6.1).
 - Sem resposta, `status` permanece `requested` e nada vale como aprovado (regra do DEC-0010).
 - `BUDGET_AUTHORIZED` é policy check e **não** vira linha de `approval`; o registro dele fica no `audit_log` ([[gates]]). Gasto acima do limite exige `approval` com `subject_type = action` (bloco 5, seção 7).
@@ -199,7 +202,7 @@ Não são entidades de negócio e **não alteram a lista de 22** do DEC-0012. Ca
 |---|---|---|
 | `event_delivery` | controle mutável da entrega de eventos (o `event` é imutável) | [[spec-core-04-eventos]], seção 5 (D4.1) |
 | `idempotency_key` | chave de idempotência dos pedidos mutadores | [[spec-core-04-eventos]], seção 6 (D4.2) |
-| `agent_credential` | hash da credencial de cada agente, com revogação | [[spec-core-05-permissoes-e-aprovacoes]], seção 3.2 (D5.2) |
+| `agent_credential` | hash da credencial de cada agente e da credencial de serviço do n8n (`agent_id` nulo e `service_name` preenchido), com revogação | [[spec-core-05-permissoes-e-aprovacoes]], seção 3.2 (D5.2) |
 | `policy_setting` | política configurável (prazo de aprovação, limites de orçamento), alterável só pela Madu com audit | [[spec-core-05-permissoes-e-aprovacoes]], seção 8 (D5.7) |
 
 ## 4. Entidades de domínio (esqueleto)
@@ -241,7 +244,9 @@ event        N──1 organization · causation_id → event (lógico)
 Entidades documentadas sem posição fixa nesta cadeia (PEND): `sequence`, `objection`, `experiment`, `metric`, `conversation`, `partner`.
 
 ## 6. Imutabilidade e integridade (proposta)
-- `event` e `audit_log`: privilégio de `INSERT` e `SELECT` apenas para o usuário da aplicação, mais trigger que lança erro em `UPDATE` e `DELETE`. Teste de imutabilidade na F2 ([[M01-plano-de-execucao]]).
+- `event` e `audit_log`: privilégio de `INSERT` e `SELECT` apenas para o usuário da aplicação, mais trigger que lança erro em `UPDATE` e `DELETE`, **mais trigger de comando que barra `TRUNCATE`** (trigger por linha não barra) e `REVOKE TRUNCATE` do usuário da aplicação.
+- **Dois papéis no banco:** o **migrador** é dono das tabelas e roda as migrations; a **aplicação** não é dona e só tem os privilégios acima. Dono de tabela pode contornar privilégio, por isso as duas funções ficam separadas.
+- Testes de imutabilidade na F2: `UPDATE`, `DELETE` e `TRUNCATE` falham com o papel da aplicação ([[M01-plano-de-execucao]]).
 - Usuário do banco da API separado do usuário do n8n (D1.4 do bloco 1).
 - Chaves estrangeiras `ON DELETE RESTRICT` por padrão.
 - `launch.status` só muda por transição validada pela API; a tabela de transições permitidas é do bloco 3. O banco pode reforçar com `CHECK` na lista de estados, mas **não** codifica a ordem das transições neste bloco.

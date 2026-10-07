@@ -49,7 +49,8 @@ Regra central: **a identidade vem da credencial, nunca do que o agente declara n
 
 ### 3.2 n8n → API (agentes)
 - **Credencial opaca por agente** (chave aleatória longa), guardada no *credential store* do n8n (guardrail do ENG-03). Na API fica só o **hash** (`agent_credential`, tabela nova de infraestrutura, com `agent_id`, `key_hash`, `created_at`, `revoked_at`, `last_used_at`).
-- Cada pedido do n8n leva a credencial do agente que está agindo, mais `correlation_id` e, nos pedidos mutadores, `Idempotency-Key` (bloco 4).
+- Cada pedido do n8n leva a credencial do agente que está agindo, mais `correlation_id`, `execution_id` e, nos pedidos mutadores, `Idempotency-Key` (bloco 4).
+- **Credencial de serviço do n8n** (revisão independente): os workflows que não pertencem a um agente (retomada de aprovação, NOTIFY, claim e ack de evento) usam uma credencial de serviço, na mesma tabela `agent_credential` com `agent_id` nulo e `service_name` preenchido (`CHECK`: exatamente um dos dois). Escopo mínimo: claim e ack de evento, obter `correlation_id` e leitura para notificação. **Não pede transição nem aprovação.**
 - Revogar e trocar a credencial é feito só pelo operador, sem parar os outros agentes. Agente desativado (`agent.is_active = false`) é negado mesmo com credencial válida.
 - A chave é mostrada **uma vez**, na criação; nenhuma resposta da API a devolve depois.
 - **Por que uma por agente e não uma do n8n inteiro:** com uma só, um workflow comprometido ou com erro poderia dizer "sou o A0". Com uma por agente, o dano fica limitado ao escopo daquele agente.
@@ -57,6 +58,7 @@ Regra central: **a identidade vem da credencial, nunca do que o agente declara n
 ### 3.3 API → n8n (webhook)
 - A API envia um **segredo no cabeçalho** do webhook, configurado como credencial no n8n. O segredo vive em ambiente seguro, não no banco e não no repositório.
 - O n8n rejeita chamada sem o segredo. Evento reenviado não é problema (deduplicação, bloco 4).
+- **Limite conhecido:** o segredo estático não tem carimbo de tempo nem assinatura contra repetição (replay). Aceito enquanto tudo roda em `127.0.0.1` (DEC-0019); revisitar quando o webhook for exposto.
 
 ### 3.4 Segredos (resumo)
 Nenhum segredo em resposta de API, log, evento ou audit. Hash para o que a API só precisa comparar; ambiente seguro para o que ela precisa enviar. **Senha do Redis** e **banco e usuário do n8n separados** (D1.4) são tarefas da F2 e F6 (ENG-02 e ENG-07), listadas aqui para não se perderem.
@@ -102,7 +104,7 @@ Segue a D2.5 do bloco 2: `agent.permissions` em `jsonb`, versionado por `permiss
 O A0 pode pedir qualquer transição porque é o orquestrador ("se pode avançar", Blueprint §13), mas **não concede gate** em nenhum caso.
 
 ## 6. Aprovações (PROP)
-O modelo de dados é o do bloco 2, 3.6; os ajustes abaixo precisam ser consolidados lá depois da aprovação.
+O modelo de dados é o do bloco 2, 3.6; os ajustes abaixo já foram consolidados lá em 2026-10-07.
 
 ### 6.1 Ciclo de vida
 ```text
@@ -166,7 +168,7 @@ O `audit_log` registra, aceito ou negado:
 - **Quem pede:** só o `owner_agent` do estado atual e o A0 pedem transição; outros são negados.
 - **Orçamento:** gasto sem limite definido negado; acima do limite exige aprovação; tudo no audit.
 - **Escalada por mensagem:** texto livre de agente pedindo "me dê permissão" ou "aprove" não muda nada.
-- **Segredos:** nenhuma resposta, log, evento ou audit contém chave, senha ou token; chave de agente aparece uma única vez.
+- **Segredos:** nenhuma resposta, log, evento, audit **nem linha de `idempotency_key`** contém chave, senha ou token; chave de agente aparece uma única vez, e repetir a criação não a revela de novo.
 - **Completude do audit:** cada ação da seção 9 deixa linha de audit, inclusive as negadas.
 - **Concorrência:** duas decisões simultâneas sobre o mesmo `approval` resultam em uma só.
 
@@ -196,7 +198,7 @@ O `audit_log` registra, aceito ou negado:
 
 ## 13. Riscos
 - **Credenciais de agente no n8n:** o *credential store* do n8n vira alvo. Mitigação: uma por agente, revogável, escopo mínimo, hash na API, nada em log. Segredos em ambiente seguro (ENG-07).
-- **Sobrecarga de aprovação para a Madu:** com os critérios PEND, todos os 12 gates ficam como HUMANO (bloco 3). Aceito por ser o caminho de menor risco; cada critério objetivo que ela definir reduz a carga.
+- **Sobrecarga de aprovação para a Madu:** com os critérios PEND, **11 dos 12 gates** ficam, na prática, como HUMANO; só o G12 tem critério proposto (bloco 3). Na prática, o caminho `decided_by_type = system` só é exercitado pelo G12. Aceito por ser o caminho de menor risco; cada critério objetivo que ela definir reduz a carga.
 - **Aprovação "esquecida":** sem prazo definido, `requested` pode ficar parada. O efeito é só atraso (fail-closed), e o aviso à Madu é o remédio; definir o prazo resolve.
 - **Aprovação de algo que muda depois** (seção 6.5), em aberto para o M03.
 - **Tabelas de infraestrutura crescendo** (`agent_credential`, `policy_setting`, `event_delivery`, `idempotency_key`): cada uma entra na F2 com migration reversível e teste de constraints.

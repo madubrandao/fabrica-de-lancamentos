@@ -31,3 +31,6 @@ Eventos são imutáveis e têm payload versionado ([[catalogo-de-eventos]]), ent
 - **PENDENTE:** `approval.expired` (aprovação vencida sem resposta) não consta em nenhum documento. Não foi assumido. Ligado ao D8 (tempo de aprovação) em [[perguntas-em-aberto]].
 
 Ver [[pendencias-de-decisao]] (P04) · [[permissoes-e-hitl]] · [[gates]].
+
+## Adendo (2026-10-07)
+A Madu aprovou, no bloco 5 da especificação do M01 (D5.6, [[spec-core-05-permissoes-e-aprovacoes]]), o evento **`approval.expired`**, com o mesmo formato de `approval.rejected` e `decided_by.type = system`. O **prazo** de aprovação continua PENDENTE (valor da Madu, política). O texto original acima foi preservado.

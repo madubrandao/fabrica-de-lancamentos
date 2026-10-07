@@ -65,18 +65,18 @@ Cada gate tem um **tipo**:
 | G02 | Offer Approved | HUMANO | critério **PEND** (oferta, preço, garantia do A2) | oferta, preço e garantia estão na lista de aprovação humana |
 | G03 | Product Ready | HUMANO | critério **PEND** | "mudança crítica de produto" é HUMAN DECISION; com um só humano o custo é baixo |
 | G04 | Content/PLC Approved | HUMANO | critério **PEND** (copy principal e PLC do A3) | copy principal e PLC são SUPERVISED: o agente prepara, o humano aprova |
-| G05 | CRM Ready | VERIFICAÇÃO | critério **PEND** (configuração do A4/A6); sem critério definido o gate fica HUMANO | o nível do documento é AUTO/baixo risco, mas **não há critério objetivo definido** |
+| G05 | CRM Ready | VERIFICAÇÃO | critério **PEND** (configuração do A4/A6); sem critério definido o gate fica HUMANO | **PROP:** etapa operacional; nenhum documento classifica o G05 como AUTO ou de baixo risco, e **não há critério objetivo definido** |
 | G06 | Technical QA Passed | VERIFICAÇÃO | QA de sales page, links, order form, checkout, thank-you, confirmação, CRM e tracking ([[n8n-estrutura]]); resultado do A6 registrado. Itens objetivos **PEND** | idem |
 | G07 | Launch Ready | HUMANO | G05 e G06 concedidos + critério **PEND** | fecha o preparo do lançamento |
-| G08 | Cart Open Authorized | HUMANO | G07 concedido; `BUDGET_AUTHORIZED = true` quando houver gasto | "go/no-go de lançamento" é aprovação humana por padrão |
-| G09 | Cart Close Authorized | HUMANO | critério **PEND** | decisão de encerrar a venda |
+| G08 | Cart Open Authorized | HUMANO | G07 concedido (conta como concedido **mesmo já usado** na transição T7: a checagem aceita `granted` com `consumed_at` preenchido, para o mesmo launch); `BUDGET_AUTHORIZED = true` quando houver gasto | "go/no-go de lançamento" é aprovação humana por padrão |
+| G09 | Cart Close Authorized | HUMANO | critério **PEND** | **PROP:** decisão de encerrar a venda; nenhum documento define o aprovador |
 | G10 | Post Launch Complete | VERIFICAÇÃO | critério **PEND** (entregas pós-lançamento do A8) | etapa operacional |
 | G11 | Analysis Complete | VERIFICAÇÃO | critério **PEND** (análise do A10 registrada) | etapa AUTO |
-| G12 | Learning Recorded | VERIFICAÇÃO | existe ao menos 1 registro `learning` ligado ao launch | o nome do gate já é a condição |
+| G12 | Learning Recorded | VERIFICAÇÃO | **PROP:** existe ao menos 1 registro `learning` ligado ao launch | o nome do gate já é a condição |
 
 Notas:
 - **Enquanto o critério objetivo de um gate de VERIFICAÇÃO estiver PEND, o gate é tratado como HUMANO.** Assim nenhum gate fica sem controle por falta de definição. É a escolha de menor risco.
-- **O A0 não concede gate nesta proposta.** A lista "A0 pode decidir" do Blueprint fala de sequência, delegação e prioridade, não de gates; nada autoriza dar a ele esse poder.
+- **O A0 não concede gate.** A saída do A0 no Blueprint §13 inclui "approvals" e "next state", mas a lista "pode decidir" fala de sequência, delegação e prioridade, e os gates HUMANO são decisão da Madu. É uma **escolha aprovada** (D3.2 e D5.4), não um fato dos documentos.
 - Os critérios objetivos de cada gate **não existem nos documentos**. A Madu os define, e cada um vira ADR ou DEC. Nada foi inventado.
 - Gate é regra do sistema, não checklist de documentação ([[gates]]).
 
@@ -135,12 +135,13 @@ O bloco 2 deixou os valores em aberto. Proposta, derivados do `approval` mais re
 
 | Valor | Quando |
 |---|---|
-| `NOT_REQUIRED` | a próxima transição não tem gate |
+| `NOT_REQUIRED` | a próxima transição não tem gate, ou o launch está em `DECISION` (não há transição seguinte) |
 | `PENDING` | existe `approval` em `requested` para a transição seguinte |
 | `GRANTED` | todos os gates da transição seguinte estão concedidos |
 | `REJECTED` | o último pedido de gate foi rejeitado |
+| `EXPIRED` | o último pedido de gate venceu sem resposta (bloco 5, D5.6) |
 
-É coluna derivada: a fonte da verdade são as linhas de `approval` (bloco 2, 3.6). `expired` fica **PEND** junto do prazo de aprovação (DEC-0016 D8).
+É coluna **derivada** das linhas de `approval` (bloco 2, 3.6), que são a fonte da verdade. A coluna é persistida em `launch`, então ela é atualizada **na mesma transação** de qualquer mudança em `approval` daquele launch, e há teste de consistência entre a coluna e as linhas (revisão independente).
 
 ## 8. Auditoria e testes que esta especificação exige
 - **Audit em toda transição**, aceita ou negada: ator, estado de origem e destino, gates verificados, resultado, `correlation_id`, `execution_id`.

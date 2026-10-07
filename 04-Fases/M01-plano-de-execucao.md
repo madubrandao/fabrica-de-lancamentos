@@ -45,7 +45,7 @@ Seguindo o Blueprint §41, o primeiro pedido ao Architect é produzir a especifi
 6. Campos da entidade "decisão de continuidade".
 7. Banco e usuário do n8n separados do banco de negócio.
 8. Senha do Redis.
-9. Escopo do ENG-04, de `packages/agents` e do `agent runtime gateway` do ENG-01 com o runtime no n8n (DEC-0020).
+9. Escopo do ENG-04, de `packages/agents` e do `agent runtime gateway` do ENG-01 com o runtime no n8n (DEC-0020). **Tratamento na F1:** o gateway é a fachada da API (D1.5); `apps/worker` não existe no M01 (D1.3); `packages/agents` e o escopo do ENG-04 ficam PENDENTES para o M02.
 10. Política de retenção do audit log e dos eventos ([[catalogo-de-eventos]]).
 
 ## Guardrails (DEC-0010 §8; fonte única em `.claude/agents/` do `launch-os`, [[engenharia-eng-00-a-07]])
@@ -60,7 +60,7 @@ Schema só com migration reversível ou plano de rollback, sem migração destru
 - **Escopo crescer:** o M01 não inclui execução de agentes nem dashboard.
 
 ## Critérios de pronto do M01
-Todas as capacidades cumprindo o [[definicao-de-pronto]] (código, testes passando, logs, erros tratados, permissões, documentação, evento definido, schema versionado, ADR atualizado, revisão por outro agente); CI verde com testes de integração e migration round-trip; as 12 transições com gate testadas positiva e negativamente; completude do audit demonstrada; pilha Docker com a API saudável; disco ≥ 20 GB; revisão independente completa; DEC de fechamento aprovado pela Madu.
+Todas as capacidades cumprindo o [[definicao-de-pronto]] (código, testes passando, logs, erros tratados, permissões, documentação, evento definido, schema versionado, ADR atualizado, revisão por outro agente); CI verde com testes de integração e migration round-trip; os 12 gates testados positiva e negativamente, junto com as transições que os exigem ([[spec-core-03-state-machine-e-gates]], D3.8); completude do audit demonstrada; pilha Docker com a API saudável; disco ≥ 20 GB; revisão independente completa; DEC de fechamento aprovado pela Madu.
 
 ## F0 concluída (2026-10-04)
 Pré-condições conferidas e registradas no [[DEC-0022-inicio-formal-do-m01]]: disco 22 GB livres, CI verde em `f00f597`, repositórios sincronizados, Claude Code 2.1.289, número de humanos respondido (só a Madu). O `docs/status/` do `launch-os` foi atualizado para refletir o M01 em andamento. **Achado:** a proteção de branch não existe neste repositório privado (exige GitHub Pro ou repositório público), então a revisão por outro agente antes do merge vale por convenção. As branches `feat/*` são criadas quando cada fase começa; a F1 começa em `feat/core-platform`.

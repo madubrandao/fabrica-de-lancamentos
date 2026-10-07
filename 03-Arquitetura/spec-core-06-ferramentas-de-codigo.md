@@ -39,13 +39,13 @@ Blocos: 1 serviços e limites · 2 entidades e schema · 3 state machine e gates
 Cada ADR vira um arquivo em `docs/adr/` do `launch-os` **depois da aprovação** (ver seção 6). As versões abaixo são as do registro em 2026-10-07; a versão **exata** de cada pacote é fixada pelo arquivo de bloqueio (lockfile) na F6 e só muda por decisão registrada.
 
 ### ADR-1 Node.js: 24 LTS
-- **Evidência:** 24.x é LTS (nodejs.org); 26.x não é. Todas as bibliotecas escolhidas abaixo aceitam Node 24 (Vitest 5: `^22.12 || ^24 || >=26`; ESLint 10: `>=24`; node-pg-migrate 9: `>=20.11`).
+- **Evidência:** 24.x é LTS (nodejs.org); 26.x não é. Todas as bibliotecas escolhidas abaixo aceitam Node 24 (Vitest 5: `^22.12 || ^24 || >=26`; ESLint 10: `^20.19 || ^22.13 || >=24`; node-pg-migrate 9: `>=20.11`).
 - **Proposta:** fixar a linha **24 LTS** com versão exata (arquivo `.node-version`, campo `engines` e imagem de container quando houver). Na máquina há 24.16.0 e a LTS atual é 24.21.0: na F6 fixamos o patch e **a Madu decide se atualiza o Node local** (ação na máquina dela).
 - **Alternativas rejeitadas:** Node 26 (não é LTS); Node 22 (LTS mais antiga, sem ganho).
 
 ### ADR-2 Gerenciador de pacotes: pnpm com workspaces
 - **Evidência:** o repositório é um monorepo (`apps/`, `packages/`); pnpm 11.5.1 já está instalado; npm 11.13.0 também tem workspaces.
-- **Proposta:** **pnpm workspaces**, versão exata fixada no campo `packageManager` do `package.json` (hoje 11.5.1 instalado; 11.28.5 é a última 11.x no registro; a F6 escolhe a exata).
+- **Proposta:** **pnpm workspaces**, versão exata fixada no campo `packageManager` do `package.json` (instalado: 11.5.1; no registro a última 11.x é a 11.28.5 e o `latest` já é a **12.9.1**). **PEND:** a F6 escolhe a major (11 ou 12) e a versão exata, depois de verificar a compatibilidade com Node 24 e o lockfile.
 - **Alternativa rejeitada:** npm workspaces (menos controle de dependências entre pacotes do monorepo e instalação mais lenta). É a opção de menor mudança se a Madu preferir; custo é aceitável.
 
 ### ADR-3 Linguagem: TypeScript 6.0 (não 7.0)
@@ -59,7 +59,7 @@ Cada ADR vira um arquivo em `docs/adr/` do `launch-os` **depois da aprovação**
 - **Alternativas rejeitadas:** Express 5.2.1 (menos recursos nativos de validação e de ciclo de vida, o que empurra para bibliotecas extras); Hono 4.13 (voltado a edge e ambientes leves, sem ganho aqui).
 
 ### ADR-5 Validação e contratos: Zod 4 em `packages/schemas/`
-- **Evidência:** Zod 4.6.5 (atualizado em 2026-10-02). O adaptador `fastify-type-provider-zod` 7.0.0 exige `fastify ^5.5` e `zod >=4.1.5` e o plugin `@fastify/swagger` (último ajuste do adaptador em 2026-06, mais antigo que o resto).
+- **Evidência:** Zod 4.6.5 (atualizado em 2026-10-02). O adaptador `fastify-type-provider-zod` 7.0.0 exige `fastify ^5.5`, `zod >=4.1.5`, `@fastify/swagger >=9.5.1` e `openapi-types ^12.1.3` (último ajuste do adaptador em 2026-06, mais antigo que o resto).
 - **Proposta:** **Zod 4** como **fonte única** dos contratos (API, eventos, permissões) em `packages/schemas/`, de onde saem os tipos TypeScript. O adaptador é **opcional**: se ficar atrás do Fastify ou do Zod, a API valida com `parse` explícito no início do handler, sem perder o contrato. Gerar a documentação OpenAPI é **PEND** (F4).
 - **Alternativa rejeitada:** TypeBox 1.3 (gera JSON Schema nativo, mas o time e o Blueprint já pensam em Zod, e a regra de versionamento de evento precisa de validações programáveis).
 
@@ -70,7 +70,7 @@ Cada ADR vira um arquivo em `docs/adr/` do `launch-os` **depois da aprovação**
 
 ### ADR-7 Migrations: `node-pg-migrate` com arquivos SQL up/down
 - **Evidência:** `node-pg-migrate` 9.0.0 (atualizado em 2026-10-05). Conferi o código do pacote: ele carrega migrations **em SQL com arquivos pareados `.up.sql` e `.down.sql`** e recusa pares duplicados ou misturados.
-- **Proposta:** migrations em **SQL puro, um par up/down por mudança**, em `database/migrations/`; nenhuma migração destrutiva sem aprovação (DEC-0010 §8). A CI roda o **round-trip** (subir tudo, descer tudo, subir de novo) e compara o resultado com o snapshot em `database/schema/` (detalhe do snapshot: PEND, F2).
+- **Proposta:** migrations em **SQL puro, um par up/down por mudança**, em `database/migrations/`; nenhuma migração destrutiva sem aprovação (DEC-0010 §8). A CI roda o **round-trip** (subir tudo, descer tudo, subir de novo) e compara o resultado com o snapshot em `database/schema/` (detalhe do snapshot: PEND, F2). **Atenção (revisão independente):** o carregador de SQL do pacote fica em `dist/legacy/`, o pacote exige `pg` abaixo da versão 9, e um arquivo SQL único sem o par `.down.sql` vira migration **irreversível**; por isso a CI deve falhar se existir `.up.sql` sem `.down.sql`.
 - **Alternativas rejeitadas:** executor próprio de SQL (mais código para manter e testar); ferramentas fora do ecossistema Node, como dbmate (mais um binário na máquina e na CI). Não avaliei dbmate no registro do npm por não ser pacote Node; se a Madu quiser comparar, vira nova decisão.
 
 ### ADR-8 Testes: Vitest 5, banco real
@@ -90,11 +90,11 @@ Cada ADR vira um arquivo em `docs/adr/` do `launch-os` **depois da aprovação**
 ### ADR-11 Segurança: argon2, JWT e credenciais de agente
 - **Senha da Madu:** **`argon2`** 0.45.1. O pacote traz binários pré-compilados (verifiquei os `prebuilds/` no pacote), então não exige compilador no Windows. **A instalação no Windows e na CI é validada na F2**; se falhar, a alternativa é `@node-rs/argon2` 2.2.2 (também com binários por plataforma).
 - **Token de sessão:** **`@fastify/jwt`** 10.2.2, algoritmo **fixado em HS256** (sem aceitar outro), vida curta, assinado com o `JWT_SECRET` (bloco 5, D5.1). Alternativa: `jose` 6.2.12 (sem integração com Fastify).
-- **Credencial de agente:** chave aleatória de 32 bytes gerada com o módulo nativo `node:crypto`; no banco, só o **hash SHA-256** (a chave já tem entropia alta, então não precisa de hash lento); comparação em tempo constante. Sem biblioteca extra (bloco 5, D5.2).
+- **Credencial de agente:** chave aleatória (tamanho de 32 bytes: **PROP**) gerada com o módulo nativo `node:crypto`; no banco, só o **hash SHA-256** (a chave já tem entropia alta, então não precisa de hash lento); comparação em tempo constante. Sem biblioteca extra (bloco 5, D5.2).
 
 ### ADR-12 Agendador e entregador: dentro da API, sem biblioteca de fila
 - **Evidência:** o bloco 4 aprovou entrega por outbox no PostgreSQL e o bloco 1 aprovou o agendador dentro da API.
-- **Proposta:** laços temporizadores no processo da API, que pegam trabalho com `SELECT ... FOR UPDATE SKIP LOCKED` (evita duas instâncias pegarem a mesma linha). Sem biblioteca de fila e sem Redis no caminho crítico. Cobre: entrega de eventos, expiração de aprovações, limpeza.
+- **Proposta:** laços temporizadores no processo da API, que pegam trabalho com `SELECT ... FOR UPDATE SKIP LOCKED` (evita duas instâncias pegarem a mesma linha) **e só escolhem linha sem evento anterior pendente da mesma (assinante, entidade)** (bloco 4, seção 5; o `SKIP LOCKED` sozinho não garante a ordem). Sem biblioteca de fila e sem Redis no caminho crítico. Cobre: entrega de eventos, expiração de aprovações, limpeza.
 - **Alternativa rejeitada:** fila sobre Redis (decisão D4.1: fora do caminho crítico no M01).
 
 ### ADR-13 Cliente de linha de comando da Madu (bloco 5, D5.8)
