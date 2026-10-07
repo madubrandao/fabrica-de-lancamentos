@@ -17,7 +17,7 @@ Blocos: 1 serviços e limites · 2 entidades e schema · 3 state machine e gates
 | Workflows e agentes não conversam diretamente: usam um event bus central; eventos imutáveis; `correlation_id` obrigatório; `causation_id` quando há evento pai | [[DEC-0004-integracao-orientada-a-eventos]] |
 | Contrato do evento com 12 campos; payload versionado; eventos importantes auditáveis | [[catalogo-de-eventos]] (Blueprint §17) |
 | Catálogo mínimo de eventos de domínio (§16) | [[catalogo-de-eventos]] |
-| Aprovação usa `approval.requested`, `approval.granted`, `approval.rejected`; `approval.completed` não existe; `approval.expired` PENDENTE | [[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]] |
+| Aprovação usa `approval.requested`, `approval.granted`, `approval.rejected`; `approval.completed` não existe; `approval.expired` foi aprovado depois (bloco 5, D5.6; adendo no DEC-0011) | [[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]] |
 | Eventos de observabilidade (`agent.execution.*`, `workflow.*`, `api.*`, `llm.*`, `tool.execution`) | Blueprint §30 |
 | Operações mutáveis são idempotentes; retry não duplica efeitos | guardrails do ENG-03 |
 | Redis: cache, filas e controle de execução assíncrona; PostgreSQL é a fonte da verdade | [[DEC-0005-stack-de-producao]] |
@@ -47,7 +47,7 @@ Todos os payloads têm `schema_version = 1` no envelope.
 | `launch.created` | criação do launch (estado `IDEA`) | `launch_id`, `launch_type`, `product_id`, `offer_id`, `previous_launch_id` (ou nulo), `status`, `owner_agent` |
 | `launch.*` de transição (lista na seção 4) | cada transição aceita (T1 a T14) | `launch_id`, `from_status`, `to_status`, `approval_ids[]` (aprovações concedidas que liberaram a transição; vazio sem gate), `gate_ids[]`, `owner_agent` (do novo estado) |
 | `approval.requested` | pedido de aprovação criado | `approval_id`, `launch_id` (ou nulo), `gate_id` (ou nulo), `subject_type`, `subject_id` (ou nulo), `action_name` (ou nulo), `requested_by` (tipo e id), `expires_at` (ou nulo; PEND) |
-| `approval.granted` | aprovação concedida (pela Madu, ou pela API em gate de VERIFICAÇÃO) | `approval_id`, `launch_id` (ou nulo), `gate_id` (ou nulo), `decided_by` (tipo e id), `decided_at`, `reason` (ou nulo) |
+| `approval.granted` | aprovação concedida (pela Madu, ou pela API em gate de VERIFICAÇÃO) | `approval_id`, `launch_id` (ou nulo), `gate_id` (ou nulo), `subject_type`, `action_name` (ou nulo), `decided_by` (tipo e id), `decided_at`, `reason` (ou nulo) |
 | `approval.rejected` | aprovação rejeitada | os mesmos campos de `approval.granted` |
 | `approval.expired` (novo, bloco 5, D5.6) | o agendador marca como vencida uma aprovação `requested` com `expires_at` vencido | os mesmos campos de `approval.rejected`, com `decided_by.type = system` e `reason` indicando vencimento |
 | `decision.recorded` (novo, seção 4) | decisão de continuidade **confirmada** pela Madu (a proposta do A0 gera só `approval.requested`; bloco 3, seção 5) | `decision_id`, `launch_id`, `decision_type`, `chosen_option`, `next_launch_id` (ou nulo) |
@@ -61,7 +61,7 @@ Notas:
 - **`error.detected` sem entidade** (por exemplo, payload inválido na entrada): `entity_type = system` e `entity_id` = o `organization_id` (a coluna `entity_id` do `event` é obrigatória).
 - **Sem laço:** se a entrega de um `error.detected` esgotar as tentativas, vira `dead` e gera **só audit**, nunca outro `error.detected`.
 - `approval.expired` foi **aprovado** no bloco 5 (D5.6); o prazo continua PEND (valor da Madu).
-- Mudança de permissões de agente e outras ações de segurança vão para o `audit_log`; se também devem virar evento é **PEND** para o bloco 5.
+- Mudança de permissões de agente e outras ações de segurança vão **só para o `audit_log`**, sem evento (bloco 5, seção 9, D5.9).
 
 ## 4. Eventos que faltam no catálogo (PROP)
 O bloco 3 achou transições sem evento. O Blueprint chama o catálogo de "eventos mínimos", então acrescentar é permitido, desde que a Madu aprove:
@@ -104,7 +104,7 @@ Garantia: **pelo menos uma vez** (at-least-once). Duplicados são esperados e tr
 | `subscriber` | text | nome do assinante (workflow ou grupo de workflows do n8n) |
 | `status` | text | `CHECK` em `pending`, `delivered` (recebido pelo n8n), `dead` |
 | `claimed_at` | timestamptz | preenchida **de forma atômica** quando o workflow pede o claim; impede dois tratamentos do mesmo evento |
-| `processed_at` | timestamptz | preenchida no ack do workflow; `claimed_at` sem `processed_at` além de um tempo de configuração (**PEND**) vira alerta e `error.detected` |
+| `processed_at` | timestamptz | preenchida no ack do workflow. **Claim com validade:** `claimed_at` sem `processed_at` além do tempo de configuração (**PEND**, valor da Madu) é um claim **vencido**: o entregador devolve a linha a `pending` (reenvio; `attempts` conta), gera alerta e `error.detected`; ao esgotar as tentativas, `dead`. Assim não há perda de evento: continua "pelo menos uma vez" |
 | `attempts` | integer | |
 | `next_attempt_at` | timestamptz | calculado com espera crescente (backoff) |
 | `last_error` | text | sem segredo |
@@ -116,14 +116,16 @@ Garantia: **pelo menos uma vez** (at-least-once). Duplicados são esperados e tr
 **Assinantes:** a lista de quem assina o quê é configuração versionada em `packages/events/` (bloco 6). Para o M01 precisam existir: (a) o workflow **Create Launch**; (b) o workflow que **retoma o processo que esperava a aprovação**, assinante de `approval.granted`, `approval.rejected` e `approval.expired`; (c) o workflow **NOTIFY** da Madu, assinante de `approval.requested` e `error.detected`. Os workflows (b) e (c) e o claim/ack **não pertencem a um agente**: usam a credencial de **serviço do n8n** (bloco 5, seção 3.2). Os assinantes dos demais workflows entram com M02 e M03 (**PEND**).
 
 **Ordem:**
-- Garantida **por entidade** (`entity_type` + `entity_id`): o entregador só escolhe uma linha se **não existir** linha anterior da mesma (assinante, entidade) pendente ou em envio (`NOT EXISTS` sobre `position` menor). Assim `SKIP LOCKED` não passa à frente do evento anterior que está em voo.
-- **`dead` bloqueia a entidade** para aquele assinante até o reprocesso pelo operador (bloco 5, seção 5). O n8n nunca recebe T8 sem ter recebido T7.
+- Garantida **por entidade e por processamento** (`entity_type` + `entity_id`): o entregador só escolhe uma linha se **não existir** linha anterior da mesma (assinante, entidade) **sem `processed_at`** (`NOT EXISTS` sobre `position` menor). Isso cobre a linha pendente, em envio, recebida e ainda sem ack, e `dead`. Assim `SKIP LOCKED` não passa à frente do evento anterior, e o T8 só é entregue depois de o workflow do T7 confirmar (ack).
+- **`dead` bloqueia a entidade** para aquele assinante até o reprocesso pelo operador (bloco 5, seção 5).
+- **Assinantes ordenados e não ordenados:** a regra acima vale para os assinantes marcados como **ordenados** na configuração de `packages/events/` (o workflow Create Launch e o de retomada de aprovação). O assinante **NOTIFY** e os eventos `error.detected` são **não ordenados**: não bloqueiam nem são bloqueados, para que um `dead` de notificação não trave os seguintes.
+- Mesmo assim, **todo workflow confere o estado atual do launch antes de agir**: a ordem é uma defesa a mais, não a única.
 - **Sem ordem global** entre entidades diferentes.
 - `event` ganha a coluna `position` (bigint, sequência crescente), fora do contrato do Blueprint. Ela só ordena eventos **da mesma entidade**, o que é seguro porque as escritas de uma entidade são serializadas pelo bloqueio da linha (bloco 3, riscos). **Não é cursor global**: a sequência é atribuída no INSERT, não no commit.
 
 **Redis no M01 (PROP):** fora do caminho que garante a correção. Não há perda de evento se o Redis cair, porque a fila real é a tabela `event_delivery` no PostgreSQL. O Redis é validado no M01 como serviço (sobe, a API conecta, healthcheck verde, senha configurada) e pode servir a coisas não críticas, como cache. Usá-lo para acordar o entregador ou como fila de volume fica para quando houver necessidade (capacidade inicial é 1 lançamento por vez; o DEC-0017 C3 pede a arquitetura **preparada** para 5 simultâneos "com filas": o outbox no PostgreSQL com `event_delivery` já é a fila e comporta isso, e a troca por Redis fica para quando a medição mostrar necessidade).
 
-**Falha parcial (casos a testar):** a API cai depois de gravar e antes de entregar (o entregador retoma da tabela); n8n responde depois do timeout (reenvio gera duplicado e o consumidor deduplica); n8n responde 2xx e a API cai antes de marcar `delivered` (reenvio duplicado, idem); workflow falha depois do 2xx (fica `claimed_at` sem `processed_at`, e o alerta dispara).
+**Falha parcial (casos a testar):** a API cai depois de gravar e antes de entregar (o entregador retoma da tabela); n8n responde depois do timeout (reenvio gera duplicado e o consumidor deduplica); n8n responde 2xx e a API cai antes de marcar `delivered` (reenvio duplicado, idem); workflow falha depois do 2xx (o claim vence, a linha volta a `pending` e o evento é reenviado; alerta dispara).
 
 ## 6. Idempotência (PROP)
 **Pedido mutador (R5):**
@@ -138,7 +140,7 @@ Garantia: **pelo menos uma vez** (at-least-once). Duplicados são esperados e tr
 **Evento:**
 - `event_id` é único e gerado pela API.
 - `event` ganha `dedupe_key` (texto, **único**), montada pela API com o que identifica o fato (por exemplo: tipo do evento + entidade + a transição ou o id da aprovação). Impede que uma repetição interna emita o mesmo fato duas vezes mesmo sem `Idempotency-Key`.
-- **Consumidor (n8n):** deduplica por `event_id`. O padrão de workflow já tem VALIDATE no início ([[n8n-estrutura]]); o **claim** entra aí: o workflow pede à API o claim de (`event_id`, assinante); a API faz `UPDATE ... WHERE claimed_at IS NULL` e responde se o pedido ganhou a vez ou se o evento já foi tratado. É atômico, sem o "consulta e depois grava" que tem corrida. Como o n8n não guarda estado de negócio (R6), o recibo fica em `event_delivery`, não no n8n.
+- **Consumidor (n8n):** deduplica por `event_id`. O padrão de workflow já tem VALIDATE no início ([[n8n-estrutura]]); o **claim** entra aí: o workflow pede à API o claim de (`event_id`, assinante); a API faz `UPDATE ... WHERE claimed_at IS NULL` (ou com o claim vencido) e responde se o pedido ganhou a vez ou se o evento já foi tratado. É atômico, sem o "consulta e depois grava" que tem corrida. Como o n8n não guarda estado de negócio (R6), o recibo fica em `event_delivery`, não no n8n.
 - **Resposta do webhook:** o n8n responde 2xx ao receber (não ao terminar), para não segurar a conexão; o término é confirmado pelo ack. Validar esse comportamento no n8n 2.41.6 (bloco 1, riscos).
 
 ## 7. Versionamento e validação (PROP)
@@ -171,7 +173,8 @@ O Blueprint §30 lista `agent.execution.*`, `workflow.*`, `api.request/error`, `
 - **Encadeamento:** `correlation_id` presente em todo evento; `causation_id` correto em T6 e na decisão de continuidade.
 - **Falha total de entrega:** esgota tentativas, vira `dead`, gera `error.detected` e audit; reprocesso só pelo operador. `dead` de um `error.detected` gera só audit (sem laço).
 - **Ordem com falha:** `dead` do evento N bloqueia o N+1 da mesma entidade e não bloqueia outras entidades; `SKIP LOCKED` não entrega N+1 com N em voo.
-- **Claim e ack:** dois claims simultâneos do mesmo evento, um ganha; claim sem ack dispara alerta.
+- **Claim e ack:** dois claims simultâneos do mesmo evento, um ganha; claim sem ack vence, dispara alerta e o evento é reenviado (nenhum evento fica "tratado" sem ack).
+- **Ordem por processamento:** T8 só é entregue ao assinante ordenado depois do ack de T7; assinante NOTIFY e `error.detected` não são bloqueados por `dead`.
 - **Expiração:** `approval.expired` é emitido uma vez, com payload válido.
 - **Segredos na idempotência:** a tabela `idempotency_key` nunca contém corpo de resposta, chave de agente nem token (varredura no teste); criação de credencial e login repetidos não revelam o segredo.
 - **Transação própria:** pedido negado e `error.detected` deixam audit e evento mesmo quando o pedido original sofre rollback.
@@ -182,7 +185,7 @@ O Blueprint §30 lista `agent.execution.*`, `workflow.*`, `api.request/error`, `
 |---|---|---|---|
 | **D4.1** | Como entregar os eventos e qual o papel do Redis no M01 | **A)** outbox no PostgreSQL com tabela `event_delivery` e entregador na API; Redis fora do caminho crítico. **B)** fila no Redis como caminho principal. **C)** combinação (outbox e Redis acordando o entregador) | **A.** Persistência e entrega na mesma base e na mesma transação evitam perda de evento; Redis como caminho principal obrigaria a resolver consistência entre dois sistemas. Custo: uma tabela fora da lista de 22 (`event_delivery`), de infraestrutura. C só quando houver volume |
 | **D4.2** | Idempotência | **A)** `Idempotency-Key` com tabela `idempotency_key`, mais `dedupe_key` única no evento e deduplicação por `event_id` no consumidor. **B)** só deduplicar no consumidor | **A.** Cobre pedido repetido, evento repetido e entrega repetida. B deixa o efeito (a transição) repetível. Custo: uma tabela de infraestrutura e uma coluna |
-| **D4.3** | Ordem de entrega | **A)** por entidade, sem ordem global (coluna `position`). **B)** ordem global total | **A.** É a ordem que importa (estados de um launch) e é simples de garantir; B trava o sistema inteiro por um evento atrasado |
+| **D4.3** | Ordem de entrega | **A)** por entidade, sem ordem global (coluna `position`). **B)** ordem global total | **A.** É a ordem que importa (estados de um launch) e é simples de garantir; B trava o sistema inteiro por um evento atrasado **Revisada pela segunda passada (2026-10-07):** a ordem vale por **processamento** (ack) para os assinantes ordenados, e `error.detected` e NOTIFY são não ordenados (seção 5) |
 | **D4.4** | Eventos que faltam | **A)** acrescentar os 5 da seção 4 e fixar `launch.completed` junto da decisão de continuidade. **B)** usar um único `launch.status_changed` genérico. **C)** deixar T2, T4, T13 e T14 sem evento | **A.** Mantém o padrão de nomes do catálogo e cada transição com um evento próprio. B muda o catálogo inteiro; C contraria "todos os eventos importantes auditáveis" |
 | **D4.5** | Retenção | **A)** `event` e `audit_log` não apagam no M01; limpeza só de `event_delivery` (entregues) e `idempotency_key`, com prazos definidos por você depois. **B)** definir prazos agora | **A.** Não invento número (D8 do DEC-0016); apagar histórico sem necessidade é o risco maior |
 | **D4.6** | Telemetria (`api.*`, `llm.*`, `workflow.*`, `agent.execution.*`, `tool.execution`) | **A)** fora do event store no M01 (logs estruturados), decisão de armazenamento no M02. **B)** tudo no event store desde já | **A.** Alto volume e sem consumidor de negócio; só `error.detected` entra no store |
@@ -192,10 +195,10 @@ O Blueprint §30 lista `agent.execution.*`, `workflow.*`, `api.request/error`, `
 ## 12. PENDENTE
 - Payload dos eventos de domínio de M03 em diante e o assinante de cada workflow.
 - Valores numéricos: tentativas, espera entre tentativas, timeout, validade da chave de idempotência, prazo de limpeza das entregas (a Madu define).
-- `approval.expired` e o prazo de aprovação (bloco 5).
-- Se mudança de permissão de agente vira evento além do audit (bloco 5).
+- `approval.expired` está **aprovado** (D5.6); só o **valor do prazo** continua PEND (a Madu define).
+- Mudança de permissão de agente: **só audit**, sem evento (D5.9, resolvido).
 - Onde guardar a telemetria de agentes (M02).
-- Autenticação do webhook do n8n e da chamada do n8n à API (bloco 5).
+- Autenticação do webhook do n8n e da chamada do n8n à API: **resolvida** no bloco 5 (D5.1 e D5.2); o replay do webhook é limite conhecido (bloco 5, 3.3).
 - Biblioteca de fila, de validação de schema e de agendamento (bloco 6).
 
 ## 13. Riscos

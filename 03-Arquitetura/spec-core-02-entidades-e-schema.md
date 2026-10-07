@@ -137,7 +137,7 @@ Quem decide a continuidade: o A0 propõe e a Madu confirma (D3.4 e D7.6; [[spec-
 | `subject_type` | text | não | DER (bloco 5, D5.5) | `CHECK` em `gate` ou `action` |
 | `subject_id` | uuid | sim | PROP | sem uso no M01; reservado para o objeto aprovado quando existirem produto e oferta (M03). Para `gate` o vínculo é `launch_id` + `gate_id` + `from_status`; para `action`, os dois campos abaixo (D7.2) |
 | `action_name` | text | sim | DER (D7.2) | nome da ação aprovada; obrigatório quando `subject_type = action` |
-| `action_params_hash` | text | sim | DER (D7.2) | hash (SHA-256) dos parâmetros da ação em forma canônica, incluindo o valor de gasto; obrigatório quando `subject_type = action`. A API **compara** o hash ao consumir a aprovação, então uma aprovação dada para um valor não serve a outro |
+| `action_params_hash` | text | sim | DER (D7.2) | hash dos parâmetros da ação em forma canônica, incluindo o valor de gasto (**PROP:** algoritmo SHA-256 e a forma canônica, a fixar no bloco 6 e na F4); obrigatório quando `subject_type = action`. A API **compara** o hash ao consumir a aprovação, então uma aprovação dada para um valor não serve a outro |
 | `status` | text | não | DER (bloco 5, D5.6) | `CHECK` em `requested`, `granted`, `rejected`, `expired` |
 | `requested_by_type`, `requested_by_id` | text | não | DER | quem pediu (agente ou sistema) |
 | `requested_at` | timestamptz | não | DER | |
@@ -211,7 +211,7 @@ Não são entidades de negócio e **não alteram a lista de 22** do DEC-0012. Ca
 | `policy_setting` | política configurável (prazo de aprovação, limites de orçamento), alterável só pela Madu com audit | [[spec-core-05-permissoes-e-aprovacoes]], seção 8 (D5.7) |
 
 ## 4. Entidades de domínio (esqueleto)
-**D7.3 (aprovada em 2026-10-07):** a F2 cria as **22 tabelas**. Estas 14 entram **só com** `id`, `organization_id`, `created_at`, `updated_at` e as relações **já documentadas**: `offer.product_id`, `launch.product_id`, `launch.offer_id`, `launch.audience_segment_id` e `learning.launch_id`. As demais relações da tabela abaixo são **PROP e só entram no M03**, junto das **colunas de negócio**, por migration aditiva e reversível; essas colunas não estão em nenhum documento e não foram inventadas.
+**D7.3 (aprovada em 2026-10-07):** a F2 cria as **22 tabelas**. Estas 14 entram **só com** `id`, `organization_id`, `created_at`, `updated_at` e as relações **já documentadas**: `offer.product_id`, `launch.product_id`, `launch.offer_id` e `launch.audience_segment_id`, **mais uma relação PROP exigida pelo G12**: `learning.launch_id` (a cadeia documentada liga `DATA → LEARNING`, não `LAUNCH → LEARNING`; ela entra porque o G12 precisa dela). As demais relações da tabela abaixo são **PROP e só entram no M03**, junto das **colunas de negócio**, por migration aditiva e reversível; essas colunas não estão em nenhum documento e não foram inventadas.
 
 **Semente:** a de produção traz **só** a organização e os 11 agentes, sem nenhum segredo (bloco 5, 3.5). `product` e `offer` de teste existem **apenas como fixtures de teste**, nunca em `database/seeds`.
 
@@ -272,11 +272,8 @@ Entidades documentadas sem posição fixa nesta cadeia (PEND): `sequence`, `obje
 | **D2.8** | `lead` e `order` nos eventos, sem entidade na lista de 22 | **A)** `lead` = `contact` com estágio; `order` fica fora do M01 e entra com M04. **B)** adicionar entidades `Lead` e `Order` (altera o DEC-0012) | **A.** Os eventos `lead.*` e `order.*` são do Blueprint §16, mas a lista oficial não tem essas entidades. Nada precisa ser decidido para o M01 além de não bloquear |
 
 ## 8. PENDENTE para os blocos seguintes
-- Tabela de transições, mapeamento estado → gate, `owner_agent` por estado, valores de `approval_state` (bloco 3).
-- Payload por evento, idempotência, retenção e entrega confiável (bloco 4).
-- Autenticação, escopos dos 11 agentes, aprovador por gate, prazo de expiração da aprovação (bloco 5).
-- Tipos exatos, ferramenta de migration e convenção de nomes finais (bloco 6).
-- Colunas de negócio das entidades de domínio (a partir do M03, junto da definição do produto fictício).
+- **Resolvidos nos blocos seguintes (decisões aprovadas):** transições, mapeamento estado → gate, `owner_agent` e `approval_state` (bloco 3); payloads, idempotência, retenção e entrega (bloco 4); autenticação, aprovador por gate e a regra de expiração (bloco 5); ferramenta de migration e versões das ferramentas (bloco 6).
+- **Continuam PEND:** escopos dos 11 agentes e valores numéricos (prazo de aprovação, limites), a definir pela Madu; tipos exatos e convenção final de nomes (F2); colunas de negócio das entidades de domínio (a partir do M03, junto da definição do produto fictício).
 
 ## 9. Riscos
 - **Esqueleto demais ou de menos:** resolvido pela D7.3 (22 tabelas, 14 delas mínimas). O risco que sobra é uma tabela mínima ganhar coluna sem decisão; qualquer coluna nova entra por migration reversível e por decisão registrada.

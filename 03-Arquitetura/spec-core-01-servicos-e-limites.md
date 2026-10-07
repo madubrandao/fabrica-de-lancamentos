@@ -74,7 +74,7 @@ Regra comum: **só a API muda o estado de negócio**; o n8n pede, e a API decide
 | **D1.4** | Banco do n8n | **A)** mesma instância PostgreSQL, **banco e usuário separados**. **B)** instância separada. **C)** como está hoje: mesmo banco e mesmo superusuário | **A.** Dá privilégio mínimo sem pesar na máquina (RAM e disco limitados). B isola mais, mas custa mais recursos. C contraria o privilégio mínimo |
 | **D1.5** | O que é o "agent runtime gateway" do ENG-01 (pendência do [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]])? | **A)** a **fachada da API** que os workflows de agentes usam: checagem de permissão, pedido de transição, registro de resultado e emissão de evento. **B)** um serviço separado entre o n8n e a API | **A.** Evita um serviço a mais; define o gateway como o conjunto de endpoints do R1 a R5 |
 
-**PENDENTE para os blocos seguintes** (não decidido aqui): como o n8n se autentica na API e como o operador se autentica (bloco 5); contratos exatos dos endpoints (bloco 4 e depois da aprovação deste); onde a montagem de contexto roda e o que é lido de cada agente (M02, junto da memória); estratégia de entrega confiável dos eventos (bloco 4).
+**Resolvido nos blocos seguintes:** autenticação do n8n e do operador (bloco 5), entrega confiável dos eventos (bloco 4) e a lista de endpoints (seção 5-bis; os contratos exatos saem do schema versionado nas fases F3 e F4). **Continua PENDENTE:** onde a montagem de contexto roda e o que é lido de cada agente (M02, junto da memória).
 
 ## 5-bis. Catálogo mínimo de endpoints (PROP, revisão independente)
 Só a **lista de intenções**; os contratos exatos (corpo, validação, códigos) saem do schema versionado em `packages/schemas/` nas fases F3 e F4. Cabeçalhos comuns (nomes PROP): `Authorization`, `X-Correlation-Id`, `X-Execution-Id` e, nos pedidos mutadores, `Idempotency-Key`.
@@ -93,6 +93,8 @@ Só a **lista de intenções**; os contratos exatos (corpo, validação, código
 | Saúde | healthcheck | local | leitura |
 
 Erros padronizados (códigos HTTP e corpo sem segredo, com `correlation_id`): validação, não autenticado, negado (permissão ou gate), não encontrado, conflito (estado ou chave de idempotência) e falha interna.
+
+**Bootstrap das identidades:** não passa pela API; o comando do `apps/cli` fala direto com o banco (bloco 5, 3.5), então não há endpoint de bootstrap na lista.
 
 **Fora do M01 (revisão independente):** `apps/worker` não existe (D1.3 aprovada: o agendador fica na API); `packages/agents` e o escopo do ENG-04 ficam **PENDENTES** para o M02; o gateway é a fachada da API (D1.5).
 

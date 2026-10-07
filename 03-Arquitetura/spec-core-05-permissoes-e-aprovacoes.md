@@ -35,6 +35,7 @@ Blocos: 1 serviços e limites · 2 entidades e schema · 3 state machine e gates
 | **A Madu** (operador) | login no canal humano; token de sessão | `human`, `actor_id` = id do `user` |
 | **Agente A0 a A10** (rodando no n8n) | uma credencial **por agente**, usada pelo workflow | `agent`, `actor_id` = código (`A0` a `A10`) |
 | **Sistema** (agendador e entregador da API) | interno, sem credencial exposta | `system` |
+| **Serviço do n8n** (retomada de aprovação, NOTIFY, claim e ack) | credencial de serviço (3.2) | `system`, `actor_id` = `service_name` |
 
 Regra central: **a identidade vem da credencial, nunca do que o agente declara na mensagem ou no corpo do pedido.** Uma credencial só vale para o agente a que pertence. O n8n não escolhe quem é.
 
@@ -48,7 +49,7 @@ Regra central: **a identidade vem da credencial, nunca do que o agente declara n
 - **PEND:** segundo fator e duração da sessão (valor da Madu); reautenticação para aprovação crítica.
 
 ### 3.2 n8n → API (agentes)
-- **Credencial opaca por agente** (chave aleatória longa), guardada no *credential store* do n8n (guardrail do ENG-03). Na API fica só o **hash** (`agent_credential`, tabela nova de infraestrutura, com `agent_id`, `key_hash`, `created_at`, `revoked_at`, `last_used_at`).
+- **Credencial opaca por agente** (chave aleatória longa), guardada no *credential store* do n8n (guardrail do ENG-03). Na API fica só o **hash** (`agent_credential`, tabela nova de infraestrutura, com `agent_id` (ou `service_name`, na credencial de serviço), `key_hash`, `created_at`, `revoked_at`, `last_used_at`).
 - Cada pedido do n8n leva a credencial do agente que está agindo, mais `correlation_id`, `execution_id` e, nos pedidos mutadores, `Idempotency-Key` (bloco 4).
 - **Credencial de serviço do n8n** (revisão independente): os workflows que não pertencem a um agente (retomada de aprovação, NOTIFY, claim e ack de evento) usam uma credencial de serviço, na mesma tabela `agent_credential` com `agent_id` nulo e `service_name` preenchido (`CHECK`: exatamente um dos dois). Escopo mínimo: claim e ack de evento, obter `correlation_id` e leitura para notificação. **Não pede transição nem aprovação.**
 - Revogar e trocar a credencial é feito só pelo operador, sem parar os outros agentes. Agente desativado (`agent.is_active = false`) é negado mesmo com credencial válida.
@@ -65,7 +66,7 @@ Regra central: **a identidade vem da credencial, nunca do que o agente declara n
 Nenhum segredo em resposta de API, log, evento ou audit. Hash para o que a API só precisa comparar; ambiente seguro para o que ela precisa enviar. **Senha do Redis** e **banco e usuário do n8n separados** (D1.4) são tarefas da F2 e F6 (ENG-02 e ENG-07), listadas aqui para não se perderem.
 
 ### 3.5 Bootstrap das identidades (D7.4)
-A primeira senha da Madu e as credenciais dos 11 agentes e do serviço do n8n nascem de um **comando de bootstrap interativo**, executado por ela, **fora do repositório** (parte do `apps/cli`, D6.9):
+A primeira senha da Madu e as credenciais dos 11 agentes e do serviço do n8n nascem de um **comando de bootstrap interativo**, executado por ela, **fora do repositório** (parte do `apps/cli`, D6.9). **Caminho técnico (segunda passada da revisão):** o comando fala **direto com o banco**, usando a credencial do operador (papel migrador) guardada fora do repositório. **Não existe endpoint de bootstrap na API**, o que elimina a exposição de uma rota sem autenticação e a corrida de rede. A criação do usuário e das credenciais é uma só transação, e a unicidade no `user` faz a segunda execução, **mesmo concorrente**, falhar:
 - pede a senha e guarda só o **hash**;
 - gera as credenciais, grava só o **hash** de cada uma e **mostra cada credencial uma única vez**, para ela colar no credential store do n8n;
 - registra tudo no `audit_log` (sem o segredo);
@@ -182,7 +183,7 @@ O `audit_log` registra, aceito ou negado:
 - **Concorrência:** duas decisões simultâneas sobre o mesmo `approval` resultam em uma só.
 - **Vínculo da ação (D7.2):** aprovação de gasto de um valor não libera gasto de valor maior nem de outra ação; mudar um parâmetro invalida a aprovação.
 - **Quem pede (D7.5):** só o dono do gate, o `owner_agent` do estado atual e o A0 pedem aprovação ou verificação do gate; os demais são negados.
-- **Bootstrap (D7.4):** a seed não contém segredo (varredura); a credencial aparece uma vez; segunda execução recusada; tudo no audit.
+- **Bootstrap (D7.4):** a seed não contém segredo (varredura); a credencial aparece uma vez; segunda execução recusada, **inclusive duas execuções simultâneas (só uma vence)**; tudo no audit; nenhum endpoint de bootstrap existe na API.
 - **Isolamento no n8n (D7.7, F6):** um workflow não consegue usar a credencial de outro agente.
 
 ## 11. Decisões (D5.1 a D5.10 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas; ajustes consolidados no bloco 2)
@@ -191,7 +192,7 @@ O `audit_log` registra, aceito ou negado:
 | **D5.1** | Como a Madu se autentica | **A)** e-mail e senha com hash forte, token de sessão curto assinado com o `JWT_SECRET`, API só em `127.0.0.1`. **B)** chave de API fixa para o operador. **C)** provedor externo de login | **A.** Distingue com clareza o token humano do token de agente, o que sustenta o R8. B mistura com a credencial de serviço; C é peso desnecessário para uma pessoa só. Segundo fator e duração da sessão ficam PEND para você |
 | **D5.2** | Como o n8n se autentica na API | **A)** uma credencial opaca por agente (A0 a A10), com hash na API (`agent_credential`), revogável; segredo no cabeçalho do webhook da API para o n8n. **B)** uma credencial única do n8n com o agente informado no pedido. **C)** JWT de serviço assinado com o `JWT_SECRET` | **A.** Limita o dano de um workflow comprometido ao escopo de um agente e impede "me passar por A0". B permite falsificar o agente; C faria o mesmo segredo que protege a sessão da Madu também emitir identidades de agente. Custo: 11 credenciais e uma tabela de infraestrutura |
 | **D5.3** | Modelo de permissão | **A)** negar por padrão, `jsonb` (D2.5), vocabulário igual às entidades, registro semente dos 11 agentes com permissões mínimas, checagem sempre na API e endpoint de consulta para o n8n. **B)** liberar por padrão e bloquear exceções | **A.** Privilégio mínimo (DEC-0010 §8). Os escopos completos ficam PEND e entram por decisão sua quando os agentes forem definidos |
-| **D5.4** | Quem pode pedir transição e aprovação | **A)** o `owner_agent` do estado atual e o A0; nenhum concede gate HUMANO. **B)** só o `owner_agent`. **C)** qualquer agente com a permissão | **A.** O A0 é o orquestrador que decide "se pode avançar"; limitar ao dono evita que agentes alheios movam o launch. Em nenhum caso o A0 concede gate |
+| **D5.4** | Quem pode pedir transição e aprovação | **A)** o `owner_agent` do estado atual e o A0; nenhum concede gate HUMANO. **B)** só o `owner_agent`. **C)** qualquer agente com a permissão | **A.** O A0 é o orquestrador que decide "se pode avançar"; limitar ao dono evita que agentes alheios movam o launch. Em nenhum caso o A0 concede gate **Atualizada pela D7.5 (2026-10-07):** também pode pedir o **dono do gate** (bloco 3, 4.1) |
 | **D5.5** | Regras da aprovação | **A)** uso único, ligada a launch, gate e estado de origem; rejeição exige motivo; `rejected` e `expired` são finais (novo pedido = nova linha); gate de VERIFICAÇÃO concedido pela API com `decided_by_type = system`. **B)** aprovação reutilizável até o launch mudar de estado | **A.** Evita aprovação "esquecida" valendo depois. Exige as colunas `consumed_at` e `decided_by_type` em `approval` e o status `expired` (ajuste ao bloco 2, 3.6) |
 | **D5.6** | Expiração (`approval.expired`) | **A)** status `expired`, evento `approval.expired` (formato de `rejected`, `decided_by` do sistema), agendador da API; prazo vindo da política e **definido por você**; sem prazo, não expira e continua não aprovada. **B)** nunca expirar. **C)** fixar um prazo agora | **A.** Evita workflow esperando para sempre sem eu inventar o número (D8 do DEC-0016). Quando você definir o prazo, ele entra em `policy_setting` |
 | **D5.7** | `BUDGET_AUTHORIZED` e política | **A)** policy check (seção 7), fail-closed sem limite, acima do limite exige aprovação sua, registrado no audit; política em `policy_setting`, alterável só por você com audit. **B)** valores no código | **A.** Já é a regra do DEC-0010 §3 e do DEC-0016 D8 ("configuração por política, não valor fixo no código"). Custo: uma tabela de infraestrutura |

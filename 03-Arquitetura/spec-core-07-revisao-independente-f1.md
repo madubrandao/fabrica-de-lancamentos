@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: revisão independente de 2026-10-07 (agente revisor, somente leitura) sobre os blocos 1 a 6; DEC-0010; DEC-0016 D7; M01-plano-de-execucao (F1)
-status: correções de texto aplicadas e decisões D7.1 a D7.7 aprovadas pela Madu e aplicadas aos blocos em 2026-10-07 (recomendações do ENG-00); falta a segunda passada do revisor e o DEC-0023 (M01, F1, fechamento)
+status: correções, decisões D7.1 a D7.7 e ajustes da segunda passada aprovados pela Madu e aplicados aos blocos em 2026-10-07 (recomendações do ENG-00); falta só o DEC-0023 de aprovação do portão F1 (M01, F1, fechamento)
 atualizado: 2026-10-07
 ---
 # Revisão independente da especificação do Core (blocos 1 a 6)
@@ -65,8 +65,23 @@ Cada uma muda ou acrescenta algo já aprovado. Foram **aplicadas** nos blocos: D
 ## 3. Número que o revisor errou (conferido)
 O revisor disse que, ao mover o G04 para T7, "continuam 10 transições com gate". **Não continuam.** Os gates ficam em T3 (G01), T4 (G02), T5 (G03), T7 (G04 a G07), T8 (G08), T10 (G09), T12 (G10), T13 (G11) e T14 (G12): **9 transições com gate**, cobrindo os 12 gates. T6 ficou sem gate (junto de T1, T2, T9 e T11). Com a D7.1 aprovada, a D3.8 no bloco 3 já diz "9".
 
-## 4. O que fica para depois
-- **Segunda passada** do revisor, só nos pontos alterados, antes do DEC-0023 (aprovação do portão F1).
+## 4. Segunda passada do revisor (2026-10-07)
+O mesmo revisor, em modo de leitura, conferiu as correções no commit `f45dc08`. Resultado: os 6 altos e os 13 médios da primeira passada estão **resolvidos** no texto; não há achado crítico nem alto; as 9 transições com gate, o G04 em T7, as colunas novas, os links e as tabelas estão coerentes. Veredito: **pronta com ajustes menores**. Restaram 10 observações, todas aplicadas em 2026-10-07 com as recomendações do ENG-00 (a Madu mandou seguir com as recomendadas):
+
+| # | Sev. | Observação | Tratamento |
+|---|---|---|---|
+| 1 | médio | Ordem valia só por recebimento, não por processamento | **Aplicado:** bloco 4, seção 5 (`NOT EXISTS` sobre linha sem `processed_at`; assinantes ordenados; o workflow confere o estado do launch) e D4.3 |
+| 2 | médio | Claim sem ack não tinha recuperação (virava "no máximo uma vez") | **Aplicado:** bloco 4, seções 5 e 6 (claim com validade, volta a `pending` e reenvia; valor da validade PEND) |
+| 3 | médio | `dead` de `error.detected` bloqueava todas as notificações de erro | **Aplicado:** bloco 4, seção 5 (`error.detected` e NOTIFY são não ordenados) |
+| 4 | médio | Bootstrap sem caminho técnico | **Aplicado:** bloco 5, 3.5 (conexão direta ao banco com a credencial do operador; sem endpoint; segunda execução concorrente falha por unicidade); blocos 1 e 6 |
+| 5 | médio-baixo | `learning.launch_id` apresentada como relação documentada | **Aplicado:** bloco 2, seção 4 (separada como PROP exigida pelo G12) |
+| 6 | baixo | Regra do JOINT verificada só na confirmação | **Aplicado:** bloco 3, seção 6 (verifica na proposta e na confirmação; falha vira `rejected` com motivo) |
+| 7 | baixo | Ator da credencial de serviço indefinido | **Aplicado:** bloco 5, seções 2 e 3.2 (`system` com `service_name`) |
+| 8 | baixo | Texto antigo (D3.7, D5.4, listas de PENDENTE, nota de permissão, `approval.expired`) | **Aplicado:** blocos 1 a 5 |
+| 9 | baixo | Payload de `granted`, `rejected` e `expired` sem `subject_type` e `action_name` | **Aplicado:** bloco 4, seção 3 |
+| 10 | baixo | SHA-256 e "forma canônica" sem marca PROP | **Aplicado:** bloco 2, 3.6 |
+
+## 5. O que fica para depois
 - **Dono do resultado do QA** do G06 (M03) e critérios objetivos dos gates de VERIFICAÇÃO (a Madu define).
 - **Major do pnpm** (11 ou 12) e versões exatas (F6).
 - Gravar os ADRs em `docs/adr/` do `launch-os` e atualizar o `docs/status/` de lá (ação externa, confirmo antes).

@@ -30,6 +30,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] — Maestri fora do escopo; o n8n orquestra e executa os agentes A0-A10; substitui DEC-0002 (parcial), DEC-0014 e partes do DEC-0005 e do DEC-0010.
 - [[DEC-0021-m00-foundation-concluido]] — M00 Foundation concluído em 2026-10-04 (o M01 foi autorizado depois, no DEC-0022).
 - [[DEC-0022-inicio-formal-do-m01]] — início formal do M01 Core Platform (2026-10-04); especificação primeiro, código só após aprovação (portão F1).
+- [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] — **PROPOSTA, aguardando a Madu** (2026-10-07): aprovação do portão F1; só vale depois da decisão dela.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos**, sem subitens abertos.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.

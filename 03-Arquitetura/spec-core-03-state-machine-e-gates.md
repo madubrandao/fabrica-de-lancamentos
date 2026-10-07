@@ -143,6 +143,7 @@ Como "fechado" aparece no banco depois de `ARCHIVE` ou de uma decisão que cria 
 O Blueprint pede que "Joint só após Internal ter testado oferta e sequência" **vire um gate**, mas a lista tem 12 gates e o DEC-0010 fechou em 12. Proposta: tratar como **policy check de criação** (como o `BUDGET_AUTHORIZED`), sem 13º gate:
 - Criar um Launch `JOINT` exige que exista, para a mesma oferta, um Launch `INTERNAL` com decisão de continuidade **confirmada** (`decision.status = confirmed`), e não apenas em estado `DECISION`.
 - A negativa vai para o audit.
+- **Onde se verifica:** já na **proposta** (ao criar a `decision` `proposed`) e **de novo na confirmação**. Se falhar na confirmação, a `decision` vira `rejected` com `reason`, o `approval` concedido é marcado como usado (`consumed_at`) **sem criar launch**, e o fato vai para o audit.
 - O critério de "testou oferta e sequência" além disso é **PEND** (depende de métricas, M05).
 
 ## 7. `approval_state` do launch (PROP)
@@ -179,7 +180,7 @@ O bloco 2 deixou os valores em aberto. Proposta, derivados do `approval` mais re
 | **D3.4** | Quem confirma a decisão de continuidade | **A)** só a Madu. **B)** A0 propõe e a Madu confirma. **C)** A0 decide | **B.** O A0 sugere com base em métricas e learnings; a escolha (relançar, parceria, arquivar) é estratégica e está na lista de HUMAN DECISION. C contraria o Blueprint |
 | **D3.5** | Transições para trás e abandono antes de `DECISION` | **A)** não existem no M01: só avança, e um launch parado fica parado. **B)** criar estado `ABORTED` ou transição de retorno | **A.** Nenhum documento define estado fora dos 15; acrescentar um muda o DEC-0010. Registro como **PEND** e a Madu decide quando surgir a necessidade |
 | **D3.6** | Regra do Joint Launch | **A)** policy check de criação (seção 6). **B)** 13º gate | **A.** O DEC-0010 fechou em 12 gates e já tem o precedente do `BUDGET_AUTHORIZED` como policy check |
-| **D3.7** | `approval_state` | **A)** os 4 valores da seção 7, derivados. **B)** coluna independente | **A.** Uma única fonte da verdade (`approval`) evita estado duplicado |
+| **D3.7** | `approval_state` | **A)** os valores da seção 7 (hoje 5, incluindo `EXPIRED` do bloco 5), derivados. **B)** coluna independente | **A.** Uma única fonte da verdade (`approval`) evita estado duplicado |
 | **D3.8** | Texto do critério de pronto do M01: "as 12 transições com gate testadas" | **A)** reescrever para "os 12 gates e as transições que os exigem". **B)** manter | **A.** Com a tabela da seção 2 há **10 transições com gate** cobrindo **12 gates**, porque G05, G06 e G07 dividem T7. O texto atual não bate com isso e precisa ser corrigido para o critério ser verificável. **Atualizada pela D7.1:** são **9 transições com gate** (T3, T4, T5, T7, T8, T10, T12, T13, T14) cobrindo os **12 gates** |
 
 ## 10. PENDENTE para os outros blocos
