@@ -36,8 +36,8 @@ São 14 transições, todas para frente, entre estados vizinhos. A coluna "Gate"
 | T3 | `VALIDATION` → `OFFER_DRAFT` | **G01** Market Validated | `launch.validation_completed` |
 | T4 | `OFFER_DRAFT` → `PRODUCT_BUILD` | **G02** Offer Approved | sem evento de launch (existe `offer.approved`) |
 | T5 | `PRODUCT_BUILD` → `PRE_PRE` | **G03** Product Ready | `launch.prepre_started` (existe `product.approved`) |
-| T6 | `PRE_PRE` → `PLC` | **G04** Content/PLC Approved | `launch.prepre_completed` e `launch.plc_started` |
-| T7 | `PLC` → `LAUNCH_READY` | **G05** CRM Ready + **G06** Technical QA Passed + **G07** Launch Ready | `launch.launch_ready` |
+| T6 | `PRE_PRE` → `PLC` | nenhum (G04 saiu daqui pela D7.1) | `launch.prepre_completed` e `launch.plc_started` |
+| T7 | `PLC` → `LAUNCH_READY` | **G04** Content/PLC Approved + **G05** CRM Ready + **G06** Technical QA Passed + **G07** Launch Ready (D7.1) | `launch.launch_ready` |
 | T8 | `LAUNCH_READY` → `CART_OPEN` | **G08** Cart Open Authorized | `launch.cart_opened` |
 | T9 | `CART_OPEN` → `CART_CLOSING` | nenhum | `launch.cart_closing` |
 | T10 | `CART_CLOSING` → `CART_CLOSED` | **G09** Cart Close Authorized | `launch.cart_closed` |
@@ -64,7 +64,7 @@ Cada gate tem um **tipo**:
 | G01 | Market Validated | HUMANO | critério **PEND** (resultado de pesquisa do A1) | "estratégia central" é HUMAN DECISION |
 | G02 | Offer Approved | HUMANO | critério **PEND** (oferta, preço, garantia do A2) | oferta, preço e garantia estão na lista de aprovação humana |
 | G03 | Product Ready | HUMANO | critério **PEND** | "mudança crítica de produto" é HUMAN DECISION; com um só humano o custo é baixo |
-| G04 | Content/PLC Approved | HUMANO | critério **PEND** (copy principal e PLC do A3) | copy principal e PLC são SUPERVISED: o agente prepara, o humano aprova |
+| G04 | Content/PLC Approved | HUMANO | critério **PEND** (copy principal e PLC do A3) | copy principal e PLC são SUPERVISED: o agente prepara, o humano aprova. O A3 produz esse conteúdo **durante** `PLC`, por isso o gate fica na **saída** de `PLC` (D7.1) |
 | G05 | CRM Ready | VERIFICAÇÃO | critério **PEND** (configuração do A4/A6); sem critério definido o gate fica HUMANO | **PROP:** etapa operacional; nenhum documento classifica o G05 como AUTO ou de baixo risco, e **não há critério objetivo definido** |
 | G06 | Technical QA Passed | VERIFICAÇÃO | QA de sales page, links, order form, checkout, thank-you, confirmação, CRM e tracking ([[n8n-estrutura]]); resultado do A6 registrado. Itens objetivos **PEND** | idem |
 | G07 | Launch Ready | HUMANO | G05 e G06 concedidos + critério **PEND** | fecha o preparo do lançamento |
@@ -103,12 +103,27 @@ Derivado das entradas e saídas dos agentes no Blueprint §13. É o agente respo
 
 O A5 (campanhas) e o A9 (parceiros) não são donos de estado: atuam dentro de estados (A5 depois do caminho crítico, A9 a partir de JOINT). Isso fica **PEND** para o bloco 5.
 
+### 4.1 Dono de cada gate (PROP, D7.5)
+O dono do estado nem sempre é quem prepara o que o gate verifica (por exemplo, o A6 executa o QA do G06 durante `PLC`, cujo dono é o A3). Por isso cada gate tem um **dono**, derivado das saídas dos agentes no Blueprint §13. Podem **pedir a aprovação ou disparar a verificação** do gate: o dono do gate, o `owner_agent` do estado atual ou o A0. Ninguém além da Madu concede gate HUMANO.
+
+| Gate | Dono | Gate | Dono |
+|---|---|---|---|
+| G01 | A1 | G07 | A6 |
+| G02 | A2 | G08 | A6 |
+| G03 | A2 | G09 | A6 |
+| G04 | A3 | G10 | A8 |
+| G05 | A4 | G11 | A10 |
+| G06 | A6 | G12 | A10 |
+
+A tabela é constante versionada em `packages/schemas/`, como a de transições. **PEND:** o resultado do QA do G06 não tem entidade nem escopo definidos; fica para o M03 e, no M01, o G06 é HUMANO (bloco 3, seção 3).
+
 ## 5. Decisão de continuidade (PROP)
 Modelo de dados já definido no bloco 2: `decision` com `decision_type = CONTINUITY`, `chosen_option`, `next_launch_id`.
 
 Fluxo, depois de T14 (`DECISION`):
-1. O A0 prepara a decisão de continuidade (A0 sugere; a opção é uma decisão de negócio). **Quem confirma é PEND**: ver D3.4.
-2. A API grava a `decision`, o evento e o audit **na mesma transação** que cria o efeito:
+1. **Proposta (D7.6):** o A0 propõe. A API grava a `decision` com `status = proposed` e abre um `approval` do tipo `action` (`record_continuity_decision`), cujo hash de parâmetros cobre a opção escolhida e os `product_id` e `offer_id` do novo launch. A proposta informa esses dois ids **explicitamente**; no RELAUNCH a API exige a mesma `offer_id` do launch de origem (DEC-0010 §5), e os padrões dos demais tipos são **PEND** (definição do A0).
+2. **Confirmação:** a Madu concede o `approval` (D3.4). Se ela rejeitar ou o prazo vencer, a `decision` vira `rejected` ou `expired` e nada é criado.
+3. Ao confirmar, a API muda a `decision` para `confirmed`, grava o evento e o audit **na mesma transação** que cria o efeito:
 
 | Opção | Efeito (DEC-0010 §5) | Dados |
 |---|---|---|
@@ -119,14 +134,14 @@ Fluxo, depois de T14 (`DECISION`):
 | `EVERGREEN` | encaminha a uma sequência perene | `next_launch_id` nulo; detalhes **PEND** (entidade `sequence` é esqueleto) |
 | `ARCHIVE` | encerra o ciclo | `next_launch_id` nulo; o launch fica encerrado |
 
-3. O novo Launch nasce em `IDEA`, com os 15 estados e os 12 gates outra vez.
-4. Um Launch com decisão registrada **não recebe uma segunda decisão de continuidade** (`CHECK` ou unicidade por launch, PROP).
+4. O novo Launch nasce em `IDEA`, com os 15 estados e os 12 gates outra vez.
+5. Um Launch com decisão `proposed` ou `confirmed` **não recebe outra decisão de continuidade** (unicidade parcial por launch, PROP); uma `decision` `rejected` ou `expired` permite nova proposta.
 
 Como "fechado" aparece no banco depois de `ARCHIVE` ou de uma decisão que cria o próximo ciclo é **PEND**: o `launch.status` não tem estado fora dos 15, e não criei um.
 
 ## 6. Regra do Joint Launch (PROP)
 O Blueprint pede que "Joint só após Internal ter testado oferta e sequência" **vire um gate**, mas a lista tem 12 gates e o DEC-0010 fechou em 12. Proposta: tratar como **policy check de criação** (como o `BUDGET_AUTHORIZED`), sem 13º gate:
-- Criar um Launch `JOINT` exige que exista, para a mesma oferta, um Launch `INTERNAL` que chegou a `DECISION`.
+- Criar um Launch `JOINT` exige que exista, para a mesma oferta, um Launch `INTERNAL` com decisão de continuidade **confirmada** (`decision.status = confirmed`), e não apenas em estado `DECISION`.
 - A negativa vai para o audit.
 - O critério de "testou oferta e sequência" além disso é **PEND** (depende de métricas, M05).
 
@@ -147,23 +162,25 @@ O bloco 2 deixou os valores em aberto. Proposta, derivados do `approval` mais re
 - **Audit em toda transição**, aceita ou negada: ator, estado de origem e destino, gates verificados, resultado, `correlation_id`, `execution_id`.
 - Eventos de aprovação (`approval.requested/granted/rejected`) ligados ao gate e ao launch ([[DEC-0011-eventos-de-aprovacao-requested-granted-rejected]]).
 - Testes da F4 e F7, **positivos e negativos de cada transição e de cada gate**:
-  - Transição sem gate: ok. Transição com o gate pendente, rejeitado ou ausente: recusada. T7 com só 2 dos 3 gates: recusada.
+  - Transição sem gate: ok. Transição com o gate pendente, rejeitado ou ausente: recusada. T7 com só 3 dos 4 gates (G04 a G07): recusada.
   - Pular estado, voltar estado e transição repetida: recusadas; repetida com a mesma chave de idempotência: sem efeito duplicado.
   - Agente tentando conceder gate HUMANO ou alterar aprovação: recusado (R8).
-  - Decisão de continuidade duplicada: recusada. JOINT sem INTERNAL anterior: recusado.
+  - Decisão de continuidade duplicada: recusada. JOINT sem INTERNAL anterior com decisão confirmada: recusado.
+  - Continuidade: proposta sem confirmação não cria launch; rejeição ou vencimento não cria; confirmação cria o launch com os ids informados; no RELAUNCH, `offer_id` diferente da origem é recusada.
+  - Pedido de aprovação ou verificação por agente que não é dono do gate, nem dono do estado, nem A0: negado.
   - Atomicidade: falha entre mudar o estado e gravar evento/audit não deixa estado parcial (failure injection, F7).
 
 ## 9. Decisões (D3.1 a D3.8 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
-| **D3.1** | Mapeamento estado → gate | **A)** a tabela da seção 2: G01 em T3, G02 em T4, G03 em T5, G04 em T6, G05 + G06 + G07 em T7, G08 em T8, G09 em T10, G10 a G12 em T12 a T14; T1, T2, T9 e T11 sem gate. **B)** um gate em cada transição possível, mudando a lista | **A.** Respeita as ligações de nome (G08 é "Cart Open", G09 é "Cart Close") e coloca G04 a G07 entre `PLC` e `CART_OPEN`, como o DEC-0016 pede. Só há 3 transições entre `PRE_PRE` e `CART_OPEN` para 4 gates, então G05, G06 e G07 dividem T7 |
+| **D3.1** | Mapeamento estado → gate | **A)** a tabela da seção 2: G01 em T3, G02 em T4, G03 em T5, G04 em T6, G05 + G06 + G07 em T7, G08 em T8, G09 em T10, G10 a G12 em T12 a T14; T1, T2, T9 e T11 sem gate. **B)** um gate em cada transição possível, mudando a lista | **A.** Respeita as ligações de nome (G08 é "Cart Open", G09 é "Cart Close") e coloca G04 a G07 entre `PLC` e `CART_OPEN`, como o DEC-0016 pede. Só há 3 transições entre `PRE_PRE` e `CART_OPEN` para 4 gates, então G05, G06 e G07 dividem T7. **Atualizada pela D7.1 (2026-10-07):** o G04 passou de T6 para T7, que agora exige G04, G05, G06 e G07, e T6 ficou sem gate; vale a tabela da seção 2 |
 | **D3.2** | Tipo de cada gate (quem concede) | **A)** HUMANO (a Madu) em G01 a G04, G07 a G09; VERIFICAÇÃO em G05, G06, G10, G11, G12, com a regra de que, sem critério objetivo definido, o gate é HUMANO. **B)** todos HUMANO. **C)** todos VERIFICAÇÃO | **A.** Respeita os níveis do documento de HITL sem automatizar o que não tem critério. Com uma só humana, B sobrecarrega com 12 aprovações por ciclo; C contraria a lista de aprovação humana por padrão |
 | **D3.3** | `owner_agent` por estado | **A)** a tabela da seção 4. **B)** só A0 em todos | **A.** Segue as saídas de cada agente no Blueprint. Na prática o dono só importa para quem pode pedir a transição de saída (bloco 5) |
 | **D3.4** | Quem confirma a decisão de continuidade | **A)** só a Madu. **B)** A0 propõe e a Madu confirma. **C)** A0 decide | **B.** O A0 sugere com base em métricas e learnings; a escolha (relançar, parceria, arquivar) é estratégica e está na lista de HUMAN DECISION. C contraria o Blueprint |
 | **D3.5** | Transições para trás e abandono antes de `DECISION` | **A)** não existem no M01: só avança, e um launch parado fica parado. **B)** criar estado `ABORTED` ou transição de retorno | **A.** Nenhum documento define estado fora dos 15; acrescentar um muda o DEC-0010. Registro como **PEND** e a Madu decide quando surgir a necessidade |
 | **D3.6** | Regra do Joint Launch | **A)** policy check de criação (seção 6). **B)** 13º gate | **A.** O DEC-0010 fechou em 12 gates e já tem o precedente do `BUDGET_AUTHORIZED` como policy check |
 | **D3.7** | `approval_state` | **A)** os 4 valores da seção 7, derivados. **B)** coluna independente | **A.** Uma única fonte da verdade (`approval`) evita estado duplicado |
-| **D3.8** | Texto do critério de pronto do M01: "as 12 transições com gate testadas" | **A)** reescrever para "os 12 gates e as transições que os exigem". **B)** manter | **A.** Com a tabela da seção 2 há **10 transições com gate** cobrindo **12 gates**, porque G05, G06 e G07 dividem T7. O texto atual não bate com isso e precisa ser corrigido para o critério ser verificável |
+| **D3.8** | Texto do critério de pronto do M01: "as 12 transições com gate testadas" | **A)** reescrever para "os 12 gates e as transições que os exigem". **B)** manter | **A.** Com a tabela da seção 2 há **10 transições com gate** cobrindo **12 gates**, porque G05, G06 e G07 dividem T7. O texto atual não bate com isso e precisa ser corrigido para o critério ser verificável. **Atualizada pela D7.1:** são **9 transições com gate** (T3, T4, T5, T7, T8, T10, T12, T13, T14) cobrindo os **12 gates** |
 
 ## 10. PENDENTE para os outros blocos
 - Critérios objetivos de cada gate (a Madu define; cada um vira ADR ou DEC).

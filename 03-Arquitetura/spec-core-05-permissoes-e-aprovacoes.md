@@ -54,6 +54,7 @@ Regra central: **a identidade vem da credencial, nunca do que o agente declara n
 - Revogar e trocar a credencial é feito só pelo operador, sem parar os outros agentes. Agente desativado (`agent.is_active = false`) é negado mesmo com credencial válida.
 - A chave é mostrada **uma vez**, na criação; nenhuma resposta da API a devolve depois.
 - **Por que uma por agente e não uma do n8n inteiro:** com uma só, um workflow comprometido ou com erro poderia dizer "sou o A0". Com uma por agente, o dano fica limitado ao escopo daquele agente.
+- **Isolamento no n8n (D7.7):** cada credencial de agente só pode ser usada **nos workflows daquele agente** (projetos do n8n ou compartilhamento restrito de credenciais). É requisito do ENG-03 e do ENG-07, com **teste na F6** de que um workflow não acessa a credencial de outro. A viabilidade no n8n 2.41.6 é verificada na F6; se não for possível, o ENG-00 volta à Madu com alternativa. Sem isso, "uma por agente" não limita o dano de uma injeção de prompt.
 
 ### 3.3 API → n8n (webhook)
 - A API envia um **segredo no cabeçalho** do webhook, configurado como credencial no n8n. O segredo vive em ambiente seguro, não no banco e não no repositório.
@@ -62,6 +63,14 @@ Regra central: **a identidade vem da credencial, nunca do que o agente declara n
 
 ### 3.4 Segredos (resumo)
 Nenhum segredo em resposta de API, log, evento ou audit. Hash para o que a API só precisa comparar; ambiente seguro para o que ela precisa enviar. **Senha do Redis** e **banco e usuário do n8n separados** (D1.4) são tarefas da F2 e F6 (ENG-02 e ENG-07), listadas aqui para não se perderem.
+
+### 3.5 Bootstrap das identidades (D7.4)
+A primeira senha da Madu e as credenciais dos 11 agentes e do serviço do n8n nascem de um **comando de bootstrap interativo**, executado por ela, **fora do repositório** (parte do `apps/cli`, D6.9):
+- pede a senha e guarda só o **hash**;
+- gera as credenciais, grava só o **hash** de cada uma e **mostra cada credencial uma única vez**, para ela colar no credential store do n8n;
+- registra tudo no `audit_log` (sem o segredo);
+- as **seeds** (`database/seeds`) criam apenas a organização e os 11 agentes, **sem nenhum segredo**; nenhum segredo vai a arquivo versionado, ao `.env.example` ou ao evento;
+- rodar de novo **recusa** se o usuário já existe; trocar ou revogar credencial é feito depois pelo cliente de linha de comando, com token humano.
 
 ## 4. Modelo de permissões (PROP)
 Segue a D2.5 do bloco 2: `agent.permissions` em `jsonb`, versionado por `permissions_version`.
@@ -94,10 +103,10 @@ Segue a D2.5 do bloco 2: `agent.permissions` em `jsonb`, versionado por `permiss
 |---|---|---|
 | Criar launch | operador, ou A0 | API (regra do bloco 3, incluindo a de JOINT) |
 | Pedir uma transição do launch | o `owner_agent` do **estado atual** (bloco 3, seção 4) ou o A0 | API: gates cumpridos + permissão |
-| Pedir aprovação de gate | o `owner_agent` do estado atual ou o A0 | pedido só cria `approval` em `requested` |
+| Pedir aprovação de gate | o **dono do gate** (bloco 3, 4.1, D7.5), o `owner_agent` do estado atual ou o A0 | pedido só cria `approval` em `requested` |
 | Conceder ou rejeitar gate HUMANO | **só a Madu** (token humano) | a Madu |
-| Disparar a verificação de gate de VERIFICAÇÃO | o `owner_agent` | API, pela condição objetiva |
-| Registrar a decisão de continuidade | A0 propõe; **a Madu confirma** (D3.4) | a Madu |
+| Disparar a verificação de gate de VERIFICAÇÃO | o dono do gate, o `owner_agent` do estado atual ou o A0 | API, pela condição objetiva |
+| Propor a decisão de continuidade | A0 (cria `decision` `proposed` e o `approval` de ação) | a Madu confirma (D3.4 e D7.6) |
 | Alterar permissões, credenciais, política, ativar ou desativar agente | só a Madu | a Madu |
 | Reprocessar entrega `dead` | só a Madu | a Madu |
 
@@ -124,7 +133,7 @@ requested ──(Madu aprova)──> granted ──(usada numa transição)─�
 - O **prazo é política** (`approval_expiry`), definido pela Madu. **Sem valor definido, a aprovação não expira, mas continua valendo como não aprovada.** Nenhum prazo padrão é inventado.
 
 ### 6.3 Aprovação de ação (não só de gate)
-`approval.subject_type` passa a valer `gate` ou `action`. `action` cobre os itens de `requires_approval` do agente e o gasto acima do limite (seção 7). O `approval` guarda o que está sendo aprovado e o agente que pediu; ao executar a ação, a API confere que existe aprovação concedida e ainda não consumida para aquele pedido.
+`approval.subject_type` passa a valer `gate` ou `action`. `action` cobre os itens de `requires_approval` do agente e o gasto acima do limite (seção 7). O `approval` guarda o que está sendo aprovado e o agente que pediu: o nome da ação (`action_name`) e o **hash dos parâmetros** (`action_params_hash`, incluindo o valor do gasto; D7.2). Ao executar a ação, a API recalcula o hash e confere que existe aprovação concedida, ainda não consumida e **com o mesmo hash**; uma aprovação dada para um valor não serve a outro.
 
 ### 6.4 Canal da Madu até o dashboard (M06)
 - No M01 **não há dashboard**. A Madu opera por endpoints autenticados e um **cliente mínimo de linha de comando** (a forma exata é do bloco 6), que lista aprovações pendentes e permite aprovar ou rejeitar. Nada disso passa por workflow (R8).
@@ -138,7 +147,7 @@ Se o objeto aprovado mudar depois da aprovação (por exemplo, a oferta alterada
 É **policy check**, não gate (DEC-0010 §3). Funciona assim:
 1. Toda ação marcada como "com gasto" passa pelo check antes de executar.
 2. O check compara o valor com o limite da política (`budget_limits` do agente e a política geral).
-3. Dentro do limite e com permissão: `BUDGET_AUTHORIZED = true`; acima: exige `approval` do tipo `action` concedido pela Madu (HUMAN DECISION); sem limite definido: **negado** (fail-closed).
+3. Dentro do limite e com permissão: `BUDGET_AUTHORIZED = true`; acima: exige `approval` do tipo `action` concedido pela Madu (HUMAN DECISION), com o hash do valor (D7.2); sem limite definido: **negado** (fail-closed).
 4. O resultado e o motivo vão para o `audit_log` (`details`), com o valor, o limite e a aprovação, quando houver.
 - Limite de orçamento e moeda: **PEND**, definidos pela Madu antes do M04 (DEC-0017 C4). Limite de custo de LLM: aberto (M02).
 - No M01 nenhuma ação gasta dinheiro: a entrega é o mecanismo testado com limites de teste.
@@ -171,6 +180,10 @@ O `audit_log` registra, aceito ou negado:
 - **Segredos:** nenhuma resposta, log, evento, audit **nem linha de `idempotency_key`** contém chave, senha ou token; chave de agente aparece uma única vez, e repetir a criação não a revela de novo.
 - **Completude do audit:** cada ação da seção 9 deixa linha de audit, inclusive as negadas.
 - **Concorrência:** duas decisões simultâneas sobre o mesmo `approval` resultam em uma só.
+- **Vínculo da ação (D7.2):** aprovação de gasto de um valor não libera gasto de valor maior nem de outra ação; mudar um parâmetro invalida a aprovação.
+- **Quem pede (D7.5):** só o dono do gate, o `owner_agent` do estado atual e o A0 pedem aprovação ou verificação do gate; os demais são negados.
+- **Bootstrap (D7.4):** a seed não contém segredo (varredura); a credencial aparece uma vez; segunda execução recusada; tudo no audit.
+- **Isolamento no n8n (D7.7, F6):** um workflow não consegue usar a credencial de outro agente.
 
 ## 11. Decisões (D5.1 a D5.10 aprovadas pela Madu em 2026-10-07: vale a recomendação do ENG-00 em todas; ajustes consolidados no bloco 2)
 | # | Pergunta | Opções | Recomendação do ENG-00 |
@@ -197,7 +210,7 @@ O `audit_log` registra, aceito ou negado:
 - Bibliotecas de hash, de token e de agendamento (bloco 6).
 
 ## 13. Riscos
-- **Credenciais de agente no n8n:** o *credential store* do n8n vira alvo. Mitigação: uma por agente, revogável, escopo mínimo, hash na API, nada em log. Segredos em ambiente seguro (ENG-07).
+- **Credenciais de agente no n8n:** o *credential store* do n8n vira alvo. Mitigação: uma por agente, revogável, escopo mínimo, hash na API, nada em log, **uso restrito aos workflows do agente (D7.7)**. Segredos em ambiente seguro (ENG-07).
 - **Sobrecarga de aprovação para a Madu:** com os critérios PEND, **11 dos 12 gates** ficam, na prática, como HUMANO; só o G12 tem critério proposto (bloco 3). Na prática, o caminho `decided_by_type = system` só é exercitado pelo G12. Aceito por ser o caminho de menor risco; cada critério objetivo que ela definir reduz a carga.
 - **Aprovação "esquecida":** sem prazo definido, `requested` pode ficar parada. O efeito é só atraso (fail-closed), e o aviso à Madu é o remédio; definir o prazo resolve.
 - **Aprovação de algo que muda depois** (seção 6.5), em aberto para o M03.

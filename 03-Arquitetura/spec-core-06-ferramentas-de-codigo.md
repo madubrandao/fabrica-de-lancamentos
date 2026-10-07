@@ -98,7 +98,7 @@ Cada ADR vira um arquivo em `docs/adr/` do `launch-os` **depois da aprovação**
 - **Alternativa rejeitada:** fila sobre Redis (decisão D4.1: fora do caminho crítico no M01).
 
 ### ADR-13 Cliente de linha de comando da Madu (bloco 5, D5.8)
-- **Proposta:** um pacote pequeno em TypeScript no monorepo (`apps/cli`, nome a confirmar), que usa o login da seção 3.1 do bloco 5 e chama os endpoints de aprovação. Sem interface gráfica; o dashboard é do M06. Arquivo de sessão local com permissão restrita, **fora do repositório**. Biblioteca de comandos: **PEND** (escolha na F4; não é decisão de arquitetura).
+- **Proposta:** um pacote pequeno em TypeScript no monorepo (`apps/cli`, nome a confirmar), que usa o login da seção 3.1 do bloco 5 e chama os endpoints de aprovação. Também traz o comando de **bootstrap** das identidades (bloco 5, 3.5, D7.4). Sem interface gráfica; o dashboard é do M06. Arquivo de sessão local com permissão restrita, **fora do repositório**. Biblioteca de comandos: **PEND** (escolha na F4; não é decisão de arquitetura).
 - **Fora da lista de pastas do DEC-0013:** `apps/cli` não existe na estrutura. É extensão pequena e **precisa da sua aprovação** (D6.9).
 
 ## 4. O que **não** muda e o que fica PEND

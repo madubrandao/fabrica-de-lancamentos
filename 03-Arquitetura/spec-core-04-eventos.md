@@ -46,11 +46,11 @@ Todos os payloads têm `schema_version = 1` no envelope.
 |---|---|---|
 | `launch.created` | criação do launch (estado `IDEA`) | `launch_id`, `launch_type`, `product_id`, `offer_id`, `previous_launch_id` (ou nulo), `status`, `owner_agent` |
 | `launch.*` de transição (lista na seção 4) | cada transição aceita (T1 a T14) | `launch_id`, `from_status`, `to_status`, `approval_ids[]` (aprovações concedidas que liberaram a transição; vazio sem gate), `gate_ids[]`, `owner_agent` (do novo estado) |
-| `approval.requested` | pedido de aprovação criado | `approval_id`, `launch_id` (ou nulo), `gate_id` (ou nulo), `subject_type`, `subject_id` (ou nulo), `requested_by` (tipo e id), `expires_at` (ou nulo; PEND) |
+| `approval.requested` | pedido de aprovação criado | `approval_id`, `launch_id` (ou nulo), `gate_id` (ou nulo), `subject_type`, `subject_id` (ou nulo), `action_name` (ou nulo), `requested_by` (tipo e id), `expires_at` (ou nulo; PEND) |
 | `approval.granted` | aprovação concedida (pela Madu, ou pela API em gate de VERIFICAÇÃO) | `approval_id`, `launch_id` (ou nulo), `gate_id` (ou nulo), `decided_by` (tipo e id), `decided_at`, `reason` (ou nulo) |
 | `approval.rejected` | aprovação rejeitada | os mesmos campos de `approval.granted` |
 | `approval.expired` (novo, bloco 5, D5.6) | o agendador marca como vencida uma aprovação `requested` com `expires_at` vencido | os mesmos campos de `approval.rejected`, com `decided_by.type = system` e `reason` indicando vencimento |
-| `decision.recorded` (novo, seção 4) | decisão de continuidade registrada | `decision_id`, `launch_id`, `decision_type`, `chosen_option`, `next_launch_id` (ou nulo) |
+| `decision.recorded` (novo, seção 4) | decisão de continuidade **confirmada** pela Madu (a proposta do A0 gera só `approval.requested`; bloco 3, seção 5) | `decision_id`, `launch_id`, `decision_type`, `chosen_option`, `next_launch_id` (ou nulo) |
 | `launch.completed` | cria-se junto da decisão de continuidade (seção 4) | `launch_id`, `decision_id`, `chosen_option` |
 | `error.detected` | falha tratada que exige atenção (entrega esgotada, transição inválida repetida, erro de validação grave) | `source` (`api`, `delivery`, `workflow`), `error_code`, `message` (sem segredo), `entity_type`, `entity_id` (ou nulo), `retryable` (booleano) |
 

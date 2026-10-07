@@ -115,13 +115,16 @@ A lista oficial não tem entidade separada para a continuidade, e o plano do M01
 | `decision_type` | text | não | PROP | `CHECK`; valores iniciais: `CONTINUITY`. Outros tipos PEND |
 | `chosen_option` | text | não | DER | para `CONTINUITY`: SEED, INTERNAL, JOINT, RELAUNCH, EVERGREEN, ARCHIVE |
 | `next_launch_id` | uuid | sim | DER | FK `launch` criado pela decisão; nulo em EVERGREEN e ARCHIVE |
-| `decided_by_type` | text | não | PROP | `human` ou `agent` |
-| `decided_by_id` | text | não | PROP | |
+| `status` | text | não | DER (bloco 3, D7.6) | `CHECK` em `proposed`, `confirmed`, `rejected`, `expired`; para `CONTINUITY` acompanha o `approval` ligado |
+| `proposed_by_type`, `proposed_by_id` | text | não | DER (D7.6) | quem propôs (o A0) |
+| `approval_id` | uuid | sim | DER (D7.6) | FK `approval` da confirmação (`subject_type = action`, ação `record_continuity_decision`) |
+| `decided_by_type` | text | sim | PROP | `human` quando confirmada; nulo enquanto `proposed` |
+| `decided_by_id` | text | sim | PROP | |
 | `rationale` | text | sim | PROP | |
-| `decided_at` | timestamptz | não | PROP | |
+| `decided_at` | timestamptz | sim | PROP | preenchida ao confirmar, rejeitar ou vencer |
 | `created_at` | timestamptz | não | PROP | |
 
-**PEND:** quem decide a continuidade (humano, A0 ou ambos) e os campos de negócio das demais decisões da memória estruturada ([[memoria-empresarial]]).
+Quem decide a continuidade: o A0 propõe e a Madu confirma (D3.4 e D7.6; [[spec-core-03-state-machine-e-gates]], seção 5). **PEND:** os campos de negócio das demais decisões da memória estruturada ([[memoria-empresarial]]).
 
 ### 3.6 `approval`
 | Coluna | Tipo | Nulo | Origem | Nota |
@@ -132,7 +135,9 @@ A lista oficial não tem entidade separada para a continuidade, e o plano do M01
 | `gate_id` | text | sim | DER | `CHECK` em G01 a G12; nulo quando o pedido não for de gate |
 | `from_status` | text | sim | DER (revisão independente) | estado de origem da transição que a aprovação libera; `CHECK` nos 15 estados; obrigatório quando `subject_type = gate` |
 | `subject_type` | text | não | DER (bloco 5, D5.5) | `CHECK` em `gate` ou `action` |
-| `subject_id` | uuid | sim | PROP | |
+| `subject_id` | uuid | sim | PROP | sem uso no M01; reservado para o objeto aprovado quando existirem produto e oferta (M03). Para `gate` o vínculo é `launch_id` + `gate_id` + `from_status`; para `action`, os dois campos abaixo (D7.2) |
+| `action_name` | text | sim | DER (D7.2) | nome da ação aprovada; obrigatório quando `subject_type = action` |
+| `action_params_hash` | text | sim | DER (D7.2) | hash (SHA-256) dos parâmetros da ação em forma canônica, incluindo o valor de gasto; obrigatório quando `subject_type = action`. A API **compara** o hash ao consumir a aprovação, então uma aprovação dada para um valor não serve a outro |
 | `status` | text | não | DER (bloco 5, D5.6) | `CHECK` em `requested`, `granted`, `rejected`, `expired` |
 | `requested_by_type`, `requested_by_id` | text | não | DER | quem pediu (agente ou sistema) |
 | `requested_at` | timestamptz | não | DER | |
@@ -206,7 +211,9 @@ Não são entidades de negócio e **não alteram a lista de 22** do DEC-0012. Ca
 | `policy_setting` | política configurável (prazo de aprovação, limites de orçamento), alterável só pela Madu com audit | [[spec-core-05-permissoes-e-aprovacoes]], seção 8 (D5.7) |
 
 ## 4. Entidades de domínio (esqueleto)
-Valem a partir do M03 em diante. O M01 só reserva tabela, chaves e relações; **as colunas de negócio não estão em nenhum documento e não foram inventadas**. Todas têm `id`, `organization_id`, `created_at` e `updated_at`.
+**D7.3 (aprovada em 2026-10-07):** a F2 cria as **22 tabelas**. Estas 14 entram **só com** `id`, `organization_id`, `created_at`, `updated_at` e as relações **já documentadas**: `offer.product_id`, `launch.product_id`, `launch.offer_id`, `launch.audience_segment_id` e `learning.launch_id`. As demais relações da tabela abaixo são **PROP e só entram no M03**, junto das **colunas de negócio**, por migration aditiva e reversível; essas colunas não estão em nenhum documento e não foram inventadas.
+
+**Semente:** a de produção traz **só** a organização e os 11 agentes, sem nenhum segredo (bloco 5, 3.5). `product` e `offer` de teste existem **apenas como fixtures de teste**, nunca em `database/seeds`.
 
 | Entidade | Relações propostas (PROP) | Observação |
 |---|---|---|
@@ -272,8 +279,8 @@ Entidades documentadas sem posição fixa nesta cadeia (PEND): `sequence`, `obje
 - Colunas de negócio das entidades de domínio (a partir do M03, junto da definição do produto fictício).
 
 ## 9. Riscos
-- **Esqueleto demais ou de menos:** o M01 precisa só do núcleo; as demais tabelas podem ser criadas na F2 apenas como esqueleto ou adiadas para o M03. Isso é uma escolha da Madu e o bloco não a fecha.
-- **`approval_state` e `result` sem estrutura:** são campos do `launch` documentados, mas sem valores. Ficam como `PEND` até o bloco 3.
+- **Esqueleto demais ou de menos:** resolvido pela D7.3 (22 tabelas, 14 delas mínimas). O risco que sobra é uma tabela mínima ganhar coluna sem decisão; qualquer coluna nova entra por migration reversível e por decisão registrada.
+- **`result`:** campo documentado, sem estrutura (M05); `approval_state` está definido (bloco 3, seção 7).
 - **Contradição possível com o bloco 3:** se o mapeamento estado → gate exigir metadados de gate, a recomendação D2.2 muda para tabela de domínio.
 - **RAM e disco da máquina** ao testar migrations com PostgreSQL ([[M01-plano-de-execucao]] riscos).
 

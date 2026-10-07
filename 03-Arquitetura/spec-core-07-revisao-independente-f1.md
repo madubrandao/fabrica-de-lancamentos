@@ -2,7 +2,7 @@
 tipo: arquitetura
 area: 03-Arquitetura
 fonte: revisão independente de 2026-10-07 (agente revisor, somente leitura) sobre os blocos 1 a 6; DEC-0010; DEC-0016 D7; M01-plano-de-execucao (F1)
-status: correções de texto aplicadas em 2026-10-07; decisões D7.1 a D7.7 aguardando aprovação da Madu (M01, F1, fechamento)
+status: correções de texto aplicadas e decisões D7.1 a D7.7 aprovadas pela Madu e aplicadas aos blocos em 2026-10-07 (recomendações do ENG-00); falta a segunda passada do revisor e o DEC-0023 (M01, F1, fechamento)
 atualizado: 2026-10-07
 ---
 # Revisão independente da especificação do Core (blocos 1 a 6)
@@ -49,8 +49,8 @@ Numeração do relatório do revisor. **Aplicado** = correção de texto ou sche
 
 Todos os links internos já estavam resolvendo, segundo o revisor.
 
-## 2. Decisões novas para a Madu (D7.x)
-Cada uma muda ou acrescenta algo já aprovado. Se aprovar tudo como recomendado, é só dizer "siga com as recomendadas"; depois disso eu aplico nos blocos e registro.
+## 2. Decisões novas (D7.x), aprovadas pela Madu em 2026-10-07 com as recomendações do ENG-00
+Cada uma muda ou acrescenta algo já aprovado. Foram **aplicadas** nos blocos: D7.1 em [[spec-core-03-state-machine-e-gates]] (seções 2, 3 e 9); D7.2 em [[spec-core-02-entidades-e-schema]] (3.6) e [[spec-core-05-permissoes-e-aprovacoes]] (6.3 e 7); D7.3 em [[spec-core-02-entidades-e-schema]] (seção 4); D7.4 em [[spec-core-05-permissoes-e-aprovacoes]] (3.5) e [[spec-core-06-ferramentas-de-codigo]] (ADR-13); D7.5 em [[spec-core-03-state-machine-e-gates]] (4.1) e [[spec-core-05-permissoes-e-aprovacoes]] (seção 5); D7.6 em [[spec-core-03-state-machine-e-gates]] (seções 5 e 6) e [[spec-core-02-entidades-e-schema]] (3.5); D7.7 em [[spec-core-05-permissoes-e-aprovacoes]] (3.2 e 13).
 
 | # | Pergunta | Opções | Recomendação do ENG-00 |
 |---|---|---|---|
@@ -63,7 +63,7 @@ Cada uma muda ou acrescenta algo já aprovado. Se aprovar tudo como recomendado,
 | **D7.7** | Isolamento das credenciais de agente no n8n | **A)** exigir que cada credencial de agente seja usada **só nos workflows daquele agente** (projetos do n8n ou compartilhamento restrito), com **teste na F6** de que um workflow não acessa a credencial de outro; entra como requisito do ENG-03 e do ENG-07. **B)** não exigir | **A.** A defesa do bloco 5 ("uma credencial por agente") só funciona se o n8n impedir o uso cruzado, e os workflows de agente processam entrada externa e LLM (risco de injeção de prompt). A viabilidade no n8n 2.41.6 é **verificada na F6**; se não for possível, volto a você com alternativa |
 
 ## 3. Número que o revisor errou (conferido)
-O revisor disse que, ao mover o G04 para T7, "continuam 10 transições com gate". **Não continuam.** Os gates ficam em T3 (G01), T4 (G02), T5 (G03), T7 (G04 a G07), T8 (G08), T10 (G09), T12 (G10), T13 (G11) e T14 (G12): **9 transições com gate**, cobrindo os 12 gates. T6 passaria a ficar sem gate (junto de T1, T2, T9 e T11). Isso entra na D7.1 e, se for aprovada, o texto da D3.8 passa de "10" para "9".
+O revisor disse que, ao mover o G04 para T7, "continuam 10 transições com gate". **Não continuam.** Os gates ficam em T3 (G01), T4 (G02), T5 (G03), T7 (G04 a G07), T8 (G08), T10 (G09), T12 (G10), T13 (G11) e T14 (G12): **9 transições com gate**, cobrindo os 12 gates. T6 ficou sem gate (junto de T1, T2, T9 e T11). Com a D7.1 aprovada, a D3.8 no bloco 3 já diz "9".
 
 ## 4. O que fica para depois
 - **Segunda passada** do revisor, só nos pontos alterados, antes do DEC-0023 (aprovação do portão F1).
