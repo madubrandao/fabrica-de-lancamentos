@@ -25,7 +25,7 @@ Valida: fundação documental, repositório, Claude Code, infraestrutura de dese
 - [x] Documentação de arquitetura transferida/linkada ao repo (referenciada, não copiada: `docs/architecture/README.md`)
 
 ## M01 — Core Platform
-**Status: em andamento** (início formal em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 e **F1 concluídas** (especificação aprovada pela Madu em 2026-10-07, portão F1: [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]). **F2 (banco), F6 (infra e CI) e F3 (eventos) fechadas em 2026-10-07** ([[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]], [[DEC-0025-fechamento-da-f3-do-m01]]), mescladas na `main` com CI verde. **Próxima: F4 (API fina, state machine e aprovações).** Código, schema e migrations só dentro da especificação e em branches `feat/*`.
+**Status: em andamento** (início formal em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 e **F1 concluídas** (especificação aprovada pela Madu em 2026-10-07, portão F1: [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]). **F2 (banco), F6 (infra e CI) e F3 (eventos) fechadas em 2026-10-07** ([[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]], [[DEC-0025-fechamento-da-f3-do-m01]]), mescladas na `main` com CI verde. **F4 (API fina, state machine e aprovações) fechada em 2026-10-07** ([[DEC-0026-fechamento-da-f4-do-m01]]), PR #4 mesclado. **Próxima: F5 (Agent Registry e permissões).** Código, schema e migrations só dentro da especificação e em branches `feat/*`.
 Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permissions, approvals e state machine.
 - [ ] PostgreSQL + schema inicial + migrations reversíveis
 - [ ] Redis

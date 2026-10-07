@@ -2,14 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0026
-status: proposta
+status: aceita
 fonte: M01-plano-de-execucao (F4); plano único da F4 aprovado em 2026-10-07; spec-core-01 a 07; ADR-0019 e ADR-0020 no launch-os; evidências de 2026-10-07
 data-registro: 2026-10-07
-data-decisao: aguardando a Madu
+data-decisao: 2026-10-07 (a Madu aprovou seguindo as recomendações do ENG-00)
 ---
 # DEC-0026 — Fechamento da F4 (API fina, state machine e aprovações) do M01
 
-> **PROPOSTA.** O PR #4 do `launch-os` foi mesclado na `main` (merge `a142863`) com a CI verde e a revisão independente registrada abaixo, como o plano autorizava. O fechamento da fase é decisão da Madu.
+> **Aprovado pela Madu em 2026-10-07.** O PR #4 do `launch-os` foi mesclado na `main` (merge `a142863`) com a CI verde e a revisão independente registrada abaixo, como o plano autorizava. Este DEC é o fechamento da fase.
 
 ## Entrega
 - **`apps/api` (Fastify 5):** autenticação (operador: argon2 + JWT HS256; agente e serviço do n8n: credencial opaca com hash SHA-256); `POST /launches`; transições com `FOR UPDATE`; aprovações e os 12 gates (G12 por verificação); decisão de continuidade (A0 propõe, Madu confirma); `BUDGET_AUTHORIZED` (nega sem limite); claim, ack e correlação para o n8n; agendador (vence aprovações, entrega, reabre claims); audit de toda mutação, aceita ou negada, com `correlation_id`.
@@ -42,8 +42,8 @@ data-decisao: aguardando a Madu
 ## PENDENTE (Madu; sem padrão no código)
 Duração da sessão, intervalo e lote do agendador, prazo de aprovação (`approval_expiry`), limite de orçamento e de tentativas de login. Sem eles: nada expira, gasto é negado e o agendador não liga.
 
-## Decisão proposta
-1. Aprovar o fechamento da F4 e confirmar os 7 itens PROP.
+## Decisão
+1. **Aprovado o fechamento da F4** e **confirmados** os 7 itens PROP. **Aceitas** as pendências 2 a 4 (ordem livre dentro da T7, orçamento do G08 no M04, `budget.check` de uso único, login sem bloqueio até haver valor definido). **Decidido** fazer a migration 0009 (parâmetros legíveis da aprovação de ação) antes do M04, com plano próprio.
 2. PR #4 mesclado na `main` (feito).
 3. Próxima fase: **F5 (Agent Registry e permissões)**, com plano único.
 
