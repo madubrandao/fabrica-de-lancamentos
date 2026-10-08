@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 e §10; DEC-0015; DEC-0017; DEC-0020; DEC-0021; blueprint v1 §14–§21, §41; plano aprovado pela Madu em 2026-10-04
-status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F0, F1, F2, F3, F4 e F6 fechadas (DEC-0023 a DEC-0026); F5 fechada (DEC-0027); F7 implementada (PR #6), aguarda o DEC-0028 (proposta)
+status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F0, F1, F2, F3, F4 e F6 fechadas (DEC-0023 a DEC-0026); F5 fechada (DEC-0027); F7 mesclada (PR #6), aguarda o DEC-0028 (proposta); F8 é a próxima
 atualizado: 2026-10-04
 ---
 # M01 Core Platform — plano de execução (proposta)
@@ -81,3 +81,7 @@ Plano único aprovado pela Madu em 2026-10-07. Branches locais `feat/devops` (F6
 Especificação em seis blocos mais fechamento, com as decisões D1.1 a D7.7 aprovadas pela Madu ([[spec-core-01-servicos-e-limites]] a [[spec-core-07-revisao-independente-f1]]); revisão independente em duas passadas (0 críticos e 0 altos no final); portão aprovado no [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]. Os ADRs do bloco 6 foram gravados no `launch-os` (ADR-0005 a ADR-0017, commit local, sem push). **Próximo:** F2 (banco e schema) e F6 (infra e CI), cada uma com a confirmação da Madu para começar.
 
 Ver [[milestones]] · [[roadmap]] · [[M00-plano-de-execucao]].
+
+
+### F7 — implementada (2026-10-07)
+Plano único aprovado em 2026-10-07. Branch `feat/quality` (PR #6, merge `d947eca`): failure injection com o banco real, inventário rotas × guardrails, varredura de segredos, contrato dos 23 eventos, 17 provas negativas, cobertura; 3 defeitos corrigidos. 800 testes; revisão independente tratada. Fechamento: [[DEC-0028-fechamento-da-f7-do-m01]] (proposta). **Próxima: F8**, com plano único a aprovar.
