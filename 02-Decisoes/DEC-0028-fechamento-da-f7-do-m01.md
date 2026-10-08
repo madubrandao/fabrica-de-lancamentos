@@ -2,14 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0028
-status: proposta
+status: aceita
 fonte: M01-plano-de-execucao (F7); plano único da F7 aprovado em 2026-10-07; docs/status/QUALITY_EVIDENCE.md no launch-os; evidências de 2026-10-07
 data-registro: 2026-10-07
-data-decisao: aguardando a Madu
+data-decisao: 2026-10-07 (a Madu aprovou seguindo as recomendações do ENG-00)
 ---
 # DEC-0028 — Fechamento da F7 (Qualidade) do M01
 
-> **PROPOSTA.** O PR #6 do `launch-os` foi mesclado na `main` (merge `d947eca`) com a CI verde e a revisão independente registrada abaixo, como o plano autorizava. O fechamento da fase é decisão da Madu.
+> **Aprovado pela Madu em 2026-10-07.** O PR #6 do `launch-os` foi mesclado na `main` (merge `d947eca`) com a CI verde e a revisão independente registrada abaixo, como o plano autorizava. Este DEC é o fechamento da fase.
 
 ## Entrega
 - **Failure injection com o PostgreSQL real** (gatilhos que falham ou derrubam a conexão no meio): transição, concessão, continuidade, troca de permissões, claim e entrega ficam sem estado pela metade; resposta 500 padronizada; a repetição com a mesma `Idempotency-Key` conclui.
@@ -27,8 +27,8 @@ data-decisao: aguardando a Madu
 2. **Limite mínimo de cobertura:** valor numérico seu; hoje só relatório.
 3. Mudanças de produção além do plano, aceitas por serem bug claro com teste: os dois ouvintes de erro, a autenticação em `onRequest` e o observador `onRoute` do `buildApp` (só para o inventário).
 
-## Decisão proposta
-1. Aprovar o fechamento da F7 e decidir os itens acima.
+## Decisão
+1. **Aprovado o fechamento da F7.** Item 1: o limite de taxa do audit de 401 anônimo fica como **pendência obrigatória antes de expor a API além de 127.0.0.1** (opção recomendada: auditar só token presente e inválido, mais limite por IP). Item 2: cobertura continua só como relatório, sem limite mínimo até a Madu definir o valor. Item 3: aceitas as mudanças de produção listadas.
 2. PR #6 mesclado na `main` (feito).
 3. Próxima fase: **F8 (Fechamento do M01)**: verificação final, revisão independente completa, Definition of Done com evidência e DEC de fechamento do marco; plano único a aprovar.
 
