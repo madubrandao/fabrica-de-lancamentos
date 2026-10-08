@@ -2,14 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0027
-status: proposta
+status: aceita
 fonte: M01-plano-de-execucao (F5); plano único da F5 aprovado em 2026-10-07; spec-core-05 (seções 4, 5, 9, 10); ADR-0021 no launch-os; evidências de 2026-10-07
 data-registro: 2026-10-07
-data-decisao: aguardando a Madu
+data-decisao: 2026-10-07 (a Madu aprovou seguindo as recomendações do ENG-00)
 ---
 # DEC-0027 — Fechamento da F5 (Agent Registry e permissões) do M01
 
-> **PROPOSTA.** O PR #5 do `launch-os` foi mesclado na `main` (merge `511d750`) com a CI verde e a revisão independente registrada abaixo, como o plano autorizava. O fechamento da fase é decisão da Madu.
+> **Aprovado pela Madu em 2026-10-07.** O PR #5 do `launch-os` foi mesclado na `main` (merge `511d750`) com a CI verde e a revisão independente registrada abaixo, como o plano autorizava. Este DEC é o fechamento da fase.
 
 ## Entrega
 - **Modelo de permissões** (`packages/schemas`): nega por padrão; 22 entidades; registro versionado de 7 ações; `requires_approval` contido em `actions`; permissões malformadas negam tudo.
@@ -32,8 +32,8 @@ data-decisao: aguardando a Madu
 ## PENDENTE (Madu)
 Escopos reais dos 11 agentes (`read`, `write`, ações de ferramentas, orçamento por agente): M02 e M03. Mais os valores já pendentes da F4 (sessão, agendador, prazo de aprovação, orçamento, login) e a migration 0009 (parâmetros legíveis da aprovação de ação) antes do M04.
 
-## Decisão proposta
-1. Aprovar o fechamento da F5 e confirmar os 4 itens PROP.
+## Decisão
+1. **Aprovado o fechamento da F5** e **confirmados** os 4 itens PROP (ação `request_action_approval` no registro; `claim_event` e `ack_event` fora; semente com as permissões mínimas descritas; `read` e `write` informativos até o M02).
 2. PR #5 mesclado na `main` (feito).
 3. Próxima fase: **F7 (Qualidade)**, que acompanha as demais, e depois **F8**; a Madu escolhe a ordem e aprova o plano único.
 
