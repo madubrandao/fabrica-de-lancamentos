@@ -55,3 +55,8 @@ A5 negativo · onde roda o laço do agente (API: controle e custo duro, mas API 
 Agent definition schema · Prompt loading · Tool registry com escopo explícito · Memory read/write com origem e timestamp · Execution state com `execution_id` e audit trail, retries e timeouts · Agent routing, approval hooks e policy enforcement · **mais** A5 resolvido, o n8n emitindo evento pela API e `error.detected` de origem `api` e `workflow`.
 
 Ver [[milestones]] · [[roadmap]] · [[M01-plano-de-execucao]] · [[DEC-0030-inicio-formal-do-m02]].
+
+
+## Andamento
+- **F0** concluída em 2026-10-08: DEC-0030 aceito; `docs/status` do `launch-os` sincronizados (PR #8 mesclado).
+- **F1, spike A5 (2026-10-08): NEGATIVO.** O n8n 2.41.6 Community não isola credencial por workflow (projetos e compartilhamento exigem licença; o workflow do agente B usou a credencial do agente A). Evidências S1 a S8 em [[2026-10-08-spike-a5-n8n]]. **Parada nº 4 do plano:** o ENG-00 propõe a execução iniciada pela API com token curto por execução e **aguarda a decisão da Madu** antes de escrever os blocos da especificação.
