@@ -37,7 +37,7 @@ Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permi
 - [x] API skeleton
 
 ## M02 — Agent Engine
-**Status: em andamento** (início formal em 2026-10-08, [[DEC-0030-inicio-formal-do-m02]]; plano em [[M02-plano-de-execucao]]). F0 e F1 (especificação, com portão) primeiro; nenhum código antes de a Madu aprovar a especificação.
+**Status: em andamento** (início formal em 2026-10-08, [[DEC-0030-inicio-formal-do-m02]]; plano em [[M02-plano-de-execucao]]). F0 e F1 concluídas em 2026-10-08 (portão aprovado: [[DEC-0031-portao-f1-especificacao-do-agent-engine]]); próximo: ADRs e plano único da F2 e da F3.
 Valida: Agent Contract, context assembly, tool registry, memory interfaces, execution lifecycle, policy enforcement.
 - [ ] Agent definition schema · [ ] Prompt loading
 - [ ] Tool registry (escopo explícito por ferramenta)

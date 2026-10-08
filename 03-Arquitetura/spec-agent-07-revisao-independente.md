@@ -94,6 +94,9 @@ Veredicto: os 3 críticos estavam tratados; **sem crítico novo**; **7 altos nov
 ## 6-ter. Terceira leitura (resultado e correções)
 Sem crítico; **2 altos** e 9 médios, todos de redação ou lacuna que reabriam os cenários N1 e N2, tratados: **A1** (o redespacho de uma execução `running` pelo varredor (f) tem mecanismo: despacho `redispatch`, bloco 1 §4.3); **A2** (`start`, `renew`, `complete` e `fail` **não** usam a Idempotency-Key do `mutate`; a idempotência vem do estado da linha, bloco 1 §5); **M1** (estado do `renew`: `renew_from_ep`, `renew_exp`, `renew_used`); **M2–M4** (contradições de redação: rejeição/vencimento sem `resume`, `handoff.result`, "valor vigente"); **M5** (ordem de travas e passos do `grant`/`reject`/`expire`, gates e continuidade intactos); **M6** (a fase 2 sempre grava o `llm_call`); **M7** (schema do `value` por `key`); **M8** (matriz de testes); **M9** (auditoria da negação no tratador próprio).
 
+## 6-quater. Quarta leitura
+Veredicto: **pronto**, sem crítico nem alto. 4 médios e 3 baixos, tratados: passo `abandoned` e retomada em `seq+1` (o que o workflow faz com `step_in_progress`); exceção à Idempotency-Key declarada (bloco 1 §5 e bloco 6 §5-ter); replay de `complete`/`fail` na matriz de estados; ordem de travas ancestral → descendente; redação de "concedida"; identificação do `renew` pelo estado da linha; limite de tentativas do varredor (f).
+
 ## 6-bis. Mudança no plano do M02
 Esta especificação altera decisões do [[M02-plano-de-execucao]]: **D8** (a retomada deixa de ser o assinante `approval-resume` e passa a ser inserida na transação da decisão); **D5** (estados: acrescenta `dispatched`, `awaiting_child`, `timed_out` e a época); **D1** ("credencial do agente" vira token por execução); **F3** (`packages/memory` fica vazio e reservado). O plano será atualizado após o portão.
 

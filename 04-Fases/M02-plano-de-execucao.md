@@ -60,3 +60,5 @@ Ver [[milestones]] · [[roadmap]] · [[M01-plano-de-execucao]] · [[DEC-0030-ini
 ## Andamento
 - **F0** concluída em 2026-10-08: DEC-0030 aceito; `docs/status` do `launch-os` sincronizados (PR #8 mesclado).
 - **F1, spike A5 (2026-10-08): NEGATIVO.** O n8n 2.41.6 Community não isola credencial por workflow (projetos e compartilhamento exigem licença; o workflow do agente B usou a credencial do agente A). Evidências S1 a S8 em [[2026-10-08-spike-a5-n8n]]. **Parada nº 4 do plano:** o ENG-00 propõe a execução iniciada pela API com token curto por execução e **aguarda a decisão da Madu** antes de escrever os blocos da especificação.
+
+- **F1 concluída em 2026-10-08:** especificação (blocos 1 a 7) aprovada pela Madu ([[DEC-0031-portao-f1-especificacao-do-agent-engine]]); quatro revisões independentes; decisões D1–D6 conforme o bloco 7. Ajustes ao plano: D8 (retomada na transação da decisão), D5 (estados e época), D1 (token por execução), F3 (`packages/memory` vazio). **Próximo:** PR de ADRs no `launch-os` e plano único da F2 e da F3.
