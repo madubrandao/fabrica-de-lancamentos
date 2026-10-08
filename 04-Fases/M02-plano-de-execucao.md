@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 id: M02-plano-de-execucao
-status: em execução (início formal em 2026-10-08, DEC-0030)
+status: concluído em 2026-10-08 (fechamento aceito, DEC-0032; início formal em 2026-10-08, DEC-0030)
 fonte: plano aprovado pela Madu em 2026-10-08 ("PODE PLANEJAR M02"); milestones; DEC-0020; DEC-0029; blueprint v1 §36
 data-registro: 2026-10-08
 ---
@@ -64,4 +64,4 @@ Ver [[milestones]] · [[roadmap]] · [[M01-plano-de-execucao]] · [[DEC-0030-ini
 - **F1 concluída em 2026-10-08:** especificação (blocos 1 a 7) aprovada pela Madu ([[DEC-0031-portao-f1-especificacao-do-agent-engine]]); quatro revisões independentes; decisões D1–D6 conforme o bloco 7. Ajustes ao plano: D8 (retomada na transação da decisão), D5 (estados e época), D1 (token por execução), F3 (`packages/memory` vazio). **Próximo:** PR de ADRs no `launch-os` e plano único da F2 e da F3.
 - **F2 a F5 concluídas em 2026-10-08** (PRs #10, #11, #13 a #17, #19, #20 no `launch-os`; revisão independente por PR): migrations 0009 a 0013, núcleo de agentes, adaptador de LLM, gateway na API e workflows do n8n; fumaça contra o n8n real.
 - **F6 concluída em 2026-10-08** (PR #22): `approval-resume` ignora `tool.*`, varredura de segredos do Agent Engine, failure injection do gateway, 11 provas negativas, S13 a S16 na fumaça.
-- **F7 implementada em 2026-10-08** (PR #23): verificação do zero, duas revisões completas (0 críticos, 0 altos), correções, `M02_DOD.md`, runbook. **Aguarda o aceite do [[DEC-0032-fechamento-do-m02-agent-engine]].** O M03 não está autorizado.
+- **F7 implementada em 2026-10-08** (PR #23): verificação do zero, duas revisões completas (0 críticos, 0 altos), correções, `M02_DOD.md`, runbook. **Fechamento aceito pela Madu em 2026-10-08 ([[DEC-0032-fechamento-do-m02-agent-engine]]),** com a ordem das lacunas L1 a L7 antes do M03. O M03 não está autorizado.

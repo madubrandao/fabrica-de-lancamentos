@@ -33,7 +33,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]] — portão F1 aprovado pela Madu em 2026-10-07: especificação do Core aceita; F2 e F6 liberadas (ainda não iniciadas).
 - [[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]] — fechamento da F2 (banco e schema) e da F6 (infra e CI) aprovado pela Madu em 2026-10-07; push e pull requests autorizados; próxima fase: F3.
 - [[DEC-0025-fechamento-da-f3-do-m01]] — fechamento da F3 (eventos) aprovado pela Madu em 2026-10-07; PR #3 mesclado; próxima fase: F4.
-- [[DEC-0032-fechamento-do-m02-agent-engine]] — fechamento do M02 Agent Engine (proposta; aguarda o aceite da Madu). Os DEC-0026 a DEC-0031 estão nos próprios arquivos desta pasta.
+- [[DEC-0032-fechamento-do-m02-agent-engine]] — fechamento do M02 Agent Engine aceito pela Madu em 2026-10-08 (L4 decidida; ordem das lacunas L1 a L7 aprovada). Os DEC-0026 a DEC-0031 estão nos próprios arquivos desta pasta.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos**, sem subitens abertos.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.

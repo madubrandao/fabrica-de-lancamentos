@@ -2,14 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0032
-status: proposta
-fonte: M02-plano-de-execucao (F6 e F7); plano único da F6 e da F7 aprovado em 2026-10-08 ("Plano aprovado, finalize a m02"); docs/status/M02_DOD.md, M02_QUALITY_EVIDENCE.md e docs/operations/M02-RUNBOOK.md no launch-os; revisões independentes completas de 2026-10-08
+status: aceita
+fonte: M02-plano-de-execucao (F6 e F7); plano único da F6 e da F7 aprovado em 2026-10-08 ("Plano aprovado, finalize a m02"); docs/status/M02_DOD.md, M02_QUALITY_EVIDENCE.md e docs/operations/M02-RUNBOOK.md no launch-os; revisões independentes completas de 2026-10-08; decisões do item 1 aprovadas pela Madu em 2026-10-08 ("Concordo com as recomendações do item 1, siga")
 data-registro: 2026-10-08
-data-decisao: pendente (aguarda o aceite da Madu)
+data-decisao: 2026-10-08
 ---
 # DEC-0032 — Fechamento do M02 Agent Engine
 
-> **PROPOSTA, aguarda o aceite da Madu.** O M02 está **implementado e verificado do zero**; o fechamento formal (como foi o M01 no [[DEC-0029-fechamento-do-m01-core-platform]]) só vale com o aceite dela. **O M03 NÃO está autorizado:** só com novo início formal, plano único e as mesmas paradas.
+> **ACEITA pela Madu em 2026-10-08.** O M02 está **implementado, verificado do zero e fechado formalmente**, com as lacunas L1 a L7 e as BAIXAS abaixo registradas. **O M03 NÃO está autorizado:** só com novo início formal, plano único e as mesmas paradas. Antes dele, as lacunas são tratadas na ordem da seção "Decisão" (com um plano único por fase).
 
 ## Evidências do fechamento (2026-10-08)
 | Critério | Evidência |
@@ -59,8 +59,18 @@ data-decisao: pendente (aguarda o aceite da Madu)
 - **Definições:** escopos reais dos 11 agentes e seus prompts; ferramentas de negócio (M03/M04).
 - **Antes do M03:** a hospedagem do n8n e as URLs reais dos webhooks (itens L7).
 
-## Decisão (proposta do ENG-00)
-1. **Aceitar o fechamento do M02** com as lacunas L1 a L7 e as BAIXAS acima registradas, e **marcar os critérios de saída** no `milestones.md`.
-2. **Registrar:** A5 negativo e mitigado pelo token curto; `next_launch_id` fora do M02; Redis sem papel no M02.
-3. **Decidir L4** (liberar a reserva de custo em erro sem cobrança) e **confirmar a ordem** L1, L2, L3 e L5 como primeiras tarefas do M03 (antes do primeiro agente real), L6 junto dos escopos e L7 com a hospedagem.
-4. **O M03 não está autorizado.** Ele só começa com novo início formal seu, com plano único e as mesmas paradas (chamada real a LLM só com a chave e o limite de custo definidos por você).
+## Decisão (aceita pela Madu em 2026-10-08)
+1. **Fechamento do M02 aceito**, com as lacunas L1 a L7 e as BAIXAS acima registradas. Critérios de saída marcados no `milestones.md`.
+2. **Registrado:** A5 negativo e mitigado pelo token curto; `next_launch_id` fora do M02; Redis sem papel no M02.
+3. **L4 decidida:** liberar a reserva de custo em `invalid_request` e `rate_limited` (erro sem cobrança); manter a reserva em `timeout` e `provider_error` (podem ter cobrado) e na varredura.
+4. **Ordem das lacunas antes do M03 aprovada:**
+   1. L3: recusar na subida `triggers[]` com eventos que o gateway produz.
+   2. L6: validar `tool.<nome>` contra o registry no PUT de permissões.
+   3. L5: o workflow envia `run_id`; a API responde 409 se for diferente de `lease_run_id`.
+   4. L1: nó de renew no `execute-agent`, com cenário na fumaça (margem é valor da Madu; marcador até lá).
+   5. L2: marcar `outcome_unknown` na retomada e não reemitir a diretiva; obrigatória antes da primeira ferramenta externa com efeito.
+   6. L4: implementar a liberação de reserva conforme a decisão do item 3.
+   7. L7: comando de importação dos workflows (pode sair antes); TLS, imagem da API, rate limit, retenção, troca de senha e backup junto da hospedagem.
+   Cada item vira um plano único aprovado pela Madu, com PR, CI verde e revisão independente registrada.
+5. **O M03 não está autorizado.** Ele só começa com novo início formal seu, com plano único e as mesmas paradas (chamada real a LLM só com a chave e o limite de custo definidos por você).
+6. **Não autorizado nesta decisão:** push do commit do vault `04b2753` e qualquer alteração no `launch-os`.
