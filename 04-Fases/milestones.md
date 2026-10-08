@@ -25,16 +25,16 @@ Valida: fundação documental, repositório, Claude Code, infraestrutura de dese
 - [x] Documentação de arquitetura transferida/linkada ao repo (referenciada, não copiada: `docs/architecture/README.md`)
 
 ## M01 — Core Platform
-**Status: em andamento** (início formal em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 e **F1 concluídas** (especificação aprovada pela Madu em 2026-10-07, portão F1: [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]). **F2 (banco), F6 (infra e CI) e F3 (eventos) fechadas em 2026-10-07** ([[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]], [[DEC-0025-fechamento-da-f3-do-m01]]), mescladas na `main` com CI verde. **F4 (API fina, state machine e aprovações) fechada em 2026-10-07** ([[DEC-0026-fechamento-da-f4-do-m01]]), PR #4 mesclado. **F5 (DEC-0027) e F7 (DEC-0028) fechadas; F8 (fechamento) implementada em 2026-10-07 (PR #7), aguardando o DEC-0029 da Madu ([[DEC-0029-fechamento-do-m01-core-platform]]).** Os critérios abaixo só são marcados quando ela aprovar. O M02 não está autorizado. Código, schema e migrations só dentro da especificação e em branches `feat/*`.
+**Status: concluído em 2026-10-08** ([[DEC-0029-fechamento-do-m01-core-platform]]). Início formal ( em 2026-10-04, [[DEC-0022-inicio-formal-do-m01]]; plano em [[M01-plano-de-execucao]]). F0 e **F1 concluídas** (especificação aprovada pela Madu em 2026-10-07, portão F1: [[DEC-0023-aprovacao-do-portao-f1-especificacao-do-core]]). **F2 (banco), F6 (infra e CI) e F3 (eventos) fechadas em 2026-10-07** ([[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]], [[DEC-0025-fechamento-da-f3-do-m01]]), mescladas na `main` com CI verde. **F4 (API fina, state machine e aprovações) fechada em 2026-10-07** ([[DEC-0026-fechamento-da-f4-do-m01]]), PR #4 mesclado. **F5 (DEC-0027) e F7 (DEC-0028) fechadas; F8 (fechamento) implementada em 2026-10-07 (PR #7), aguardando o DEC-0029 da Madu ([[DEC-0029-fechamento-do-m01-core-platform]]).** Critérios marcados com a aprovação do DEC-0029. **O M02 não está autorizado:** só com novo início formal da Madu; A5 (isolamento de credenciais no n8n) é a primeira tarefa dele. Código, schema e migrations só dentro da especificação e em branches `feat/*`.
 Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permissions, approvals e state machine.
-- [ ] PostgreSQL + schema inicial + migrations reversíveis
-- [ ] Redis
-- [ ] Event model e event schema ([[catalogo-de-eventos]])
-- [ ] Audit log
-- [ ] Agent Registry · [ ] Permission model
-- [ ] Approval gates G01–G12 + policy check `BUDGET_AUTHORIZED`
-- [ ] Launch state machine (status x type; decisão de continuidade)
-- [ ] API skeleton
+- [x] PostgreSQL + schema inicial + migrations reversíveis
+- [x] Redis (parcial, aceito: sobe saudável com senha; a API não o usa no M01)
+- [x] Event model e event schema ([[catalogo-de-eventos]])
+- [x] Audit log
+- [x] Agent Registry · [x] Permission model
+- [x] Approval gates G01–G12 + policy check `BUDGET_AUTHORIZED`
+- [x] Launch state machine (status x type; decisão de continuidade)
+- [x] API skeleton
 
 ## M02 — Agent Engine
 Valida: Agent Contract, context assembly, tool registry, memory interfaces, execution lifecycle, policy enforcement.

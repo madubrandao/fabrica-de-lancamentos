@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 fonte: DEC-0010 §7 e §10; DEC-0015; DEC-0017; DEC-0020; DEC-0021; blueprint v1 §14–§21, §41; plano aprovado pela Madu em 2026-10-04
-status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F0, F1, F2, F3, F4 e F6 fechadas (DEC-0023 a DEC-0026); F5 fechada (DEC-0027); F7 fechada (DEC-0028); F8 implementada (PR #7), aguarda o DEC-0029 (proposta)
+status: em execução (início formal em 2026-10-04, DEC-0022); F0, F1, F2, F3 e F6 fechadas (DEC-0023, DEC-0024, DEC-0025); F0, F1, F2, F3, F4 e F6 fechadas (DEC-0023 a DEC-0026); F5 fechada (DEC-0027); F7 fechada (DEC-0028); F8 fechada (DEC-0029); M01 CONCLUÍDO em 2026-10-08
 atualizado: 2026-10-04
 ---
 # M01 Core Platform — plano de execução (proposta)
@@ -88,4 +88,4 @@ Plano único aprovado em 2026-10-07. Branch `feat/quality` (PR #6, merge `d947ec
 
 
 ### F8 — implementada (2026-10-07)
-Plano único aprovado em 2026-10-07. Branch `feat/m01-close` (PR #7, merge `bb3b654`): verificação do zero em pilha isolada, fumaça ponta a ponta (49/49), revisões independentes completas (conformidade e segurança) e do código novo, canais da operadora (política, credenciais, entregas `dead`; ADR-0022), `M01_DOD.md` e runbook. 843 testes. Fechamento do marco: [[DEC-0029-fechamento-do-m01-core-platform]] (proposta). **O M02 não está autorizado.**
+Plano único aprovado em 2026-10-07. Branch `feat/m01-close` (PR #7, merge `bb3b654`): verificação do zero em pilha isolada, fumaça ponta a ponta (49/49), revisões independentes completas (conformidade e segurança) e do código novo, canais da operadora (política, credenciais, entregas `dead`; ADR-0022), `M01_DOD.md` e runbook. 843 testes. Fechamento do marco aprovado em 2026-10-08: [[DEC-0029-fechamento-do-m01-core-platform]]. **O M02 não está autorizado.**

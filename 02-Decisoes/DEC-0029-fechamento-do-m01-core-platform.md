@@ -2,14 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0029
-status: proposta
+status: aceita
 fonte: M01-plano-de-execucao (F8); plano único da F8 aprovado em 2026-10-07; docs/status/M01_DOD.md, QUALITY_EVIDENCE.md e docs/operations/M01-RUNBOOK.md no launch-os; revisões independentes completas de 2026-10-07
 data-registro: 2026-10-08
-data-decisao: aguardando a Madu
+data-decisao: 2026-10-08 (a Madu aprovou seguindo as recomendações do ENG-00)
 ---
 # DEC-0029 — Fechamento do M01 Core Platform
 
-> **PROPOSTA.** O PR #7 do `launch-os` foi mesclado na `main` (merge `bb3b654`) com a CI verde e as revisões independentes registradas abaixo. **O fechamento do M01 é decisão da Madu. O M02 NÃO está autorizado:** ele só começa com um novo início formal dela, como foi com o M00 ([[DEC-0021-m00-foundation-concluido]]).
+> **Aprovado pela Madu em 2026-10-08.** O PR #7 do `launch-os` foi mesclado na `main` (merge `bb3b654`) com a CI verde e as revisões independentes registradas abaixo. **M01 fechado. O M02 NÃO está autorizado:** ele só começa com um novo início formal dela, como foi com o M00 ([[DEC-0021-m00-foundation-concluido]]).
 
 ## Evidências do fechamento (2026-10-07)
 | Critério | Evidência |
@@ -64,8 +64,8 @@ A revisão de conformidade achou três canais da operadora que a especificação
 6. **Barato, recomendo já no início do M02:** exigir tamanho mínimo e recusar `CHANGE_ME` em `JWT_SECRET` e nas senhas.
 7. Itens menores da revisão: validação de `http://` fora de loopback na CLI, `requireAgent` sem uso, funções de limpeza ainda fora do agendador (os prazos são seus).
 
-## Decisão proposta
-1. **Aprovar o fechamento do M01** com as lacunas acima registradas, e **marcar os critérios de saída** do M01 no `milestones.md` (Redis como parcial, aceito).
+## Decisão
+1. **Aprovado o fechamento do M01** com as lacunas acima registradas, e **marcar os critérios de saída** do M01 no `milestones.md` (Redis como parcial, aceito).
 2. **Alterar o critério A4** (API saudável no compose) como recomendado, e registrar A5 como **primeira tarefa do M02**.
 3. **O M02 não está autorizado.** Ele só começa com um novo início formal seu, com plano único e as mesmas paradas.
 
