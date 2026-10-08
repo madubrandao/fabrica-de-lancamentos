@@ -37,13 +37,14 @@ Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permi
 - [x] API skeleton
 
 ## M02 — Agent Engine
-**Status: em andamento** (início formal em 2026-10-08, [[DEC-0030-inicio-formal-do-m02]]; plano em [[M02-plano-de-execucao]]). F0 e F1 concluídas em 2026-10-08 (portão aprovado: [[DEC-0031-portao-f1-especificacao-do-agent-engine]]); próximo: ADRs e plano único da F2 e da F3.
+**Status: implementado e verificado do zero em 2026-10-08; aguarda o aceite do [[DEC-0032-fechamento-do-m02-agent-engine]] pela Madu** (início formal em 2026-10-08, [[DEC-0030-inicio-formal-do-m02]]; plano em [[M02-plano-de-execucao]]; portão da F1: [[DEC-0031-portao-f1-especificacao-do-agent-engine]]). F0 a F7 concluídas; 1266 testes, fumaça 29/29 contra o n8n real, duas revisões completas sem achado crítico ou alto. **O M03 não está autorizado.** Lacunas abertas para antes do M03: L1 a L7 no DEC-0032.
 Valida: Agent Contract, context assembly, tool registry, memory interfaces, execution lifecycle, policy enforcement.
-- [ ] Agent definition schema · [ ] Prompt loading
-- [ ] Tool registry (escopo explícito por ferramenta)
-- [ ] Memory read/write (com origem e timestamp)
-- [ ] Execution state com `execution_id` e audit trail · retries/timeouts
-- [ ] Agent routing · approval hooks · policy enforcement
+- [x] Agent definition schema · [x] Prompt loading
+- [x] Tool registry (escopo explícito por ferramenta)
+- [x] Memory read/write (com origem e timestamp)
+- [x] Execution state com `execution_id` e audit trail · retries/timeouts
+- [x] Agent routing · approval hooks · policy enforcement
+- [x] A5 resolvido (negativo, mitigado pelo token curto) · [x] n8n emite evento pela API · [x] `error.detected` de origem `api` e `workflow`
 
 ## M03 — First Business Agents
 Valida: A0–A4. Objetivo: produzir um lançamento até `LAUNCH_READY`.
