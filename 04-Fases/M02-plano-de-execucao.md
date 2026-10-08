@@ -2,13 +2,13 @@
 tipo: fase
 area: 04-Fases
 id: M02-plano-de-execucao
-status: planejado, NÃO iniciado (aguarda o "iniciar M02" da Madu e o DEC-0030)
+status: em execução (início formal em 2026-10-08, DEC-0030)
 fonte: plano aprovado pela Madu em 2026-10-08 ("PODE PLANEJAR M02"); milestones; DEC-0020; DEC-0029; blueprint v1 §36
 data-registro: 2026-10-08
 ---
 # M02 — Agent Engine: plano de execução
 
-> **Planejado, não iniciado.** Aprovar o plano autorizou só gravá-lo aqui e a proposta [[DEC-0030-inicio-formal-do-m02]]. Nenhum código, branch ou Docker até o "iniciar M02" da Madu (como o [[DEC-0022-inicio-formal-do-m01]] no M01). O M01 está fechado ([[DEC-0029-fechamento-do-m01-core-platform]]).
+> **Iniciado formalmente em 2026-10-08** ([[DEC-0030-inicio-formal-do-m02]]), como o M01 ([[DEC-0022-inicio-formal-do-m01]]). O M01 está fechado ([[DEC-0029-fechamento-do-m01-core-platform]]). Cada fase tem um plano único aprovado pela Madu; nenhum código antes de ela aprovar a especificação (F1).
 
 ## O que o M02 é
 O motor que **executa agentes**: Agent Contract, definição e carga de prompts, tool registry com escopo explícito, montagem de contexto, interfaces de memória (origem e timestamp), ciclo de vida da execução (`execution_id`, estado, audit, retry, timeout), roteamento/handoff, approval hooks e policy enforcement. **Não cria os agentes de negócio** (A0–A10 são do M03 em diante). Por que há portão de especificação: o [[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]] deixou PENDENTES o que fica no código e o que fica no n8n, o papel do *agent runtime gateway* e a convivência do adaptador de LLM com os nós de IA.

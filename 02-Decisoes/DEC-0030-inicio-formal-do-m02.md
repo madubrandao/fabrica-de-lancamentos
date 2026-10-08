@@ -2,14 +2,14 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0030
-status: proposta
+status: aceita
 fonte: M02-plano-de-execucao; plano aprovado pela Madu em 2026-10-08; DEC-0029 (M02 não autorizado até novo início formal)
 data-registro: 2026-10-08
-data-decisao: aguardando a Madu ("iniciar M02")
+data-decisao: 2026-10-08 (a Madu disse "iniciar M02")
 ---
 # DEC-0030 — Início formal do M02 Agent Engine
 
-> **PROPOSTA.** O M02 está **planejado, não iniciado**. Este DEC só vale quando a Madu disser "iniciar M02". Até lá: nenhum código, nenhuma branch, nenhum Docker.
+> **Aprovado pela Madu em 2026-10-08 ("iniciar M02").** O M02 está **iniciado formalmente**. Valem F0 e F1; cada fase seguinte exige um plano único aprovado. Nenhum código de aplicação antes de a Madu aprovar a especificação (portão F1).
 
 ## Contexto
 O M01 foi fechado em 2026-10-08 ([[DEC-0029-fechamento-do-m01-core-platform]]), que deixou claro que o M02 só começa com um novo início formal, como o M01 ([[DEC-0022-inicio-formal-do-m01]]) e o M00 ([[DEC-0018-inicio-formal-do-m00]]). O plano está em [[M02-plano-de-execucao]].
@@ -28,6 +28,6 @@ O M01 foi fechado em 2026-10-08 ([[DEC-0029-fechamento-do-m01-core-platform]]), 
 Rate limit e bloqueio de login, retenção do `audit_log`, troca de senha, backup e restore, hospedagem de teste e produção, imagem Docker da API (A4), produto fictício de teste e definição do A6 mínimo.
 
 ## Decisão
-Aguardando a Madu: dizer **"iniciar M02"** (com ou sem ajustes ao plano).
+**Iniciado** em 2026-10-08, sem ajustes ao plano. Próximo: plano único da F0 e da F1.
 
 Ver [[M02-plano-de-execucao]] · [[milestones]] · [[roadmap]].
