@@ -1,11 +1,30 @@
 ---
 tipo: fase
 area: 04-Fases
-status: proposto (aguarda a aprovação da Madu)
-fonte: DEC-0032 (L3, L6, L5 e emenda R4); DEC-0034 (fase B); leitura do código do launch-os em 2026-10-09
+status: concluído em 2026-10-09 (PRs #26, #27 e #28 mesclados pela Madu, com revisão independente; CI com login no Docker Hub no PR #29; documentação de fechamento no PR #30)
+fonte: DEC-0032 (L3, L6, L5 e emenda R4); DEC-0034 (fase B); leitura do código do launch-os em 2026-10-09; plano revisado e aprovado pela Madu em 2026-10-09 (modo de planejamento)
 atualizado: 2026-10-09
 ---
-# Fase B antes do M03: L3, L6 e L5 (plano único, PROPOSTO)
+# Fase B antes do M03: L3, L6 e L5
+
+## Resultado (2026-10-09)
+O desenho abaixo é o **rascunho inicial**. A revisão do código antes da implementação mudou três pontos, aprovados pela Madu no plano revisado, e as revisões independentes acrescentaram mais dois.
+
+- **L3 (PR #26).**
+  - Na subida, `triggers[]` não aceita `error.detected`, `approval.requested` nem `approval.expired`.
+  - No gatilho, evento de agente só dispara se houver o audit `event.emit`, o único vínculo confiável, porque o `x-execution-id` de agentes `lo_` não é verificado. Sem ele, o gatilho é negado com `untraced_agent_event`.
+  - `approval.granted` e `approval.rejected` só disparam com ator humano (`non_human_decision`). Isso cobre o `verify-gate` do G12, achado da revisão.
+  - **Efeito para o M03:** agente encadeia agente só por handoff ou `event.emit`.
+- **L6 (PR #27).**
+  - O PUT de permissões recusa ferramenta desconhecida com 400 `unknown_tool`.
+  - Na subida, há aviso para ferramenta desconhecida e para permissão malformada.
+- **L5 (PR #28).**
+  - O `fail` do serviço exige `running`, o `run_id` do lease e `lease_epoch = token_epoch`, o que fecha a janela do redespacho.
+  - O lease acompanha o `renew` do próprio run. Eu achei esse defeito e a revisão confirmou.
+  - Fumaça do M02 contra o n8n real: 29/29.
+- **CI:** os PRs #27 e #28 pegaram o limite de downloads anônimos do Docker Hub nos runners do GitHub. É externo ao código; os jobs foram reexecutados.
+
+---
 
 Ordem aprovada no DEC-0032: L3 → L6 → L5. **Uma aprovação só para os três.** Sem LLM real, sem agente de negócio, sem dependência nova, sem migration.
 

@@ -87,4 +87,11 @@ Pontos médios da revisão completa de 2026-10-08 (`dev-senior-suport`, sem crí
 
 Também registrado da revisão: a L2 vale como ALTA na primeira ferramenta externa com efeito, e o comentário em `step.ts:410` cita um `outcome_unknown` que não existe (corrigido na fase A).
 
+**Lacunas fechadas em 2026-10-09 (fase B do DEC-0034):**
+- **L3:** `launch-os` PR #26; inclui o R4 e o `approval.granted` de sistema do G12.
+- **L6:** PR #27.
+- **L5:** PR #28; inclui a época no `fail` e o lease que acompanha o `renew`.
+
+Ver [[pre-M03-fase-B-plano]].
+
 **Mudança na ordem (DEC-0034):** da L7 fica antes do M03 só o **comando de importação dos workflows**. Hospedagem com TLS, imagem da API, rate limit, troca de senha, segundo fator e notificação passam para **antes do M04**; o M03 roda local, com integrações simuladas (DEC-0017 C5). Retenção do `audit_log` e backup ficam antes do M03 (fase D).
