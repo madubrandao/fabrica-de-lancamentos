@@ -74,3 +74,17 @@ data-decisao: 2026-10-08
    Cada item vira um plano único aprovado pela Madu, com PR, CI verde e revisão independente registrada.
 5. **O M03 não está autorizado.** Ele só começa com novo início formal seu, com plano único e as mesmas paradas (chamada real a LLM só com a chave e o limite de custo definidos por você).
 6. **Não autorizado nesta decisão:** push do commit do vault `04b2753` e qualquer alteração no `launch-os`.
+
+## Emenda de 2026-10-09 (aceita pela Madu com o [[DEC-0034-perfil-de-valores-e-plano-ate-o-m03]])
+Pontos médios da revisão completa de 2026-10-08 (`dev-senior-suport`, sem crítico nem alto), registrados agora:
+| # | Achado | Tratamento |
+|---|---|---|
+| R1 | **Retomada entregue e perdida:** o `resume` recebe 2xx e o n8n reinicia (ou o início dá 5xx); a execução fica em `awaiting_*` até `deadline_at`. Os varredores cobrem só `dispatched` e `running` (`gateway/sweepers.ts:73-82`) | Confirmar com teste de integração e corrigir junto da L1 (fase C do DEC-0034) |
+| R2 | **O `server.ts` não roda em teste nem em fumaça, e a fumaça do M01 quebrou:** o ambiente da fumaça (`m01-smoke.ts:110-127`) não tem `EXECUTION_TOKEN_SECRET`, `AGENT_*` nem `N8N_WEBHOOK_URL_AGENT` | Fase A do DEC-0034: ambiente completo, teste da subida, fumaças de novo |
+| R3 | **`memory.write` não grava em produção** (`server.ts` não passa `memoryKeys`; `gateway/tools.ts:63`) e isso não estava registrado | **Por desenho:** lista vazia = nenhuma escrita (`packages/agents/src/memory.ts:39`). As chaves permitidas são definidas por agente no M03. O critério "Memory read/write" fica cumprido no mecanismo, sem chave liberada |
+| R4 | **L3 mais larga que o descrito:** a raiz só é herdada se houver audit `event.emit` (`gateway/triggers.ts:30-58`); evento de negócio causado por agente por outra via vira raiz nova, sem teto por raiz | Ampliar o plano da L3 para cobrir essa via |
+| R5 | **"A5 mitigado pelo token curto" só vale depois da L1:** sem `renew`, o TTL precisa cobrir `deadline_seconds` | Nenhuma execução real antes da L1 (fase C antes do M03) |
+
+Também registrado da revisão: a L2 vale como ALTA na primeira ferramenta externa com efeito, e o comentário em `step.ts:410` cita um `outcome_unknown` que não existe (corrigido na fase A).
+
+**Mudança na ordem (DEC-0034):** da L7 fica antes do M03 só o **comando de importação dos workflows**. Hospedagem com TLS, imagem da API, rate limit, troca de senha, segundo fator e notificação passam para **antes do M04**; o M03 roda local, com integrações simuladas (DEC-0017 C5). Retenção do `audit_log` e backup ficam antes do M03 (fase D).

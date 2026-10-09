@@ -34,10 +34,10 @@ Valida: PostgreSQL, Redis, migrations, eventos, audit log, Agent Registry, permi
 - [x] Agent Registry · [x] Permission model
 - [x] Approval gates G01–G12 + policy check `BUDGET_AUTHORIZED`
 - [x] Launch state machine (status x type; decisão de continuidade)
-- [x] API skeleton
+- [x] API skeleton (critério A4 alterado pela [[DEC-0033-decisoes-pendentes-do-m01]]: API verificada pela fumaça; imagem Docker junto da hospedagem, antes do M03)
 
 ## M02 — Agent Engine
-**Status: concluído em 2026-10-08** ([[DEC-0032-fechamento-do-m02-agent-engine]], aceito pela Madu; início formal em 2026-10-08, [[DEC-0030-inicio-formal-do-m02]]; plano em [[M02-plano-de-execucao]]; portão da F1: [[DEC-0031-portao-f1-especificacao-do-agent-engine]]). F0 a F7 concluídas; 1266 testes, fumaça 29/29 contra o n8n real, duas revisões completas sem achado crítico ou alto. **O M03 não está autorizado.** Lacunas abertas para antes do M03: L1 a L7 no DEC-0032.
+**Status: concluído em 2026-10-08** ([[DEC-0032-fechamento-do-m02-agent-engine]], aceito pela Madu; início formal em 2026-10-08, [[DEC-0030-inicio-formal-do-m02]]; plano em [[M02-plano-de-execucao]]; portão da F1: [[DEC-0031-portao-f1-especificacao-do-agent-engine]]). F0 a F7 concluídas; 1266 testes, fumaça 29/29 contra o n8n real, duas revisões completas sem achado crítico ou alto. **O M03 não está autorizado.** Lacunas abertas para antes do M03: L1 a L6 e o comando de importação da L7 no DEC-0032; o resto da L7 passou para antes do M04 ([[DEC-0034-perfil-de-valores-e-plano-ate-o-m03]], plano A a F). `memory.write` só grava com as chaves por agente do M03 (por desenho).
 Valida: Agent Contract, context assembly, tool registry, memory interfaces, execution lifecycle, policy enforcement.
 - [x] Agent definition schema · [x] Prompt loading
 - [x] Tool registry (escopo explícito por ferramenta)

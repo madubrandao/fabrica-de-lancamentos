@@ -34,6 +34,8 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0024-fechamento-da-f2-e-da-f6-do-m01]] — fechamento da F2 (banco e schema) e da F6 (infra e CI) aprovado pela Madu em 2026-10-07; push e pull requests autorizados; próxima fase: F3.
 - [[DEC-0025-fechamento-da-f3-do-m01]] — fechamento da F3 (eventos) aprovado pela Madu em 2026-10-07; PR #3 mesclado; próxima fase: F4.
 - [[DEC-0032-fechamento-do-m02-agent-engine]] — fechamento do M02 Agent Engine aceito pela Madu em 2026-10-08 (L4 decidida; ordem das lacunas L1 a L7 aprovada). Os DEC-0026 a DEC-0031 estão nos próprios arquivos desta pasta.
+- [[DEC-0033-decisoes-pendentes-do-m01]] — decisões pendentes do M01 aceitas em 2026-10-09 (A4 alterado, OpenAPI adiado, Node 24.21.0, retenção do audit por partição; gates e notificação com a Madu).
+- [[DEC-0034-perfil-de-valores-e-plano-ate-o-m03]] — perfil de valores do desenvolvimento local, políticas, gates por aprovação humana, L7 (exceto importação) movida para antes do M04 e plano A a F até o M03; aceita em 2026-10-09. Emenda o DEC-0032 (revisão R1 a R5).
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos**, sem subitens abertos.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.
