@@ -39,6 +39,7 @@ Critério: menor risco. A máquina tem pouca RAM (cerca de 90% em uso), há uma 
 | `AGENT_MAX_EXECUTIONS_PER_ROOT` | 10 | Testado; corta ciclos |
 | Marcadores do n8n: `__API_BASE_URL__` | `http://host.docker.internal:3000` | O n8n roda no Docker; a API, na máquina |
 | `__HTTP_TIMEOUT_MS__` / `__HTTP_MAX_TRIES__` / `__HTTP_WAIT_MS__` / `__STEP_WAIT_S__` | 150000 / 3 / 2000 / 5 | O tempo limite precisa passar o do LLM, porque pela leitura de `step.ts` o LLM é chamado dentro do `step` (a confirmar por teste na fase A). `__STEP_WAIT_S__` ≤ 60 |
+| `__RENEW_MARGIN_S__` (aprovado com o plano da fase C, 2026-10-09) | 180 | Renova o token quando falta menos que isto. Tem de ser maior que o tempo de um passo (150 s) e menor que o TTL (300 s); a importação recusa o contrário |
 
 ## 3. Políticas (gravadas pela API, com audit)
 | Política | Valor | Por quê |

@@ -94,4 +94,11 @@ Também registrado da revisão: a L2 vale como ALTA na primeira ferramenta exter
 
 Ver [[pre-M03-fase-B-plano]].
 
+**Lacunas fechadas em 2026-10-09, à noite (fase C do DEC-0034):**
+- **L1 e R1:** PR #31. O workflow renova o token (margem de 180 s local) e o varredor `resume_lost` recupera a retomada perdida.
+- **L2:** PR #32. `outcome_unknown` para ferramenta externa não idempotente sem resultado.
+- **L4:** PR #33. `invalid_request` e `rate_limited` liberam a reserva; 408 vira `timeout`.
+- Fumaças finais na `main`: M02 31/31 e M01 49/49.
+- Das lacunas antes do M03 resta só o comando de importação (parte da L7, fase D).
+
 **Mudança na ordem (DEC-0034):** da L7 fica antes do M03 só o **comando de importação dos workflows**. Hospedagem com TLS, imagem da API, rate limit, troca de senha, segundo fator e notificação passam para **antes do M04**; o M03 roda local, com integrações simuladas (DEC-0017 C5). Retenção do `audit_log` e backup ficam antes do M03 (fase D).

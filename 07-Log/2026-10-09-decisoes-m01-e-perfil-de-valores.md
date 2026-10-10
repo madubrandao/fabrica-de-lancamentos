@@ -21,4 +21,13 @@ data: 2026-10-09
   - **L5 (PR #28):** `fail` do serviço confere `run_id` e época; o `renew` leva o lease junto (defeito meu, achado antes da revisão, que confirmou). Fumaça do M02: 29/29.
 - **CI:** o Docker Hub bloqueou os downloads anônimos dos runners. A Madu criou o token e os segredos, e a CI passou a baixar com login (PR #29).
 - **Merges:** todos autorizados pela Madu. O classificador do modo automático exige essa autorização no momento do merge.
-- **Próximo:** plano único da fase C (L1 com R1, L2, L4).
+- **Fase C concluída (à noite):** o plano foi aprovado em modo de planejamento, com a margem de renovação de 180 s entrando no DEC-0034.
+  - **L1 e R1 (PR #31):**
+    - o workflow renova o token ("Renovar?", "Renovar", "Seguir");
+    - o varredor `resume_lost` recupera a retomada perdida;
+    - **defeito achado pela fumaça:** sem índice de saída, o n8n lia a saída de erro do "Passo" e o `tool_call_id` vinha vazio. Corrigido com `.last(0)` e teste de contrato.
+  - **L2 (PR #32):** `outcome_unknown` para ferramenta externa não idempotente sem resultado. Limite registrado: a ferramenta tem de terminar antes de `AGENT_STEP_STALE_SECONDS`.
+  - **L4 (PR #33):** `invalid_request` e `rate_limited` liberam a reserva; 408 vira `timeout`. Houve conflito de merge no runbook, resolvido mantendo L4 e L5.
+  - Cada PR teve revisão independente, com os achados tratados antes do merge. Fumaças finais na `main`: M02 31/31 e M01 49/49.
+  - Specs 03 e 04 atualizadas: `outcome_unknown` é status; exceção na finalização; varredor (g); liberação da reserva.
+- **Próximo:** plano único da fase D (comando de importação, partição do `audit_log`, limpeza agendada, backup e restore).
