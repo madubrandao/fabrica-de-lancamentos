@@ -94,4 +94,28 @@ Tudo da DEC-0035 não citado aqui: dois ambientes, API só em rede privada, edit
 | P6: procedimento concreto dos testes de perda de worker e de Redis | ENG-06 | Etapa 5 |
 | Demais pendentes da DEC-0035 §10 | os mesmos | os mesmos, com a numeração do §2.3 |
 
+## 5. Adendo de 2026-10-11 (aprovado pela Madu durante a etapa 3a, PR #39)
+
+### 5.1 Nova condição de rejeição: credenciais na URL
+A política das URLs de webhook (§2.1) ganha **uma condição adicional de rejeição**: a URL **não pode trazer usuário nem senha**, em nenhum protocolo e para nenhum host (`https://usuario:senha@host`, `http://usuario@127.0.0.1`).
+- **Como se decide:** depois do parser, por `url.username !== ''` ou `url.password !== ''`. **Nunca por heurística sobre o texto cru** (procurar `@` na string): um `@` na query, no fragmento ou no caminho não é credencial e não é recusado; userinfo vazio (`https://@host`) o parser descarta e é aceito.
+- **Ordem das verificações:** primeiro o protocolo e o host real (inseguro), depois as credenciais. `http://x.railway.internal@evil.com` continua recusado como host inseguro, porque o host real é `evil.com`.
+- **Motivo:** o `fetch` do Node recusa credenciais na URL na hora da chamada (verificado na revisão do PR #39), então sem esta regra a API subiria e todo despacho falharia; o segredo do webhook vai em cabeçalho, nunca na URL; evita segredo em log; e mantém `config.ts` e `transport.ts` idênticos.
+- **A exceção `.railway.internal` do §2.1 não muda.** A mensagem é fixa ("não pode conter usuário nem senha na URL") e não repete a URL nem o segredo.
+- Vale nos dois pontos (`apps/api/src/config.ts` e `packages/events/src/transport.ts`), pela mesma função `packages/events/src/url-policy.ts`, com testes.
+
+### 5.2 Comentário obrigatório e comportamento fixado em teste
+O código da política documenta, e os testes fixam: a política avalia o **hostname normalizado pelo parser**, não o texto cru. Codificações que normalizam para o **mesmo** host privado (`n8n%2erailway.internal`, ponto ideográfico, porta padrão, IDN em punycode) são **aceitas por desenho**, porque o destino do `fetch` é o host privado; armadilhas que normalizam para **outro** host (`:80@evil.com`, barra invertida, `#`, `?`, `%00@`) são **recusadas**.
+
+### 5.3 Terceiro ponto com regra de `https`: `scripts/n8n/markers.ts` vai para a etapa 3b
+`checkApiBaseUrl` (`scripts/n8n/markers.ts`) valida a URL pela qual o **n8n chama a API** (carrega o token de execução) e hoje aceita `http` só para `localhost`, `127.0.0.1`, `[::1]` e `host.docker.internal`; com a API só em rede privada, `http://api.railway.internal:3000` seria recusado na importação.
+- **Decisão:** tratar na **etapa 3b**, reaproveitando `isPrivateRailwayHost` (a mesma regra de um rótulo só, sem diferenciar maiúsculas de minúsculas). **Não se mistura** com a política das URLs de webhook: é outro consumidor e outra semântica (a URL da API, não a dos webhooks do n8n).
+- Se a 3b também recusar credenciais nessa URL é decisão do PR da 3b; fica como item de revisão.
+
+### 5.4 Pendentes acrescentados
+| PENDENTE | Responsável | Bloqueia |
+|---|---|---|
+| Tratar `checkApiBaseUrl` com `isPrivateRailwayHost` (§5.3) | ENG-06 | Etapa 3b |
+| Nomes de serviço do Railway com `_` ou outros caracteres fora da regra do rótulo (a API recusa subir; falha visível) | ENG-07 | Primeiro deploy do staging |
+
 Ver [[DEC-0035-migracao-para-o-railway]] · [[DEC-0034-perfil-de-valores-e-plano-ate-o-m03]].
