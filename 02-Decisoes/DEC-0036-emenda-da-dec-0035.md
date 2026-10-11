@@ -112,7 +112,14 @@ O código da política documenta, e os testes fixam: a política avalia o **host
 - **Decisão:** tratar na **etapa 3b**, reaproveitando `isPrivateRailwayHost` (a mesma regra de um rótulo só, sem diferenciar maiúsculas de minúsculas). **Não se mistura** com a política das URLs de webhook: é outro consumidor e outra semântica (a URL da API, não a dos webhooks do n8n).
 - Se a 3b também recusar credenciais nessa URL é decisão do PR da 3b; fica como item de revisão.
 
-### 5.4 Pendentes acrescentados
+### 5.4 Adendo de 2026-10-11 (etapa 3b-1, PR #40, mesclado em `1e1ecad`)
+Registra o que o PR #40 decidiu e entregou, com a aprovação da Madu:
+- **`checkApiBaseUrl` recusa credenciais** (decisão D2): a URL pela qual o n8n chama a API **não pode trazer usuário nem senha**, decidido **depois do parser** (`url.username`/`url.password`), nunca por procura de `@` no texto. Mesma lógica do §5.1, aplicada ao consumidor da URL da API (`scripts/n8n/markers.ts`), que continua com semântica própria: aceita `https`, `http` para o loopback, `host.docker.internal` e `<serviço>.railway.internal` (um rótulo só, via `isPrivateRailwayHost`); **não** reutiliza `webhookUrlProblem`.
+- **O que entra no workflow é a forma normalizada pelo parser** (`url.href` sem barras finais), **não o texto digitado**. Motivo: o cliente HTTP do n8n é **outro parser** que o do Node; se os dois divergirem (`%2e`, tabulação, IDN, ponto ideográfico), a validação perderia valor. Gravando a forma normalizada, **o que foi validado é o que é enviado**. Verificado: **nenhuma URL de uso normal muda** (0 de 14 conferidas); a barra final que `url.href` acrescenta é removida pelo mesmo passo que já existia, e as URLs de webhook, com caminho explícito, não passam por `markers.ts`.
+- **Guard nas fumaças** (`scripts/n8n/railway-context.ts`, criado no 3b-1): as fumaças M01 e M02 recusam rodar, antes de qualquer efeito, com `RAILWAY_ENVIRONMENT_NAME`, `RAILWAY_PROJECT_ID` ou `N8N_IMPORT_TARGET=railway` (esta última sem diferenciar maiúsculas de minúsculas). `RAILWAY_TOKEN` e `RAILWAY_API_TOKEN` **não contam** (definidos pelo usuário em CI).
+- **Pendências:** a trava de banco local na fumaça M01 (a M02 já tem) fica para a **3b-2**; a **prova** de que `railway run` injeta `RAILWAY_ENVIRONMENT_NAME` e `RAILWAY_PROJECT_ID` fica para a **etapa 6**; `markers.ts` não é tocado pela 3b-2.
+
+### 5.5 Pendentes acrescentados
 | PENDENTE | Responsável | Bloqueia |
 |---|---|---|
 | Tratar `checkApiBaseUrl` com `isPrivateRailwayHost` (§5.3) | ENG-06 | Etapa 3b |
