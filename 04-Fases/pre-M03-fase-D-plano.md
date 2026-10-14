@@ -1,7 +1,7 @@
 ---
 tipo: fase
 area: 04-Fases
-status: PROPOSTO em 2026-10-11 (D1 e D2 já mesclados; D3 e D4 aguardam aprovação da Madu) | **2026-10-14: as seções D3 e D4 foram reorganizadas pelo [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] (PROPOSTA) e pelo [[pre-M03-d4-d3-plano-unificado]]; este texto fica como histórico**
+status: PROPOSTO em 2026-10-11 (D1 e D2 já mesclados; D3 e D4 aguardam aprovação da Madu) | **2026-10-14: as seções D3 e D4 foram reorganizadas pelo [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] (ACEITA) e pelo [[pre-M03-d4-d3-plano-unificado]]; este texto fica como histórico**
 fonte: DEC-0033 (item 6); DEC-0034 (perfil de valores e fase D); PRs #35 e #36 do launch-os; leitura de `database/migrations/0006` e `docs/operations/M01-RUNBOOK.md` em 2026-10-11
 atualizado: 2026-10-11
 ---

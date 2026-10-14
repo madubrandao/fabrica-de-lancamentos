@@ -2,14 +2,15 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0037
-status: PROPOSTA (as decisões D-1 a D-10 e os 6 ajustes obrigatórios foram aprovados com condições pela Madu em conversa de 2026-10-14; texto corrigido em 2026-10-14 após a revisão dos PRs, aguardando a aprovação final dela). **O status só passa a ACEITA, e o merge só ocorre, depois de autorização explícita da Madu.** Nenhuma implementação autorizada.
+status: ACEITA (texto final aprovado pela Madu em 2026-10-14, depois da revisão dos PRs #1 e #44; as decisões D-1 a D-10 e os 6 ajustes obrigatórios foram aprovados com condições na mesma data). A aceitação **não implementa nada**: só a E0 (documentação) foi autorizada e concluída; E1 a E13 e o M03 continuam **NÃO autorizados**, cada etapa depende de autorização própria.
 fonte: DEC-0034 (§2, §4, §5); DEC-0035 (§3.2, §3.6, §3.7, §8, §10); DEC-0036 (§2.3); 04-Fases/pre-M03-fase-D-plano.md e pre-M03-fase-E-plano.md; launch-os na main `5ce7c63` (migration 0006, packages/events/src/db.ts:54-64, packages/events/src/maintenance.ts, infrastructure/compose/docker-compose.dev.yml, docs/operations/M01-RUNBOOK.md:76); pesquisa pública de 2026-10-14 (preços e bucket locks do Cloudflare R2; cron e backups do Railway)
 data-registro: 2026-10-14
+data-decisao: 2026-10-14 (aceite formal da Madu, por autorização explícita, depois da revisão dos PRs)
 emenda: DEC-0034 (§5, fase D), DEC-0035 (§3.6, §8 etapas 7 e 8, §10), DEC-0036 (§2.3)
 ---
 # DEC-0037: sequência e escopo de D4 (backup e restore) e D3 (retenção do `audit_log`)
 
-> **PROPOSTA.** Não altera código, banco, configuração nem recursos externos. O M03 continua **não autorizado**. Nada é criado no Railway nem em nuvem. Esta DEC **não reescreve** o DEC-0034, o DEC-0035 nem o DEC-0036: ela registra o que muda, o que permanece e quem decide o que falta. Os três ganham só uma linha de ponteiro para cá.
+> **ACEITA pela Madu em 2026-10-14.** Não altera código, banco, configuração nem recursos externos. O M03 continua **não autorizado**. Nada é criado no Railway nem em nuvem. Esta DEC **não reescreve** o DEC-0034, o DEC-0035 nem o DEC-0036: ela registra o que muda, o que permanece e quem decide o que falta. Os três ganham só uma linha de ponteiro para cá.
 
 ## 1. Contexto: o conflito de sequência (exposto, não reconciliado em silêncio)
 | Fonte | O que diz | Consequência |
@@ -100,7 +101,7 @@ Legenda: **O** = obrigatório antes de o modo operar; **S** = obrigatório apena
 
 ## 8. Pendências de decisão da Madu e paradas
 - **Onde o M03 roda** (local ou staging): definido **na autorização formal do M03** (fase E). A frase "o M03 roda local" está superada.
-- **Aceite formal desta DEC:** o texto continua **PROPOSTA** até a Madu aprovar o texto corrigido; só então o status muda para ACEITA e o PR é mesclado, **por autorização explícita dela**.
+- **Aceite formal desta DEC: concluído em 2026-10-14**, por autorização explícita da Madu; o status passou de PROPOSTA para ACEITA. A aceitação não implementa nada e não autoriza E1 a E13 nem o M03.
 - **Referência operacional do vault:** `feat/core-platform` é a referência **provisória**. A `main` do vault está 43 commits atrás e não tem os DEC-0032 a DEC-0036. **Atividade futura, não feita agora:** promover `feat/core-platform` para a `main`, com **auditoria própria** dos 43 commits de diferença. Enquanto isso, esta DEC só é referência em `feat/core-platform`.
 - **D-11:** provedor da segunda cópia independente e frequência da cópia offline.
 - **Revisão da retenção D-4** antes de qualquer exclusão automática.
