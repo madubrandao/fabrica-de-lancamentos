@@ -18,8 +18,8 @@ A0 a A4 e o **A6 mínimo** (só o necessário para o Create Launch; definição 
 | A, B, C | Concluídas |
 | D | D1 e D2 mesclados; **D3 e D4 não implementados** em 2026-10-14. Sequência e requisitos por modo (M03 local, M03 em staging, production): [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] §6 (PROPOSTA); plano em [[pre-M03-d4-d3-plano-unificado]] |
 | E | Este rascunho |
-| F (hospedagem, TLS, imagem da API, rate limit, segundo fator, notificação) | Passou para **antes do M04**; o M03 roda local |
-| **Onde o M03 roda** | **A decidir no início formal:** o DEC-0034 diz local; o DEC-0035 antecipou a hospedagem sem revogar nem confirmar essa frase (DEC-0037 §2). O início formal tem de dizer "local" ou "staging" |
+| F (hospedagem, TLS, imagem da API, rate limit, segundo fator, notificação) | Passou para **antes do M04**; ~~o M03 roda local~~ **[SUPERADO em 2026-10-14: o ambiente do M03 (local ou staging) será definido na autorização formal do M03; DEC-0037 §2]** |
+| **Onde o M03 roda** | **Definido na autorização formal do M03:** o DEC-0034 dizia local; o DEC-0035 antecipou a hospedagem sem revogar nem confirmar essa frase, e o DEC-0037 §2 a considera superada. A autorização formal tem de dizer "local" ou "staging" |
 
 ## O que só a Madu fornece (nenhum valor é inventado)
 | Item | O que falta | Referência |
