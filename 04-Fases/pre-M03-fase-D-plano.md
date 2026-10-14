@@ -1,11 +1,13 @@
 ---
 tipo: fase
 area: 04-Fases
-status: PROPOSTO em 2026-10-11 (D1 e D2 já mesclados; D3 e D4 aguardam aprovação da Madu)
+status: PROPOSTO em 2026-10-11 (D1 e D2 já mesclados; D3 e D4 aguardam aprovação da Madu) | **2026-10-14: as seções D3 e D4 foram reorganizadas pelo [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] (PROPOSTA) e pelo [[pre-M03-d4-d3-plano-unificado]]; este texto fica como histórico**
 fonte: DEC-0033 (item 6); DEC-0034 (perfil de valores e fase D); PRs #35 e #36 do launch-os; leitura de `database/migrations/0006` e `docs/operations/M01-RUNBOOK.md` em 2026-10-11
 atualizado: 2026-10-11
 ---
 # Fase D antes do M03: operação local
+
+> **Nota de 2026-10-14:** a partição `DEFAULT` citada abaixo como pergunta aberta já estava decidida **sem** `DEFAULT` no DEC-0035 §3.6; e D3 e D4 passaram a ter parte local e parte Railway. Ver [[DEC-0037-sequencia-d4-d3-backup-e-retencao]]. O restante do documento não foi alterado.
 
 Fonte da decisão: DEC-0034 (fase D = comando de importação, partição do `audit_log`, limpeza agendada, backup e restore testados com a `N8N_ENCRYPTION_KEY`). Este documento registra o que já foi feito e propõe o que falta. **Nada de D3 e D4 foi implementado.**
 

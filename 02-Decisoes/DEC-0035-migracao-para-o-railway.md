@@ -10,6 +10,8 @@ emenda: DEC-0034 (muda "o M03 roda local" e antecipa parte da hospedagem), DEC-0
 # DEC-0035: migração da pilha para o Railway (staging e production)
 
 > **Aceita pela Madu em 2026-10-11** (aprovou o conteúdo e autorizou a gravação como ACEITA). O M03 continua **não autorizado**. Nenhuma chamada real a LLM. Nenhum recurso é criado no Railway sem a confirmação da Madu a cada passo; o Claude Code não tem credencial do Railway.
+>
+> **Emenda posterior (PROPOSTA, 2026-10-14):** [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] reorganiza a sequência de D3 e D4 e o destino da exportação. O texto desta DEC não foi alterado; vale o que o DEC-0037 disser quando aceito.
 
 ## 1. Contexto
 - O ambiente local (7,7 GB de RAM, 17 GB livres em `C:`, mínimo exigido 20 GB) parou o projeto várias vezes. A pilha ocupa pouco em dados (~170 MB), mas exige PostgreSQL, Redis e n8n ligados, e o notebook não tem folga.
