@@ -10,6 +10,8 @@ data-decisao: 2026-10-09 (a Madu aceitou em bloco: "Siga com as recomendaras")
 # DEC-0034 — Perfil de valores e plano até o M03
 
 > **Aceita pela Madu em 2026-10-09**, depois de pedir "traga a melhor opção". O perfil local vale para o desenvolvimento; os valores de produção saem no plano da hospedagem. O M03 continua **não autorizado** até o início formal (fase E). Os valores **não entram no código** como padrão (DEC-0016 D8): vão no `.env` local (pelo bootstrap) e nas políticas, gravadas pela API com audit.
+>
+> **Emenda posterior (ACEITA, 2026-10-14):** [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] reorganiza a sequência de D3 e D4 e o destino da exportação. O texto desta DEC não foi alterado; vale o que o DEC-0037 disser (aceito em 2026-10-14).
 
 ## 1. Princípio
 - **Para continuar a implementação (L1 a L7), nenhum valor da Madu é necessário:** os testes e as fumaças usam valores de teste.

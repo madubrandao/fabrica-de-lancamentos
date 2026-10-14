@@ -10,6 +10,8 @@ emenda: DEC-0035
 # DEC-0036: emenda à DEC-0035 (exceção nos dois pontos do código, reordenação das etapas e verificação reduzida no staging)
 
 > **Aceita pela Madu em 2026-10-11.** A DEC-0035 continua válida em tudo que esta DEC não altera. O M03 continua **não autorizado**. Nada é criado no Railway sem a confirmação da Madu a cada passo. Sem chamada real a LLM.
+>
+> **Emenda posterior (ACEITA, 2026-10-14):** [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] reorganiza a sequência de D3 e D4 e o destino da exportação. O texto desta DEC não foi alterado; vale o que o DEC-0037 disser (aceito em 2026-10-14).
 
 ## 1. Contexto
 O PR #38 (etapa 2 da DEC-0035) foi mesclado (`cb66543`). A revisão independente e a leitura do código encontraram pontos que a DEC-0035 não cobria: (a) a regra "`http` só para localhost" existe em **dois** lugares; (b) a ordem das etapas deixaria a API no ar entre as etapas 3 e 5 com URLs de webhook provisórias; (c) a fumaça atual (M01 e M02) **não consegue** rodar do notebook contra o Railway: roda a API em processo local, cria o banco de teste direto no PostgreSQL (privado no Railway) e usa o CLI do Docker.

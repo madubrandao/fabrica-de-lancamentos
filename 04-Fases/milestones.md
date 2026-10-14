@@ -49,6 +49,7 @@ Valida: Agent Contract, context assembly, tool registry, memory interfaces, exec
 ## M03 — First Business Agents
 Valida: A0–A4. Objetivo: produzir um lançamento até `LAUNCH_READY`.
 - Pré-requisito: produto fictício de teste definido ([[DEC-0017-modelo-de-negocio-inicial]] C1)
+- Pré-requisito operacional (2026-10-14, DEC-0037 ACEITA): D4 (backup e restore) e D3a (partição do `audit_log`) conforme a matriz por modo do [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] §6; **não implementados**; M03 não autorizado
 - [ ] A0 · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] **A6 mínimo** (só o necessário para o Create Launch; definição PENDENTE; A6 completo no M04)
 - Primeiro workflow integrado: Create Launch até `LAUNCH_READY` ([[n8n-estrutura]], [[DEC-0015-alocacao-do-roadmap-m01-m04]])
 
