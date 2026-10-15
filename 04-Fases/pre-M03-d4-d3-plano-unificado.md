@@ -1,7 +1,7 @@
 ---
 tipo: fase
 area: 04-Fases
-status: ACEITO em 2026-10-14 (DEC-0037 ACEITA; E0 concluída; E1 a E13 NÃO autorizadas: cada etapa depende de autorização própria da Madu) | 2026-10-15: E1 concluída; **E2-A concluída** (mecanismo de backup testado, launch-os PR #45, main `6ccd6de`); **restaurabilidade não comprovada** (E3); E2-B, E3 e o restante NÃO autorizados
+status: ACEITO em 2026-10-14 (DEC-0037 ACEITA; E0 concluída; E1 a E13 NÃO autorizadas: cada etapa depende de autorização própria da Madu) | 2026-10-15: E1 concluída; **E2-A concluída** (mecanismo de backup testado, launch-os PR #45, main `6ccd6de`); **restaurabilidade não comprovada** (E3); E2-B, E3 e o restante NÃO autorizados
 fonte: DEC-0037; DEC-0034 §5 (fase D); DEC-0035 §3.6, §3.7, §8; DEC-0036 §2.3; pre-M03-fase-D-plano.md (2026-10-11); launch-os `main` em `5ce7c63`
 atualizado: 2026-10-14
 ---
