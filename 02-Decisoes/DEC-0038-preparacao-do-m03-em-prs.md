@@ -2,15 +2,15 @@
 tipo: decisao
 area: 02-Decisoes
 id: DEC-0038
-status: PROPOSTA NÃO APROVADA (rascunho de 2026-10-16 para revisão da Madu; não vale como decisão até o aceite expresso)
+status: ACEITA (2026-10-17). Não autoriza o M03 nem altera a DEC-0037 e a DEC-0034
 fonte: DEC-0034 (§5, cabeçalho); DEC-0037 (§6, §8); docs/status/CURRENT_TASK.md do launch-os; 04-Fases/pre-M03-fase-E-plano.md; 03-Arquitetura/proposta-m03-source-integridade-e-aprovacoes.md
 data-registro: 2026-10-16
-data-decisao: (em branco: aguarda aprovação)
+data-decisao: 2026-10-17
 emenda: DEC-0034 (§5, fase E), DEC-0037 (§6), sem revogar nenhuma
 ---
-# DEC-0038: preparação do M03 em branches e PRs (PROPOSTA NÃO APROVADA)
+# DEC-0038: preparação do M03 em branches e PRs (ACEITA em 2026-10-17)
 
-> **PROPOSTA NÃO APROVADA.** Este texto não altera código, banco, configuração, workflows, Railway nem recursos externos, e **não autoriza o M03**. Só passa a valer depois de aceite expresso da Madu, registrado na linha de aprovação ao final.
+> **ACEITA pela Madu em 2026-10-17**, nos termos deste texto, registrado na linha de aprovação ao final. Este texto não altera código, banco, configuração, workflows, Railway nem recursos externos, e **não autoriza o M03**. A DEC-0037 e a DEC-0034 permanecem integralmente.
 
 ## 1. Contexto
 - O DEC-0034 §5 diz: "Sem chamada real a LLM antes da fase E" e exige, para cada fase, "branch própria, `check-repo.sh` depois do `git add`, CI verde e revisão independente registrada no PR antes do merge". O cabeçalho diz que o M03 "continua **não autorizado** até o início formal (fase E)".
@@ -55,6 +55,8 @@ Vale do aceite até o início formal do M03 (quando o plano único do M03 a subs
 | Os requisitos da DEC-0037 serem vistos como dispensados | Seção 4: preservados integralmente |
 
 ## 8. Aprovação
-Aprovada por: ______________________  em: ____/____/______   (**em branco: proposta não aprovada**)
+Aprovada por: Madu  em: 17/10/2026.
+
+Registro do aceite (2026-10-17): "aprovo a DEC-0038 nos termos documentados no vault, preservando integralmente a DEC-0037 e a DEC-0034". Na mesma decisão a Madu autorizou **a preparação dos dois PRs previstos** (PR1 funcional; PR2 n8n) **sem consultá-la entre alterações internas de implementação**, para entrega à revisão final dela. Mantidas: nenhum merge automático (o merge de cada PR continua dependendo da Madu), nenhum agente real, nenhum LLM real, nenhuma credencial operacional, nenhuma alteração do banco de desenvolvimento, nenhuma importação de workflow em n8n em execução, nenhuma publicação e nenhum início formal do M03. A mudança no núcleo do gateway (§5) ganhou a ADR-0029 no `launch-os`. Os `limits` das definições dos agentes seguem como **proposta** até o aceite expresso da Madu (§2).
 
 Ver [[DEC-0034-perfil-de-valores-e-plano-ate-o-m03]] · [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] · [[pre-M03-fase-E-plano]] · [[e1-inventario-de-dados-persistidos]]
