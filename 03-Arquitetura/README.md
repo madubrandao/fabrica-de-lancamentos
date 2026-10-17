@@ -18,6 +18,8 @@ Arquitetura técnica, integrações, dados e infraestrutura. Tudo é **especific
 - [[n8n-estrutura]]
 - [[estrutura-do-repositorio]] — repo `launch-os` (ainda não criado).
 - [[observabilidade-e-testes]]
+- [[proposta-afropilot-studio-producao-criativa]] — **PROPOSTA NÃO APROVADA**: arquitetura do AfroPilot Studio (produção de conteúdo visual e audiovisual); nada implementado.
+- [[proposta-afropilot-studio-especificacao-de-imagens]] — **PROPOSTA NÃO APROVADA**: padrão de criação de imagens do Studio (formatos, `VisualBrief`, QA); nada implementado.
 - [[spec-core-01-servicos-e-limites]] — **M01/F1, bloco 1** (decisões D1.x aprovadas em 2026-10-07): serviços e limites entre a API e o n8n.
 - [[spec-core-02-entidades-e-schema]] — **M01/F1, bloco 2** (decisões D2.x aprovadas em 2026-10-07): colunas, chaves e constraints das 22 entidades.
 - [[spec-core-03-state-machine-e-gates]] — **M01/F1, bloco 3** (decisões D3.x aprovadas em 2026-10-07): transições, mapeamento estado → gate, aprovadores, `owner_agent` e decisão de continuidade.
