@@ -2,7 +2,7 @@
 tipo: fase
 area: 04-Fases
 id: E1
-status: PARA CONFIRMAÇÃO DA MADU (não confirmado; elaborado em 2026-10-16, somente leitura)
+status: CONFIRMADA pela Madu em 2026-10-17 (§8); elaborada em 2026-10-16, somente leitura
 fonte: DEC-0037 (§4 item 3, §6, §7); 04-Fases/pre-M03-d4-d3-plano-unificado.md (E1); 07-Log/2026-10-15-e2a-concluida.md; docs/operations/BACKUP-RUNBOOK.md e docker-compose.dev.yml do launch-os (main afa36c5)
 data-registro: 2026-10-16
 ---
@@ -50,9 +50,22 @@ Este documento é a lista fechada pedida. **A DEC-0037 não foi alterada**; a at
 ## 7. Evidências
 `docker volume ls`; `docker ps -a`; `docker system df -v` (tamanhos: `launch-os_postgres_data` 89,5 MB, `launch-os_redis_data` 292 B); `df -h /c`; `ls -la .env` (apenas tamanho); `docker-compose.dev.yml` (volumes `postgres_data`, `redis_data`, `n8n_data`; serviço `n8n` com `N8N_ENCRYPTION_KEY` obrigatória); `.env.example` (variáveis `BACKUP_*`); BACKUP-RUNBOOK §1, §6, §7; RESTORE-RUNBOOK §6.
 
-## 8. Confirmação da Madu (em branco)
-- [ ] Confirmo a E1 como concluída, com estas inclusões, exclusões e itens não medidos.
-- [ ] Corrijo: ______________________________________________
-Confirmada por: ______________________  em: ____/____/______
+## 8. Confirmação da Madu
+- [x] Confirmo a E1 como concluída, com estas inclusões, exclusões e itens não medidos.
+- [ ] Corrijo: (nenhuma correção)
+
+Confirmada por: **Madu**, em **17/10/2026** (autorização explícita na sessão do Claude Code; registro feito pelo Claude a pedido dela).
+
+**Escopo confirmado:**
+- **Entram:** bancos `launch_os` e `n8n` e papéis do PostgreSQL (`BACKUP_DATABASES=launch_os,n8n`, `BACKUP_INCLUDE_GLOBALS=true`).
+- **Ficam fora:** Redis; `.env` (custódia da Madu); `n8n_data` (inexistente no desenvolvimento, `BACKUP_INCLUDE_N8N_DATA=false`); workflows (versionados no Git).
+
+**Limitações que continuam NÃO verificadas:**
+- **Recuperação das credenciais do n8n:** depende da custódia separada da `N8N_ENCRYPTION_KEY`, que não entra no backup. Sem ela, o banco `n8n` restaurado não decifra as credenciais (RESTORE-RUNBOOK, limite A4).
+- Tamanho lógico e conteúdo dos bancos `launch_os` e `n8n`, incluindo se o banco `n8n` do desenvolvimento tem dados.
+- Dados binários e modo fila do n8n 2.41.6.
+- Papel efetivo e conteúdo do Redis.
+
+**Atualizações desde a elaboração (2026-10-16):** o bloqueio do §4 caiu (C: com 44,5 GB livres em 17/10/2026). A recuperação independente da chave `age` pela cópia do Bitwarden foi validada criptograficamente em 17/10/2026 (`age` v1.3.2 oficial, procedência verificada): mesma pública da original (`age18wvggt9ujk83gsc35fdl5a6cjp64exyjv58llnu2t2mxcyf3fvfqef3sl4`) e texto sintético decifrado só com a cópia, hashes iguais. A confirmação da E1 **não** comprova restaurabilidade: só a E3 aplicada ao conjunto real comprova.
 
 Ver [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] · [[pre-M03-d4-d3-plano-unificado]] · [[DEC-0038-preparacao-do-m03-em-prs]]
