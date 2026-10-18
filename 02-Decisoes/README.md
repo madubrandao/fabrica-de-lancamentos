@@ -37,6 +37,7 @@ Registro de decisões (ADRs): contexto, escolha, alternativas e consequências.
 - [[DEC-0033-decisoes-pendentes-do-m01]] — decisões pendentes do M01 aceitas em 2026-10-09 (A4 alterado, OpenAPI adiado, Node 24.21.0, retenção do audit por partição; gates e notificação com a Madu).
 - [[DEC-0034-perfil-de-valores-e-plano-ate-o-m03]] — perfil de valores do desenvolvimento local, políticas, gates por aprovação humana, L7 (exceto importação) movida para antes do M04 e plano A a F até o M03; aceita em 2026-10-09. Emenda o DEC-0032 (revisão R1 a R5).
 - [[DEC-0037-sequencia-d4-d3-backup-e-retencao]] — **ACEITA (2026-10-14):** divide D3 e D4 em parte local e parte Railway, R2 condicionado como destino, criptografia `age`, alertas e requisitos por modo (M03 local, M03 em staging, production). Emenda DEC-0034 §5, DEC-0035 §8 e DEC-0036 §2.3 sem reescrevê-los. Nada implementado; M03 não autorizado.
+- [[DEC-0039-liberacao-do-primeiro-teste-real-do-m03]] — **PROPOSTA (2026-10-18), não aprovada:** decisão única para o 1º teste real A0 → A1 → A3 local: aceite da E4, liberação do M03 só neste escopo, produto fictício, permissões do A0, custo e modelo; resolve a contradição DEC-0034 × DEC-0038 §3.1.
 - [[pendencias-de-decisao]] — conflitos entre documentos: **P01–P12 todos resolvidos**, sem subitens abertos.
 
 Status "aceita-nas-fontes" = a decisão consta nos documentos da FASE 1; DEC-0010 prevalece em qualquer conflito.
