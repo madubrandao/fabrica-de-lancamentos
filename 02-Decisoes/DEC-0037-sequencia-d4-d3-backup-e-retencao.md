@@ -108,6 +108,7 @@ Legenda: **O** = obrigatório antes de o modo operar; **S** = obrigatório apena
 - **Destino definitivo da exportação** depois do checklist da E7 (se o R2 reprovar).
 - **Canal dos alertas automáticos** (conta SMTP ou monitor externo) antes de qualquer ambiente sem supervisão; **prazo esperado do job de partição e quem responde ao alerta**.
 - **Autorizar cada etapa de implementação** (E1 em diante), uma por vez, com PR, CI verde, revisão independente e merge só com a autorização dela.
+- **Registro posterior (ponteiro, 2026-10-17):** decisões da Madu sobre a E5/E6 (aceite do relatório da §4.4, D11 sem filtro de data até a E11, critério de conclusão da entrega de código, `MAINTENANCE_*` opcional sem limpeza autorizada, rotina manual da D-7 no local) em [[pre-M03-d4-d3-plano-unificado]] (Registro de execução) e [[2026-10-17-e5-e6-entrega-de-codigo]]. Esta DEC não foi alterada além deste ponteiro.
 
 ## 9. O que esta DEC NÃO faz
 Não implementa E1 a E13; não cria bucket, token, chave ou recurso externo; não altera banco, código, configuração, workflows nem o Railway; não exclui dados; não autoriza o M03; não revoga nenhuma decisão anterior.

@@ -6,6 +6,8 @@ atualizado: 2026-10-04
 ---
 # Fábrica de Lançamentos — Memória do Projeto
 
+> **RETOMADA (2026-10-18):** estado atual, bloqueios e próxima ação do 1º teste real do M03 em [[00-RETOMADA-M03]].
+
 Vault Obsidian com a memória do projeto. Estrutura adaptada do padrão BRAVY SCOOL: pastas numeradas por área, README em cada nível e este índice na raiz.
 
 **O projeto em uma frase:** LAUNCH OS — uma empresa de lançamentos autônoma baseada na metodologia de *A Fórmula do Lançamento*, operada por 11 agentes de IA (A0–A10) executados em workflows do n8n, sobre PostgreSQL + Redis e uma API fina de estado, construída com Claude Code (subagentes ENG-00…07), com humano nas decisões críticas. O Maestri saiu do escopo em 2026-10-04 ([[DEC-0020-maestri-fora-do-escopo-e-n8n-executa-os-agentes]]). Detalhe em [[visao-do-projeto]].
